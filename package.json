@@ -1,0 +1,28 @@
+{
+  "name": "bitcoin",
+  "version": "1.0.0",
+  "description": "",
+  "main": "CLI.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/m0bi/bitcoin.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/m0bi/bitcoin/issues"
+  },
+  "homepage": "https://github.com/m0bi/bitcoin#readme",
+  "dependencies": {
+    "coincap-lib": "^1.0.0",
+    "dotenv": "^5.0.1",
+    "node-coinigy": "^2.0.1",
+    "request": "^2.86.0",
+    "shapeshift": "^1.0.2"
+  },
+  "devDependencies": {}
+}
