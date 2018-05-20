@@ -1,23 +1,26 @@
-require("dotenv").config();
-var request = require('request');
-var Coinigy = require('node-coinigy');
+//require("dotenv").config();
+//var request = require('request');
+//var Coinigy = require('node-coinigy');
 const shapeshift = require('shapeshift');
-var keys = require("./keys.js");
-var coinigy = new Coinigy(keys.coinigy);
+const coincap = require('coincap-lib');
+//var keys = require("./keys.js");
+//var coinigy = new Coinigy(keys.coinigy);
 
-coinigy.activity()
-.then(function (body) {
-  console.log(body.data);
-  console.log(body.notifications);
-})
-.catch(function (err) {
-  console.log(err);
-});
+
+//----------------------------Coinigy contains private key data that I would like to keep secure, but it also contains all the data needed for the major exchanges in one place. I would like to use it if possible.
+// coinigy.activity()
+// .then(function (body) {
+//   console.log(body.data);
+//   console.log(body.notifications);
+// })
+// .catch(function (err) {
+//   console.log(err);
+// });
 
 //----------------------------npm install node-coinigy --save
 
-const coincap = require('coincap-lib')
- 
+
+ coincap.coins().then(console.log);
 //coincap.coins().then(console.log) // ["300", "611", "888", ...]
 //coincap.coinHistory('BTC', 1).then(console.log) // { market_cap: [...], ... }
 
@@ -27,24 +30,25 @@ const coincap = require('coincap-lib')
 
 
 //---------------------node npm install --save shapeshift
-// const pair = 'btc_ltc';
+ const pair = 'btc_ltc';
 
-// shapeshift.getRate(pair)
-// 	.then(function(data){
-// 		//do something w/ data
-// 	});
-// shapeshift.getLimit(pair)
-// 	.then(function(data){
-// 		const body = data.body;
+ shapeshift.getRate(pair)
+ 	.then(function(data){
+        console.log(data);
+ 	});
+ shapeshift.getLimit(pair)
+ 	.then(function(data){
+ 		const body = data.body;
+        console.log(body);
+ 		//{"pair":"btc_ltc","limit":"1.98046131"}
+ 	});
 
-// 		//{"pair":"btc_ltc","limit":"1.98046131"}
-// 	});
-
-// shapeshift.getCoins()
-// 	.then(data => {
-// 		const coins = data.body;
-// 		//{"pair":"btc_ltc","limit":"1.98046131"}
-// 	});
+ shapeshift.getCoins()
+ 	.then(data => {
+         const coins = data.body;
+         console.log(coins);
+ 		//{"pair":"btc_ltc","limit":"1.98046131"}
+ 	});
 
 
 
