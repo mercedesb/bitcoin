@@ -20,6 +20,7 @@
   "dependencies": {
     "coincap-lib": "^1.0.0",
     "dotenv": "^5.0.1",
+    "http": "0.0.0",
     "node-coinigy": "^2.0.1",
     "request": "^2.86.0",
     "shapeshift": "^1.0.2"

@@ -56,7 +56,38 @@ const coincap = require('coincap-lib');
 
 
 
+//-----------------------------------------------------------------------------------------------------------------------------------------------------
+var http = require("http");
 
+var options = {
+  "method": "POST",
+  "hostname": "api.changelly.com",
+  "headers": {
+    "Content-Type": "application/json",
+    "api-key": "ed7f576df31d4bcab7742641d37f935b",
+    "sign": "4fb2405ff40d0e7874baae70687ff7e28b3ffec8f9303aed5bb205b2da871bbe"
+  }
+};
+
+var req = http.request(options, function (res) {
+  var chunks = [];
+
+  res.on("data", function (chunk) {
+    chunks.push(chunk);
+  });
+
+  res.on("end", function () {
+    var body = Buffer.concat(chunks);
+    console.log(body.toString());
+  });
+});
+
+req.write(JSON.stringify({ id: 'test',
+  jsonrpc: '2.0',
+  method: 'getCurrenciesFull',
+  params: {} }));
+req.end();
+//----------------------------------------------------------------------------------------
 
 
 
