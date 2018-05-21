@@ -19,11 +19,16 @@
   "homepage": "https://github.com/m0bi/bitcoin#readme",
   "dependencies": {
     "coincap-lib": "^1.0.0",
+    "crypto": "^1.0.1",
     "dotenv": "^5.0.1",
+    "fs": "0.0.1-security",
+    "get-json": "^1.0.0",
     "http": "0.0.0",
+    "jayson": "^2.0.6",
     "node-coinigy": "^2.0.1",
     "request": "^2.86.0",
-    "shapeshift": "^1.0.2"
+    "shapeshift": "^1.0.2",
+    "socket.io-client": "^2.1.1"
   },
   "devDependencies": {}
 }

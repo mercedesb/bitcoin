@@ -1,0 +1,1 @@
+{"jsonrpc":"2.0","id":"6f94bf46-48d8-4d5b-aec7-0cc83da7c239","result":"11.865375"}
