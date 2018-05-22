@@ -185,7 +185,7 @@ var get1 = new getJSON('https://api.bibox.com/v1/mdata?cmd=marketAll', function 
 var get2 = new getJSON('https://www.bit-z.com/api_v1/tickerall', function (error, response) {
     if (error) throw error;
 
-    fs.writeFile("bitz.txt", JSON.stringify(response.result), function (err) {
+    fs.writeFile("bitz.txt", JSON.stringify(response), function (err) {
 
         // If the code experiences any errors it will log the error to the console.
         if (err) {
@@ -200,7 +200,7 @@ var get2 = new getJSON('https://www.bit-z.com/api_v1/tickerall', function (error
 var get3 = new getJSON('https://api.kucoin.com/v1/open/tick', function (error, response) {
     if (error) throw error;
 
-    fs.writeFile("kucoin.txt", JSON.stringify(response.result), function (err) {
+    fs.writeFile("kucoin.txt", JSON.stringify(response), function (err) {
 
         // If the code experiences any errors it will log the error to the console.
         if (err) {

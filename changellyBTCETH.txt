@@ -1,1 +1,1 @@
-{"jsonrpc":"2.0","id":"6f94bf46-48d8-4d5b-aec7-0cc83da7c239","result":"11.865375"}
+{"jsonrpc":"2.0","id":"2e060ad1-1411-408f-9ad6-5bd1c11e1fc9","result":"12.10716"}

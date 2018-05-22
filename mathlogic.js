@@ -79,3 +79,6 @@ function pairGenerator(array) {
 
 //maybe do shapeshift and changelly on their own chart, since their pairs could be different
 //need a combination maker for our changelly and shapeshift functions.
+
+
+//need a fee calculator. getall the fees I can.cd .
