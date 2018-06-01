@@ -375,7 +375,7 @@ shapeshift.getCoins()
                             "min": data.body.min,
                             "limit": data.body.limit
                         });
-                        database.ref("/shapeshift/min/" + data.body.pair).push(
+                        database.ref("/shapeshift/min/" + data.body.pair).set(
                             {
                                 "pair": data.body.pair,
                                 "min": data.body.min,
@@ -962,9 +962,7 @@ app.get('/kucoin/', function (req, res) {
     database.ref("/kucoin/").once("value").then(function (response) {
         var coins = [];
         coins = Object.keys(response.val());
-       // res.json(coins);
-        
-        coins.forEach(function(data){res.render("index", response.child(data).val())});
+        res.json(coins);
     });
 });
 

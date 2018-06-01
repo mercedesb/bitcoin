@@ -1,1 +1,1 @@
-[{"symbol":"eth_btc","last":"0.07670900"},{"symbol":"bch_btc","last":"0.13313700"},{"symbol":"dash_btc","last":"0.04145100"},{"symbol":"ltc_btc","last":"0.01584000"},{"symbol":"zec_btc","last":"0.03256600"}]
+[{"symbol":"eth_btc","last":"0.07621843"},{"symbol":"bch_btc","last":"0.13202300"},{"symbol":"dash_btc","last":"0.04093700"},{"symbol":"ltc_btc","last":"0.01574800"},{"symbol":"zec_btc","last":"0.03178300"}]
