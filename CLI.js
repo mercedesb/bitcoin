@@ -8,28 +8,28 @@ var app = firebase.initializeApp({
     messagingSenderId: "195092768796"
 });
 
-var stream = require('stream');
-var es = require('event-stream')
+//var stream = require('stream');
+//var es = require('event-stream')
 //require("dotenv").config();
-var fs = require('fs') // gonna write some of this shit down
+//var fs = require('fs') // gonna write some of this shit down
 //var request = require('request');
 
 const shapeshift = require('shapeshift');
 const coincap = require('coincap-lib');
-const Combinatorics = require('js-combinatorics');
+var Combinatorics = require('js-combinatorics');
 var getJSON = require('get-json');
 //var keys = require("./keys.js");
 //var coinigy = new Coinigy(keys.coinigy);
-var database = firebase.database();
-var coinigyData = [];
-var coincapData = [];
-var biboxData = [];
-var kucoinData = [];
-var bitzData = [];
-var shapeshiftData = [];
-var changellyPairs = [];
+const database = firebase.database();
+var firebasePromise = [];
+
+//these arrays should have arrays as items, [coin, price, exchange]. Price needs to be grabbed first, maybe new API?
+
+
+
+
 //----------------------------Coinigy contains private key data that I would like to keep secure, but it also contains all the data needed for the major exchanges in one place. I would like to use it if possible.
-var request = require('request');
+const request = require('request');
 
 
 request({
@@ -42,28 +42,9 @@ request({
     }
 }, function (error, response, body) {
     if (error) throw error;
-    fs.writeFile("./data/coinigy.txt", body, function (err) {
-
-        // If the code experiences any errors it will log the error to the console.
-        if (err) {
-            return console.log(err);
-        }
-
-
-
-
-    });
     //------------NEW CODE------------GRABBING FIRST SET OF DATA
 
     JSON.parse(body).data.forEach(function (element) {
-        coinigyData.push({
-            "mkt_name": element.mkt_name,
-            "exch_code": element.exch_code,
-            "exch_name": element.exch_name,
-            "primary_currency_name": element.primary_currency_name,
-            "secondary_currency_name": element.secondary_currency_name,
-            "last_price": element.last_price
-        });
         database.ref("/coinigy/" + element.mkt_name + "/" + element.exch_code).set({
             "mkt_name": element.mkt_name,
             "exch_code": element.exch_code,
@@ -74,34 +55,15 @@ request({
         });
     });
     //good data. needs additions from coincap
-    fs.writeFile("./data/coinigyData.txt", JSON.stringify(coinigyData), function (err) {
-        if (err) throw err;
 
-    });
 });
 
 
 //This is the basic averages.
 
 coincap.front().then(function (response) {
-    fs.writeFile("./data/coincap.txt", JSON.stringify(response), function (err) {
-
-        if (err) {
-            return console.log(err);
-        }
-
-
-
-    });
     response.find(function (element) {
         if (element.short === "BTC") {
-            coincapData.push(
-                {
-                    "cap24hrChange": element.cap24hrChange,
-                    "short": element.short,
-                    "price": element.price
-                }
-            );
             database.ref("/coincap/BTC").set({
                 "cap24hrChange": element.cap24hrChange,
                 "short": element.short,
@@ -112,13 +74,6 @@ coincap.front().then(function (response) {
     });
     response.find(function (element) {
         if (element.short === "ETH") {
-            coincapData.push(
-                {
-                    "cap24hrChange": element.cap24hrChange,
-                    "short": element.short,
-                    "price": element.price
-                }
-            );
             database.ref("/coincap/ETH").set(
                 {
                     "cap24hrChange": element.cap24hrChange,
@@ -130,13 +85,6 @@ coincap.front().then(function (response) {
     });
     response.find(function (element) {
         if (element.short === "BCH") {
-            coincapData.push(
-                {
-                    "cap24hrChange": element.cap24hrChange,
-                    "short": element.short,
-                    "price": element.price
-                }
-            );
             database.ref("/coincap/BCH").set(
                 {
                     "cap24hrChange": element.cap24hrChange,
@@ -148,13 +96,6 @@ coincap.front().then(function (response) {
     });
     response.find(function (element) {
         if (element.short === "DASH") {
-            coincapData.push(
-                {
-                    "cap24hrChange": element.cap24hrChange,
-                    "short": element.short,
-                    "price": element.price
-                }
-            );
             database.ref("/coincap/DASH").set(
                 {
                     "cap24hrChange": element.cap24hrChange,
@@ -166,13 +107,6 @@ coincap.front().then(function (response) {
     });
     response.find(function (element) {
         if (element.short === "LTC") {
-            coincapData.push(
-                {
-                    "cap24hrChange": element.cap24hrChange,
-                    "short": element.short,
-                    "price": element.price
-                }
-            );
             database.ref("/coincap/LTC").set(
                 {
                     "cap24hrChange": element.cap24hrChange,
@@ -184,13 +118,6 @@ coincap.front().then(function (response) {
     });
     response.find(function (element) {
         if (element.short === "NEO") {
-            coincapData.push(
-                {
-                    "cap24hrChange": element.cap24hrChange,
-                    "short": element.short,
-                    "price": element.price
-                }
-            );
             database.ref("/coincap/NEO").set(
                 {
                     "cap24hrChange": element.cap24hrChange,
@@ -202,13 +129,6 @@ coincap.front().then(function (response) {
     });
     response.find(function (element) {
         if (element.short === "STEEM") {
-            coincapData.push(
-                {
-                    "cap24hrChange": element.cap24hrChange,
-                    "short": element.short,
-                    "price": element.price
-                }
-            );
             database.ref("/coincap/STEEM").set(
                 {
                     "cap24hrChange": element.cap24hrChange,
@@ -220,13 +140,6 @@ coincap.front().then(function (response) {
     });
     response.find(function (element) {
         if (element.short === "XLM") {
-            coincapData.push(
-                {
-                    "cap24hrChange": element.cap24hrChange,
-                    "short": element.short,
-                    "price": element.price
-                }
-            );
             database.ref("/coincap/XLM").set(
                 {
                     "cap24hrChange": element.cap24hrChange,
@@ -238,13 +151,6 @@ coincap.front().then(function (response) {
     });
     response.find(function (element) {
         if (element.short === "XMR") {
-            coincapData.push(
-                {
-                    "cap24hrChange": element.cap24hrChange,
-                    "short": element.short,
-                    "price": element.price
-                }
-            );
             database.ref("/coincap/XMR").set(
                 {
                     "cap24hrChange": element.cap24hrChange,
@@ -256,13 +162,6 @@ coincap.front().then(function (response) {
     });
     response.find(function (element) {
         if (element.short === "XRP") {
-            coincapData.push(
-                {
-                    "cap24hrChange": element.cap24hrChange,
-                    "short": element.short,
-                    "price": element.price
-                }
-            );
             database.ref("/coincap/XRP").set(
                 {
                     "cap24hrChange": element.cap24hrChange,
@@ -274,13 +173,6 @@ coincap.front().then(function (response) {
     });
     response.find(function (element) {
         if (element.short === "ZEC") {
-            coincapData.push(
-                {
-                    "cap24hrChange": element.cap24hrChange,
-                    "short": element.short,
-                    "price": element.price
-                }
-            );
             database.ref("/coincap/ZEC").set(
                 {
                     "cap24hrChange": element.cap24hrChange,
@@ -290,10 +182,7 @@ coincap.front().then(function (response) {
             );
         }
     });
-    fs.writeFile("./data/coincapData.txt", JSON.stringify(coincapData), function (err) {
-        if (err) throw err;
 
-    });
     //good data
 });
 
@@ -302,26 +191,10 @@ coincap.front().then(function (response) {
 shapeshift.getCoins()
     .then(data => {
         const coins = data.body;
-        fs.writeFile("./data/shapeshift.txt", JSON.stringify(coins), function (err) {
-
-            // If the code experiences any errors it will log the error to the console.
-            if (err) {
-                return console.log(err);
-            }
-
-            // Otherwise, it will print: "movies.txt was updated!"
-
-            //Provides miners fees for all coins. Have to pull coin trade data individually
-        });
 
 
         var shapeshiftCoins = Object.keys(coins);
         for (var i = 0; i < shapeshiftCoins.length; i++) {
-            shapeshiftData.push({
-                "symbol": coins[shapeshiftCoins[i]].symbol,
-                "status": coins[shapeshiftCoins[i]].status,
-                "minerFee": coins[shapeshiftCoins[i]].minerFee
-            });
             database.ref("/shapeshift/miner/" + coins[shapeshiftCoins[i]].symbol).set(
                 {
                     "symbol": coins[shapeshiftCoins[i]].symbol,
@@ -330,9 +203,6 @@ shapeshift.getCoins()
                 }
             );
         }
-        fs.appendFile("./data/shapeshiftMinerFeeData.txt", JSON.stringify(shapeshiftData), function (err) {
-            if (err) throw err;
-        });
         var pair = [];
         var pairPrice = [];
         var pairLimit = [];
@@ -356,9 +226,6 @@ shapeshift.getCoins()
                         );
 
                     }
-                    fs.appendFile("./data/shapeshiftPairPriceData.txt", JSON.stringify(pairPrice), function (err) {
-                        if (err) throw err;
-                    });
                     //this one works (pairPrice)
                 }).catch((err) => { return err });
         }
@@ -384,9 +251,6 @@ shapeshift.getCoins()
                         );
 
                     }
-                    fs.appendFile("./data/shapeshiftPairLimitData.txt", JSON.stringify(pairLimit), function (err) {
-                        if (err) throw err;
-                    });
                 }).catch((err) => { return });
         }
     }).catch((err) => { console.log(err); });
@@ -405,7 +269,7 @@ changelly.getCurrencies(function (err, data) {
     } else {
         // console.log(data.result);
         //double
-
+        var changellyPairs = [];
         cmb = Combinatorics.combination(data.result, 2);
         while (a = cmb.next()) {
             changellyPairs.push([a[0].toLowerCase(), a[1].toLowerCase()]);
@@ -437,205 +301,119 @@ changelly.getCurrencies(function (err, data) {
 
 
 
-var get1 = new getJSON('https://api.bibox.com/v1/mdata?cmd=marketAll', function (error, response) {
-    if (error) throw error;
+// var get1 = new getJSON('https://api.bibox.com/v1/mdata?cmd=marketAll', function (response) {
+//     response.result.find(function (element) {
+//         if (element.coin_symbol === "BCH" && element.currency_symbol === "BTC") {
+//             database.ref("/bibox/" + element.coin_symbol + "_" + element.currency_symbol).set(
+//                 {
+//                     "coin_symbol": element.coin_symbol,
+//                     "currency_symbol": element.currency_symbol,
+//                     "last": element.last,
+//                     "taker": "0.1%",
+//                     "withdraw": "0.005"
+//                 }
+//             );
 
-    fs.writeFile("./data/bibox.txt", JSON.stringify(response.result), function (err) {
-
-        if (err) {
-            return console.log(err);
-        }
-
-        //good data
-
-    });
-    response.result.find(function (element) {
-        if (element.coin_symbol === "BCH" && element.currency_symbol === "BTC") {
-            biboxData.push(
-                {
-                    "coin_symbol": element.coin_symbol,
-                    "currency_symbol": element.currency_symbol,
-                    "last": element.last
-                }
-            );
-            database.ref("/bibox/" + element.coin_symbol + "_" + element.currency_symbol).set(
-                {
-                    "coin_symbol": element.coin_symbol,
-                    "currency_symbol": element.currency_symbol,
-                    "last": element.last,
-                    "taker": "0.1%",
-                    "withdraw": "0.005"
-                }
-            );
-
-        }
-    });
-    response.result.find(function (element) {
-        if (element.coin_symbol === "BCH" && element.currency_symbol === "ETH") {
-            biboxData.push(
-                {
-                    "coin_symbol": element.coin_symbol,
-                    "currency_symbol": element.currency_symbol,
-                    "last": element.last
-                }
-            );
-            database.ref("/bibox/" + element.coin_symbol + "_" + element.currency_symbol).set(
-                {
-                    "coin_symbol": element.coin_symbol,
-                    "currency_symbol": element.currency_symbol,
-                    "last": element.last,
-                    "taker": "0.1%",
-                    "withdraw": "0.005"
-                }
-            );
-        }
-    });
-    response.result.find(function (element) {
-        if (element.coin_symbol === "DASH" && element.currency_symbol === "BTC") {
-            biboxData.push(
-                {
-                    "coin_symbol": element.coin_symbol,
-                    "currency_symbol": element.currency_symbol,
-                    "last": element.last
-                }
-            );
-            database.ref("/bibox/" + element.coin_symbol + "_" + element.currency_symbol).set(
-                {
-                    "coin_symbol": element.coin_symbol,
-                    "currency_symbol": element.currency_symbol,
-                    "last": element.last,
-                    "taker": "0.1%",
-                    "withdraw": "0.001"
-                }
-            );
-        }
-    });
-    response.result.find(function (element) {
-        if (element.coin_symbol === "DASH" && element.currency_symbol === "ETH") {
-            biboxData.push(
-                {
-                    "coin_symbol": element.coin_symbol,
-                    "currency_symbol": element.currency_symbol,
-                    "last": element.last
-                }
-            );
-            database.ref("/bibox/" + element.coin_symbol + "_" + element.currency_symbol).set(
-                {
-                    "coin_symbol": element.coin_symbol,
-                    "currency_symbol": element.currency_symbol,
-                    "last": element.last,
-                    "taker": "0.1%",
-                    "withdraw": "0.001"
-                }
-            );
-        }
-    });
-    response.result.find(function (element) {
-        if (element.coin_symbol === "LTC" && element.currency_symbol === "BTC") {
-            biboxData.push(
-                {
-                    "coin_symbol": element.coin_symbol,
-                    "currency_symbol": element.currency_symbol,
-                    "last": element.last
-                }
-            );
-            database.ref("/bibox/" + element.coin_symbol + "_" + element.currency_symbol).set(
-                {
-                    "coin_symbol": element.coin_symbol,
-                    "currency_symbol": element.currency_symbol,
-                    "last": element.last,
-                    "taker": "0.1%",
-                    "withdraw": "0.005"
-                }
-            );
-        }
-    });
-    response.result.find(function (element) {
-        if (element.coin_symbol === "LTC" && element.currency_symbol === "ETH") {
-            biboxData.push(
-                {
-                    "coin_symbol": element.coin_symbol,
-                    "currency_symbol": element.currency_symbol,
-                    "last": element.last
-                }
-            );
-            database.ref("/bibox/" + element.coin_symbol + "_" + element.currency_symbol).set(
-                {
-                    "coin_symbol": element.coin_symbol,
-                    "currency_symbol": element.currency_symbol,
-                    "last": element.last,
-                    "taker": "0.1%",
-                    "withdraw": "0.005"
-                }
-            );
-        }
-    });
-    response.result.find(function (element) {
-        if (element.coin_symbol === "NEO" && element.currency_symbol === "BTC") {
-            biboxData.push(
-                {
-                    "coin_symbol": element.coin_symbol,
-                    "currency_symbol": element.currency_symbol,
-                    "last": element.last
-                }
-            );
-            database.ref("/bibox/" + element.coin_symbol + "_" + element.currency_symbol).set(
-                {
-                    "coin_symbol": element.coin_symbol,
-                    "currency_symbol": element.currency_symbol,
-                    "last": element.last,
-                    "taker": "0.1%",
-                    "withdraw": false
-                }
-            );
-        }
-    });
-    response.result.find(function (element) {
-        if (element.coin_symbol === "NEO" && element.currency_symbol === "ETH") {
-            biboxData.push(
-                {
-                    "coin_symbol": element.coin_symbol,
-                    "currency_symbol": element.currency_symbol,
-                    "last": element.last
-                }
-            );
-            database.ref("/bibox/" + element.coin_symbol + "_" + element.currency_symbol).set(
-                {
-                    "coin_symbol": element.coin_symbol,
-                    "currency_symbol": element.currency_symbol,
-                    "last": element.last,
-                    "taker": "0.1%",
-                    "withdraw": false
-                }
-            );
-        }
-    });
-    fs.writeFile("./data/biboxData.txt", JSON.stringify(biboxData), function (err) {
-        if (err) throw err;
-    });
-    //good data
-});
+//         }
+//     });
+//     response.result.find(function (element) {
+//         if (element.coin_symbol === "BCH" && element.currency_symbol === "ETH") {
+//             database.ref("/bibox/" + element.coin_symbol + "_" + element.currency_symbol).set(
+//                 {
+//                     "coin_symbol": element.coin_symbol,
+//                     "currency_symbol": element.currency_symbol,
+//                     "last": element.last,
+//                     "taker": "0.1%",
+//                     "withdraw": "0.005"
+//                 }
+//             );
+//         }
+//     });
+//     response.result.find(function (element) {
+//         if (element.coin_symbol === "DASH" && element.currency_symbol === "BTC") {
+//             database.ref("/bibox/" + element.coin_symbol + "_" + element.currency_symbol).set(
+//                 {
+//                     "coin_symbol": element.coin_symbol,
+//                     "currency_symbol": element.currency_symbol,
+//                     "last": element.last,
+//                     "taker": "0.1%",
+//                     "withdraw": "0.001"
+//                 }
+//             );
+//         }
+//     });
+//     response.result.find(function (element) {
+//         if (element.coin_symbol === "DASH" && element.currency_symbol === "ETH") {
+//             database.ref("/bibox/" + element.coin_symbol + "_" + element.currency_symbol).set(
+//                 {
+//                     "coin_symbol": element.coin_symbol,
+//                     "currency_symbol": element.currency_symbol,
+//                     "last": element.last,
+//                     "taker": "0.1%",
+//                     "withdraw": "0.001"
+//                 }
+//             );
+//         }
+//     });
+//     response.result.find(function (element) {
+//         if (element.coin_symbol === "LTC" && element.currency_symbol === "BTC") {
+//             database.ref("/bibox/" + element.coin_symbol + "_" + element.currency_symbol).set(
+//                 {
+//                     "coin_symbol": element.coin_symbol,
+//                     "currency_symbol": element.currency_symbol,
+//                     "last": element.last,
+//                     "taker": "0.1%",
+//                     "withdraw": "0.005"
+//                 }
+//             );
+//         }
+//     });
+//     response.result.find(function (element) {
+//         if (element.coin_symbol === "LTC" && element.currency_symbol === "ETH") {
+//             database.ref("/bibox/" + element.coin_symbol + "_" + element.currency_symbol).set(
+//                 {
+//                     "coin_symbol": element.coin_symbol,
+//                     "currency_symbol": element.currency_symbol,
+//                     "last": element.last,
+//                     "taker": "0.1%",
+//                     "withdraw": "0.005"
+//                 }
+//             );
+//         }
+//     });
+//     response.result.find(function (element) {
+//         if (element.coin_symbol === "NEO" && element.currency_symbol === "BTC") {
+//             database.ref("/bibox/" + element.coin_symbol + "_" + element.currency_symbol).set(
+//                 {
+//                     "coin_symbol": element.coin_symbol,
+//                     "currency_symbol": element.currency_symbol,
+//                     "last": element.last,
+//                     "taker": "0.1%",
+//                     "withdraw": false
+//                 }
+//             );
+//         }
+//     });
+//     response.result.find(function (element) {
+//         if (element.coin_symbol === "NEO" && element.currency_symbol === "ETH") {
+//             database.ref("/bibox/" + element.coin_symbol + "_" + element.currency_symbol).set(
+//                 {
+//                     "coin_symbol": element.coin_symbol,
+//                     "currency_symbol": element.currency_symbol,
+//                     "last": element.last,
+//                     "taker": "0.1%",
+//                     "withdraw": false
+//                 }
+//             );
+//         }
+//     });
+//     //good data
+// });
 
 
 var get2 = new getJSON('https://www.bit-z.com/api_v1/tickerall', function (error, response) {
     if (error) throw error;
 
-    fs.writeFile("./data/bitz.txt", JSON.stringify(response), function (err) {
-
-        // If the code experiences any errors it will log the error to the console.
-        if (err) {
-            return console.log(err);
-        }
-
-        //good data
-
-    });
-
-
-    bitzData.push({
-        "symbol": "eth_btc",
-        "last": response.data.eth_btc.last
-    });
     database.ref("/bitz/eth_btc").set(
         {
             "symbol": "eth_btc",
@@ -644,10 +422,6 @@ var get2 = new getJSON('https://www.bit-z.com/api_v1/tickerall', function (error
             "withdraw": "0.01"
         }
     );
-    bitzData.push({
-        "symbol": "bch_btc",
-        "last": response.data.bch_btc.last
-    });
     database.ref("/bitz/bch_btc").set(
         {
             "symbol": "bch_btc",
@@ -656,10 +430,6 @@ var get2 = new getJSON('https://www.bit-z.com/api_v1/tickerall', function (error
             "withdraw": "0.0001"
         }
     );
-    bitzData.push({
-        "symbol": "dash_btc",
-        "last": response.data.dash_btc.last
-    });
     database.ref("/bitz/dash_btc").set(
         {
             "symbol": "dash_btc",
@@ -668,10 +438,6 @@ var get2 = new getJSON('https://www.bit-z.com/api_v1/tickerall', function (error
             "withdraw": "0.002"
         }
     );
-    bitzData.push({
-        "symbol": "ltc_btc",
-        "last": response.data.ltc_btc.last
-    });
     database.ref("/bitz/ltc_btc").set(
         {
             "symbol": "ltc_btc",
@@ -680,10 +446,6 @@ var get2 = new getJSON('https://www.bit-z.com/api_v1/tickerall', function (error
             "withdraw": "0.01"
         }
     );
-    bitzData.push({
-        "symbol": "zec_btc",
-        "last": response.data.zec_btc.last
-    });
     database.ref("/bitz/zec_btc").set(
         {
             "symbol": "zec_btc",
@@ -693,35 +455,14 @@ var get2 = new getJSON('https://www.bit-z.com/api_v1/tickerall', function (error
         }
     );
     //good data
-    fs.writeFile("./data/bitzData.txt", JSON.stringify(bitzData), function (err) {
-        if (err) throw err;
-
-    });
 });
 
 var get3 = new getJSON('https://api.kucoin.com/v1/open/tick', function (error, response) {
     if (error) throw error;
 
-    fs.writeFile("./data/kucoin.txt", JSON.stringify(response), function (err) {
-
-        // If the code experiences any errors it will log the error to the console.
-        if (err) {
-            return console.log(err);
-        }
-
-        //good data
-
-    });
 
     response.data.find(function (element) {
         if (element.symbol === "ETH-BTC") {
-            kucoinData.push(
-                {
-                    "symbol": element.symbol,
-                    "lastDealPrice": element.lastDealPrice,
-                    "feeRate": element.feeRate
-                }
-            );
             database.ref("/kucoin/" + element.symbol).set(
                 {
                     "symbol": element.symbol,
@@ -735,13 +476,6 @@ var get3 = new getJSON('https://api.kucoin.com/v1/open/tick', function (error, r
     });
     response.data.find(function (element) {
         if (element.symbol === "BCH-BTC") {
-            kucoinData.push(
-                {
-                    "symbol": element.symbol,
-                    "lastDealPrice": element.lastDealPrice,
-                    "feeRate": element.feeRate
-                }
-            );
             database.ref("/kucoin/" + element.symbol).set(
                 {
                     "symbol": element.symbol,
@@ -755,13 +489,6 @@ var get3 = new getJSON('https://api.kucoin.com/v1/open/tick', function (error, r
     });
     response.data.find(function (element) {
         if (element.symbol === "BCH-ETH") {
-            kucoinData.push(
-                {
-                    "symbol": element.symbol,
-                    "lastDealPrice": element.lastDealPrice,
-                    "feeRate": element.feeRate
-                }
-            );
             database.ref("/kucoin/" + element.symbol).set(
                 {
                     "symbol": element.symbol,
@@ -775,13 +502,6 @@ var get3 = new getJSON('https://api.kucoin.com/v1/open/tick', function (error, r
     });
     response.data.find(function (element) {
         if (element.symbol === "DASH-BTC") {
-            kucoinData.push(
-                {
-                    "symbol": element.symbol,
-                    "lastDealPrice": element.lastDealPrice,
-                    "feeRate": element.feeRate
-                }
-            );
             database.ref("/kucoin/" + element.symbol).set(
                 {
                     "symbol": element.symbol,
@@ -795,13 +515,6 @@ var get3 = new getJSON('https://api.kucoin.com/v1/open/tick', function (error, r
     });
     response.data.find(function (element) {
         if (element.symbol === "DASH-ETH") {
-            kucoinData.push(
-                {
-                    "symbol": element.symbol,
-                    "lastDealPrice": element.lastDealPrice,
-                    "feeRate": element.feeRate
-                }
-            );
             database.ref("/kucoin/" + element.symbol).set(
                 {
                     "symbol": element.symbol,
@@ -815,13 +528,6 @@ var get3 = new getJSON('https://api.kucoin.com/v1/open/tick', function (error, r
     });
     response.data.find(function (element) {
         if (element.symbol === "LTC-BTC") {
-            kucoinData.push(
-                {
-                    "symbol": element.symbol,
-                    "lastDealPrice": element.lastDealPrice,
-                    "feeRate": element.feeRate
-                }
-            );
             database.ref("/kucoin/" + element.symbol).set(
                 {
                     "symbol": element.symbol,
@@ -835,13 +541,6 @@ var get3 = new getJSON('https://api.kucoin.com/v1/open/tick', function (error, r
     });
     response.data.find(function (element) {
         if (element.symbol === "LTC-ETH") {
-            kucoinData.push(
-                {
-                    "symbol": element.symbol,
-                    "lastDealPrice": element.lastDealPrice,
-                    "feeRate": element.feeRate
-                }
-            );
             database.ref("/kucoin/" + element.symbol).set(
                 {
                     "symbol": element.symbol,
@@ -855,13 +554,6 @@ var get3 = new getJSON('https://api.kucoin.com/v1/open/tick', function (error, r
     });
     response.data.find(function (element) {
         if (element.symbol === "NEO-BTC") {
-            kucoinData.push(
-                {
-                    "symbol": element.symbol,
-                    "lastDealPrice": element.lastDealPrice,
-                    "feeRate": element.feeRate
-                }
-            );
             database.ref("/kucoin/" + element.symbol).set(
                 {
                     "symbol": element.symbol,
@@ -875,13 +567,6 @@ var get3 = new getJSON('https://api.kucoin.com/v1/open/tick', function (error, r
     });
     response.data.find(function (element) {
         if (element.symbol === "NEO-ETH") {
-            kucoinData.push(
-                {
-                    "symbol": element.symbol,
-                    "lastDealPrice": element.lastDealPrice,
-                    "feeRate": element.feeRate
-                }
-            );
             database.ref("/kucoin/" + element.symbol).set(
                 {
                     "symbol": element.symbol,
@@ -892,10 +577,6 @@ var get3 = new getJSON('https://api.kucoin.com/v1/open/tick', function (error, r
                 }
             );
         }
-    });
-    fs.writeFile("./data/kucoinData.txt", JSON.stringify(kucoinData), function (err) {
-        if (err) throw err;
-
     });
 
 });
@@ -944,10 +625,6 @@ app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-var exphbs = require("express-handlebars");
-
-app.engine("handlebars", exphbs({ defaultLayout: "main" }));
-app.set("view engine", "handlebars");
 
 // app.get('/blockchain',function(req,res){ //outputs
 
@@ -956,126 +633,201 @@ app.set("view engine", "handlebars");
 //   });
 
 
+firebasePromise.push(database.ref("/shapeshift/").once("value"));
+
+// app.get('/kucoin/', function (req, res) {
+firebasePromise.push(database.ref("/kucoin/").once("value"));
+// PROMISE 0
+// then(function (response) {
+//     var coins = [];
+//     coins = Object.keys(response.val());
+//     res.json(coins);
+// });
+// });
+
+// app.get('/kucoin/:coin', function (req, res) {
+
+// firebasePromise.push(database.ref("/kucoin/").once("value"));
+
+// PROMISE 1
+// then(function (response) {
+//      var coins = [];
+//      coins = Object.keys(response.val());
+//      coins.forEach(function(value){console.log(value.toLowerCase()); console.log(req.params.coin); if(value.toLowerCase() === req.params.coin.toLowerCase()){res.json(response.child(value).val())}});
+// });
+// }); 
 
 
-app.get('/kucoin/', function (req, res) {
-    database.ref("/kucoin/").once("value").then(function (response) {
-        var coins = [];
-        coins = Object.keys(response.val());
-        res.json(coins);
-    });
+// app.get('/coinigy/', function (req, res) {
+firebasePromise.push(database.ref("/coinigy/").once("value"));
+
+// PROMISE 2
+// .then(function (response) {
+//     var coins = [];
+//     coins = Object.keys(response.val());
+//     res.json(coins);
+// });
+// });
+
+// app.get('/coinigy/:coin', function (req, res) {
+// firebasePromise.push(database.ref("/coinigy/").once("value"));
+
+// PROMISE 3
+// .then(function (response) {
+//      var coins = [];
+//      coins = Object.keys(response.val());
+//      coins.forEach(function(value){console.log(value.toLowerCase()); console.log(req.params.coin); if(value.toLowerCase() === req.params.coin.toLowerCase()){res.json(response.child(value).val())}});
+// });
+// }); 
+
+// app.get('/coincap/', function (req, res) {
+//firebasePromise.push(database.ref("/coincap/").once("value"));
+
+// PROMISE 4
+// .then(function (response) {
+//     var coins = [];
+//     coins = Object.keys(response.val());
+//     res.json(coins);
+// });
+// });
+
+// app.get('/coincap/:coin', function (req, res) {
+// firebasePromise.push(database.ref("/coincap/").once("value"));
+
+// PROMISE 5
+// .then(function (response) {
+//      var coins = [];
+//      coins = Object.keys(response.val());
+//      coins.forEach(function(value){console.log(value.toLowerCase()); console.log(req.params.coin); if(value.toLowerCase() === req.params.coin.toLowerCase()){res.json(response.child(value).val())}});
+// });
+// }); 
+
+// app.get('/changelly/', function (req, res) {
+firebasePromise.push(database.ref("/changelly/").once("value"));
+
+// PROMISE 6
+// .then(function (response) {
+//     var coins = [];
+//     coins = Object.keys(response.val());
+//     res.json(coins);
+// });
+// });
+
+// app.get('/changelly/:coin', function (req, res) {
+// firebasePromise.push(database.ref("/changelly/").once("value"));
+
+// PROMISE 7
+// .then(function (response) {
+//      var coins = [];
+//      coins = Object.keys(response.val());
+//      coins.forEach(function(value){console.log(value.toLowerCase()); console.log(req.params.coin); if(value.toLowerCase() === req.params.coin.toLowerCase()){res.json(response.child(value).val())}});
+// });
+// }); 
+
+
+// app.get('/bitz/', function (req, res) {
+firebasePromise.push(database.ref("/bitz/").once("value"))
+
+// PROMISE 8
+// .then(function (response) {
+//     var coins = [];
+//     coins = Object.keys(response.val());
+//     res.json(coins);
+// });
+// });
+
+// app.get('/bitz/:coin', function (req, res) {
+// firebasePromise.push(database.ref("/bitz/").once("value"));
+
+// PROMISE 9
+// .then(function (response) {
+//      var coins = [];
+//      coins = Object.keys(response.val());
+//      coins.forEach(function(value){console.log(value.toLowerCase()); console.log(req.params.coin); if(value.toLowerCase() === req.params.coin.toLowerCase()){res.json(response.child(value).val())}});
+// });
+// }); 
+
+// app.get('/bisq/', function (req, res) {
+firebasePromise.push(database.ref("/bisq/").once("value"));
+
+// PROMISE 10
+// .then(function (response) {
+//     var coins = [];
+//     coins = Object.keys(response.val());
+//     res.json(coins);
+// });
+// });
+
+// app.get('/bisq/:coin', function (req, res) {
+
+firebasePromise.push(database.ref("/bisq/").once("value"))
+
+// PROMISE 11
+// .then(function (response) {
+//      var coins = [];
+//      coins = Object.keys(response.val());
+//      coins.forEach(function(value){console.log(value.toLowerCase()); console.log(req.params.coin); if(value.toLowerCase() === req.params.coin.toLowerCase()){res.json(response.child(value).val())}});
+// });
+// }); 
+
+// app.get('/bibox/', function (req, res) {
+firebasePromise.push(database.ref("/bibox/").once("value"));
+
+// PROMISE 12
+// .then(function (response) {
+//     var coins = [];
+//     coins = Object.keys(response.val());
+//     res.json(coins);
+// });
+// });
+
+// app.get('/bibox/:coin', function (req, res) {
+
+
+// firebasePromise.push(database.ref("/bibox/").once("value"));
+
+// PROMISE 12
+// .then(function (response) {
+//      var coins = [];
+//      coins = Object.keys(response.val());
+//      coins.forEach(function(value){console.log(value.toLowerCase()); console.log(req.params.coin); if(value.toLowerCase() === req.params.coin.toLowerCase()){res.json(response.child(value).val())}});
+// });
+// }); 
+
+Promise.all(firebasePromise).then(function (values) {
+    var coins = [];
+    for (var i = 3; i < values.length; i++) {
+        coins.push(Object.keys(values[i].val()));
+    }
+    var mergedCoins = [].concat.apply([], coins);
+    mergedCoins = uniq(mergedCoins);
+    //console.log(mergedCoins);
+    //this block grabs all of my coin names and eliminates duplicates. Except for three problem cases.
+    
+    //reset coins
+    var shapeshiftMinerFee = [];
+    var keys = Object.keys(values[0].child("miner").val());
+    for (var i = 0; i < keys.length; i++) {
+        if (values[0].child("miner").child(keys[i]).child("status").val() === "available") {
+            shapeshiftMinerFee.push(values[0].child("miner").child(keys[i]).val());
+        }
+    }
+    var shapeshiftTrading = Object.keys(values[0].child("min").val());
+    console.log(shapeshiftTrading);
+    console.log(shapeshiftMinerFee);
+
 });
 
-app.get('/kucoin/:coin', function (req, res) {
-    database.ref("/kucoin/").once("value").then(function (response) {
-         var coins = [];
-         coins = Object.keys(response.val());
-         coins.forEach(function(value){console.log(value.toLowerCase()); console.log(req.params.coin); if(value.toLowerCase() === req.params.coin.toLowerCase()){res.json(response.child(value).val())}});
+function uniq(a) {
+    var seen = {};
+    return a.filter(function (item) {
+        return seen.hasOwnProperty(item) ? false : (seen[item] = true);
     });
-}); 
+}
 
-
-app.get('/coinigy/', function (req, res) {
-    database.ref("/coinigy/").once("value").then(function (response) {
-        var coins = [];
-        coins = Object.keys(response.val());
-        res.json(coins);
-    });
+app.listen(PORT, function () {
+    console.log("localhost:" + PORT);
 });
-
-app.get('/coinigy/:coin', function (req, res) {
-    database.ref("/coinigy/").once("value").then(function (response) {
-         var coins = [];
-         coins = Object.keys(response.val());
-         coins.forEach(function(value){console.log(value.toLowerCase()); console.log(req.params.coin); if(value.toLowerCase() === req.params.coin.toLowerCase()){res.json(response.child(value).val())}});
-    });
-}); 
-
-app.get('/coincap/', function (req, res) {
-    database.ref("/coincap/").once("value").then(function (response) {
-        var coins = [];
-        coins = Object.keys(response.val());
-        res.json(coins);
-    });
-});
-
-app.get('/coincap/:coin', function (req, res) {
-    database.ref("/coincap/").once("value").then(function (response) {
-         var coins = [];
-         coins = Object.keys(response.val());
-         coins.forEach(function(value){console.log(value.toLowerCase()); console.log(req.params.coin); if(value.toLowerCase() === req.params.coin.toLowerCase()){res.json(response.child(value).val())}});
-    });
-}); 
-
-app.get('/changelly/', function (req, res) {
-    database.ref("/changelly/").once("value").then(function (response) {
-        var coins = [];
-        coins = Object.keys(response.val());
-        res.json(coins);
-    });
-});
-
-app.get('/changelly/:coin', function (req, res) {
-    database.ref("/changelly/").once("value").then(function (response) {
-         var coins = [];
-         coins = Object.keys(response.val());
-         coins.forEach(function(value){console.log(value.toLowerCase()); console.log(req.params.coin); if(value.toLowerCase() === req.params.coin.toLowerCase()){res.json(response.child(value).val())}});
-    });
-}); 
-
-
-app.get('/bitz/', function (req, res) {
-    database.ref("/bitz/").once("value").then(function (response) {
-        var coins = [];
-        coins = Object.keys(response.val());
-        res.json(coins);
-    });
-});
-
-app.get('/bitz/:coin', function (req, res) {
-    database.ref("/bitz/").once("value").then(function (response) {
-         var coins = [];
-         coins = Object.keys(response.val());
-         coins.forEach(function(value){console.log(value.toLowerCase()); console.log(req.params.coin); if(value.toLowerCase() === req.params.coin.toLowerCase()){res.json(response.child(value).val())}});
-    });
-}); 
-
-app.get('/bisq/', function (req, res) {
-    database.ref("/bisq/").once("value").then(function (response) {
-        var coins = [];
-        coins = Object.keys(response.val());
-        res.json(coins);
-    });
-});
-
-app.get('/bisq/:coin', function (req, res) {
-    database.ref("/bisq/").once("value").then(function (response) {
-         var coins = [];
-         coins = Object.keys(response.val());
-         coins.forEach(function(value){console.log(value.toLowerCase()); console.log(req.params.coin); if(value.toLowerCase() === req.params.coin.toLowerCase()){res.json(response.child(value).val())}});
-    });
-}); 
-
-app.get('/bibox/', function (req, res) {
-    database.ref("/bibox/").once("value").then(function (response) {
-        var coins = [];
-        coins = Object.keys(response.val());
-        res.json(coins);
-    });
-});
-
-app.get('/bibox/:coin', function (req, res) {
-    database.ref("/bibox/").once("value").then(function (response) {
-         var coins = [];
-         coins = Object.keys(response.val());
-         coins.forEach(function(value){console.log(value.toLowerCase()); console.log(req.params.coin); if(value.toLowerCase() === req.params.coin.toLowerCase()){res.json(response.child(value).val())}});
-    });
-}); 
-
-
-    app.listen(PORT, function () {
-        console.log("localhost:" + PORT);
-    });
 
 
     //I have a variable which is a promise type. But the response has been dealt with. Let me test.
