@@ -13,7 +13,10 @@ var app = firebase.initializeApp({
 //require("dotenv").config();
 //var fs = require('fs') // gonna write some of this shit down
 //var request = require('request');
-
+if (typeof localStorage === "undefined" || localStorage === null) {
+    var LocalStorage = require('node-localstorage').LocalStorage;
+    localStorage = new LocalStorage('./scratch');
+  }
 const shapeshift = require('shapeshift');
 const coincap = require('coincap-lib');
 var Combinatorics = require('js-combinatorics');
@@ -798,12 +801,11 @@ Promise.all(firebasePromise).then(function (values) {
     var coins = [];
     for (var i = 3; i < values.length; i++) {
         coins.push(Object.keys(values[i].val()));
+        //console.log(coins[i-3]);
     }
-    var mergedCoins = [].concat.apply([], coins);
-    mergedCoins = uniq(mergedCoins);
     //console.log(mergedCoins);
     //this block grabs all of my coin names and eliminates duplicates. Except for three problem cases.
-    
+
     //reset coins
     var shapeshiftMinerFee = [];
     var keys = Object.keys(values[0].child("miner").val());
@@ -813,9 +815,62 @@ Promise.all(firebasePromise).then(function (values) {
         }
     }
     var shapeshiftTrading = Object.keys(values[0].child("min").val());
-    console.log(shapeshiftTrading);
-    console.log(shapeshiftMinerFee);
+   // console.log(shapeshiftMinerFee);
+    //console.log(shapeshiftTrading);
+    coins.push(shapeshiftTrading);
+    //console.log(coins);
+    var trading = Object.keys(values[1].val());
+    for (var i = 0; i < trading.length; i++) {
+        trading[i] = trading[i].toLowerCase();
+    }
+    coins.push(trading);
 
+    var personal1 = Object.keys(values[2].val());
+    var personal2 = [];
+    var personal3 = [];
+    for (var i = 0; i < personal1.length; i++) {
+        personal2.push(Object.keys(values[2].child(personal1[i]).val()));
+        cp = Combinatorics.cartesianProduct([personal1[i]], personal2[i]);
+        personal3.push(cp.toArray());
+    }
+    //console.log(personal3);
+
+    var personal4 = [];
+    for (var i = 0; i < personal3.length; i++) {
+        for (var j = 0; j < personal3[i].length; j++) {
+            personal4.push(personal3[i][j][0] + "_" + personal3[i][j][1]);
+        }
+    }
+
+
+    coins.push(personal4);
+    var mergedCoins = [].concat.apply([], coins);
+    mergedCoins = uniq(mergedCoins);
+    //console.log(mergedCoins);
+    // console.log(mergedCoins);
+
+    var coinObj = {};
+        
+            var alpha = Object.values(values[0].child("rate").val());
+            var beta = Object.values(values[0].child("miner").val());
+            //console.log(beta);
+            for (var j = 0; j < alpha.length; j++) {
+                    if (mergedCoins.includes(alpha[j].pair)) {
+                        coinObj[alpha[j].pair] = alpha[j].rate;
+                        if(beta.includes(alpha[j].pair)) {
+                            for(var k = 0; k < beta.length; k++) {
+                                if(beta[k].symbol === alpha[j].pair.slice(0,3))
+                                {
+                                    conObj[alpha[j].pair] = alpha[j].rate - +beta[k].minerFee;
+                                }
+                            }
+
+                        }
+                    }
+                }
+            //console.log(coinObj);
+            localStorage.setItem("shapeshift", JSON.stringify(coinObj));
+            //This is my shapeshift object in it's full glory. Now I can turn it into a graph.
 });
 
 function uniq(a) {
@@ -824,6 +879,27 @@ function uniq(a) {
         return seen.hasOwnProperty(item) ? false : (seen[item] = true);
     });
 }
+
+var express = require("express");
+var bodyParser = require("body-parser");
+
+var app = express();
+
+// Set the port of our application
+// process.env.PORT lets the port be set by Heroku
+var PORT = process.env.PORT || 8080;
+
+// Use the express.static middleware to serve static content for the app from the "public" directory in the application directory.
+app.use(express.static("public"));
+
+// Sets up the Express app to handle data parsing
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(express.static("public"));
+
+app.get("/", function(req, res){
+  res.sendFile(path.join(__dirname, "./public/index.html"));
+});
 
 app.listen(PORT, function () {
     console.log("localhost:" + PORT);
