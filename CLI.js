@@ -17,11 +17,14 @@ if (typeof localStorage === "undefined" || localStorage === null) {
     var LocalStorage = require('node-localstorage').LocalStorage;
     localStorage = new LocalStorage('./scratch');
   }
-const shapeshift = require('shapeshift');
+//create an API route that reads the scratch file and sends it through an API route to client whenever it makes a request. Then you can access it in local storage.
+const shapeshift = require('shapeshift')
+  ;
 const coincap = require('coincap-lib');
 var Combinatorics = require('js-combinatorics');
 var getJSON = require('get-json');
-//var keys = require("./keys.js");
+var keys = require("./keys.js");
+require("dotenv").config();
 //var coinigy = new Coinigy(keys.coinigy);
 const database = firebase.database();
 var firebasePromise = [];
@@ -40,8 +43,8 @@ request({
     url: 'https://api.coinigy.com/api/v1/userWatchList',
     headers: {
         'Content-Type': 'application/json',
-        'X-API-KEY': '2f1198cd7540ad52b584cfcc21a1e476',
-        'X-API-SECRET': 'f021026e7281dfcb05220dfe299e38b6'
+        'X-API-KEY': keys.key,
+        'X-API-SECRET': keys.secret
     }
 }, function (error, response, body) {
     if (error) throw error;

@@ -1,12 +1,11 @@
-var CLI = require("./CLI");
-
   function buildTable() {
+      console.log("starting function: build table");
     var table = $("<table class='table table-hover table-sm table-responsive'>");
     var head = $("<thead id='shapeshift'>");
     var tr = $("<tr>");
     table.append(head);
     head.append(tr);
-    var shapeshift = JSON.parse(localstorage.getItem("shapeshift"));
+    var shapeshift = JSON.parse(localStorage.getItem("shapeshift"));
     //Here I put the first coin
     var keys = Object.keys(shapeshift);
     for (var i = 0; i < keys.length; i++) {
@@ -30,7 +29,7 @@ function addTD(x, y) {
     td.text(y);
     x.append(td);
 }
-function addTH(x,y) {
+function addTH2(x,y) {
     var th = $("<th scope = row")
     th.text(y);
     x.append(th);
@@ -39,11 +38,11 @@ function makeRow(body, obj) {
     var tr = $("<tr>");
     var th = $("<th scope = 'row'>");
     
-    var shapeshift = JSON.parse(localstorage.getItem("shapeshift"));
+    var shapeshift = JSON.parse(localStorage.getItem("shapeshift"));
     //Here I put the first coin
     var keys = Object.keys(shapeshift);
     for (var i = 0; i < keys.length; i++) {
-        addTR(tr, keys[i]);
+        addTH2(tr, keys[i]);
         addTD(tr, shapeshift[keys[i]])
     }
     body.append(tr);

@@ -1,6 +1,9 @@
 console.log('this is loaded');
+require("dotenv").config();
 
-exports.coinigy = {
-    key: process.env.COINIGY-ID,
-    secret: process.env.X-API-SECRET
+module.exports = {
+    key: process.env.COINIGY_KEY,
+    secret: process.env.COINIGY_SECRET
   };
+
+  
