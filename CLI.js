@@ -8,18 +8,34 @@ var app = firebase.initializeApp({
     messagingSenderId: "195092768796"
 });
 
+
+//-------------------------------------------------------CUT FROM BELOW
+var express = require("express");
+var bodyParser = require("body-parser");
+
+var app = express();
+
+// Set the port of our application
+// process.env.PORT lets the port be set by Heroku
+var PORT = process.env.PORT || 8080;
+
+// Use the express.static middleware to serve static content for the app from the "public" directory in the application directory.
+app.use(express.static("public"));
+
+// Sets up the Express app to handle data parsing
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(express.static("public"));
+
+//--------------------------------------------------------------------------CUT FROM BELOW
+
 //var stream = require('stream');
 //var es = require('event-stream')
 //require("dotenv").config();
 //var fs = require('fs') // gonna write some of this shit down
 //var request = require('request');
-if (typeof localStorage === "undefined" || localStorage === null) {
-    var LocalStorage = require('node-localstorage').LocalStorage;
-    localStorage = new LocalStorage('./scratch');
-  }
 //create an API route that reads the scratch file and sends it through an API route to client whenever it makes a request. Then you can access it in local storage.
-const shapeshift = require('shapeshift')
-  ;
+const shapeshift = require('shapeshift');
 const coincap = require('coincap-lib');
 var Combinatorics = require('js-combinatorics');
 var getJSON = require('get-json');
@@ -43,8 +59,8 @@ request({
     url: 'https://api.coinigy.com/api/v1/userWatchList',
     headers: {
         'Content-Type': 'application/json',
-        'X-API-KEY': keys.key,
-        'X-API-SECRET': keys.secret
+        'X-API-KEY': keys.coinigy_key,
+        'X-API-SECRET': keys.coinigy_secret
     }
 }, function (error, response, body) {
     if (error) throw error;
@@ -67,130 +83,130 @@ request({
 
 //This is the basic averages.
 
-coincap.front().then(function (response) {
-    response.find(function (element) {
-        if (element.short === "BTC") {
-            database.ref("/coincap/BTC").set({
-                "cap24hrChange": element.cap24hrChange,
-                "short": element.short,
-                "price": element.price
-            }
-            );
-        }
-    });
-    response.find(function (element) {
-        if (element.short === "ETH") {
-            database.ref("/coincap/ETH").set(
-                {
-                    "cap24hrChange": element.cap24hrChange,
-                    "short": element.short,
-                    "price": element.price
-                }
-            );
-        }
-    });
-    response.find(function (element) {
-        if (element.short === "BCH") {
-            database.ref("/coincap/BCH").set(
-                {
-                    "cap24hrChange": element.cap24hrChange,
-                    "short": element.short,
-                    "price": element.price
-                }
-            );
-        }
-    });
-    response.find(function (element) {
-        if (element.short === "DASH") {
-            database.ref("/coincap/DASH").set(
-                {
-                    "cap24hrChange": element.cap24hrChange,
-                    "short": element.short,
-                    "price": element.price
-                }
-            );
-        }
-    });
-    response.find(function (element) {
-        if (element.short === "LTC") {
-            database.ref("/coincap/LTC").set(
-                {
-                    "cap24hrChange": element.cap24hrChange,
-                    "short": element.short,
-                    "price": element.price
-                }
-            );
-        }
-    });
-    response.find(function (element) {
-        if (element.short === "NEO") {
-            database.ref("/coincap/NEO").set(
-                {
-                    "cap24hrChange": element.cap24hrChange,
-                    "short": element.short,
-                    "price": element.price
-                }
-            );
-        }
-    });
-    response.find(function (element) {
-        if (element.short === "STEEM") {
-            database.ref("/coincap/STEEM").set(
-                {
-                    "cap24hrChange": element.cap24hrChange,
-                    "short": element.short,
-                    "price": element.price
-                }
-            );
-        }
-    });
-    response.find(function (element) {
-        if (element.short === "XLM") {
-            database.ref("/coincap/XLM").set(
-                {
-                    "cap24hrChange": element.cap24hrChange,
-                    "short": element.short,
-                    "price": element.price
-                }
-            );
-        }
-    });
-    response.find(function (element) {
-        if (element.short === "XMR") {
-            database.ref("/coincap/XMR").set(
-                {
-                    "cap24hrChange": element.cap24hrChange,
-                    "short": element.short,
-                    "price": element.price
-                }
-            );
-        }
-    });
-    response.find(function (element) {
-        if (element.short === "XRP") {
-            database.ref("/coincap/XRP").set(
-                {
-                    "cap24hrChange": element.cap24hrChange,
-                    "short": element.short,
-                    "price": element.price
-                }
-            );
-        }
-    });
-    response.find(function (element) {
-        if (element.short === "ZEC") {
-            database.ref("/coincap/ZEC").set(
-                {
-                    "cap24hrChange": element.cap24hrChange,
-                    "short": element.short,
-                    "price": element.price
-                }
-            );
-        }
-    });
+// coincap.front().then(function (response) {
+//     response.find(function (element) {
+//         if (element.short === "BTC") {
+//             database.ref("/coincap/BTC").set({
+//                 "cap24hrChange": element.cap24hrChange,
+//                 "short": element.short,
+//                 "price": element.price
+//             }
+//             );
+//         }
+//     });
+//     response.find(function (element) {
+//         if (element.short === "ETH") {
+//             database.ref("/coincap/ETH").set(
+//                 {
+//                     "cap24hrChange": element.cap24hrChange,
+//                     "short": element.short,
+//                     "price": element.price
+//                 }
+//             );
+//         }
+//     });
+//     response.find(function (element) {
+//         if (element.short === "BCH") {
+//             database.ref("/coincap/BCH").set(
+//                 {
+//                     "cap24hrChange": element.cap24hrChange,
+//                     "short": element.short,
+//                     "price": element.price
+//                 }
+//             );
+//         }
+//     });
+//     response.find(function (element) {
+//         if (element.short === "DASH") {
+//             database.ref("/coincap/DASH").set(
+//                 {
+//                     "cap24hrChange": element.cap24hrChange,
+//                     "short": element.short,
+//                     "price": element.price
+//                 }
+//             );
+//         }
+//     });
+//     response.find(function (element) {
+//         if (element.short === "LTC") {
+//             database.ref("/coincap/LTC").set(
+//                 {
+//                     "cap24hrChange": element.cap24hrChange,
+//                     "short": element.short,
+//                     "price": element.price
+//                 }
+//             );
+//         }
+//     });
+//     response.find(function (element) {
+//         if (element.short === "NEO") {
+//             database.ref("/coincap/NEO").set(
+//                 {
+//                     "cap24hrChange": element.cap24hrChange,
+//                     "short": element.short,
+//                     "price": element.price
+//                 }
+//             );
+//         }
+//     });
+//     response.find(function (element) {
+//         if (element.short === "STEEM") {
+//             database.ref("/coincap/STEEM").set(
+//                 {
+//                     "cap24hrChange": element.cap24hrChange,
+//                     "short": element.short,
+//                     "price": element.price
+//                 }
+//             );
+//         }
+//     });
+//     response.find(function (element) {
+//         if (element.short === "XLM") {
+//             database.ref("/coincap/XLM").set(
+//                 {
+//                     "cap24hrChange": element.cap24hrChange,
+//                     "short": element.short,
+//                     "price": element.price
+//                 }
+//             );
+//         }
+//     });
+//     response.find(function (element) {
+//         if (element.short === "XMR") {
+//             database.ref("/coincap/XMR").set(
+//                 {
+//                     "cap24hrChange": element.cap24hrChange,
+//                     "short": element.short,
+//                     "price": element.price
+//                 }
+//             );
+//         }
+//     });
+//     response.find(function (element) {
+//         if (element.short === "XRP") {
+//             database.ref("/coincap/XRP").set(
+//                 {
+//                     "cap24hrChange": element.cap24hrChange,
+//                     "short": element.short,
+//                     "price": element.price
+//                 }
+//             );
+//         }
+//     });
+//     response.find(function (element) {
+//         if (element.short === "ZEC") {
+//             database.ref("/coincap/ZEC").set(
+//                 {
+//                     "cap24hrChange": element.cap24hrChange,
+//                     "short": element.short,
+//                     "price": element.price
+//                 }
+//             );
+//         }
+//     });
 
-    //good data
-});
+//     //good data
+// });
 
 
 
@@ -265,8 +281,8 @@ shapeshift.getCoins()
 var Changelly = require('./lib.js');
 
 var changelly = new Changelly(
-    'ed7f576df31d4bcab7742641d37f935b',
-    '4fb2405ff40d0e7874baae70687ff7e28b3ffec8f9303aed5bb205b2da871bbe'
+    keys.changelly_key,
+    keys.changelly_secret
 );
 
 changelly.getCurrencies(function (err, data) {
@@ -871,8 +887,12 @@ Promise.all(firebasePromise).then(function (values) {
                         }
                     }
                 }
+
+               app.get("/shapeshift/", function(req,res){
+                   res.json(coinObj);
+               });
             //console.log(coinObj);
-            localStorage.setItem("shapeshift", JSON.stringify(coinObj));
+           //listen HERE??
             //This is my shapeshift object in it's full glory. Now I can turn it into a graph.
 });
 
@@ -882,23 +902,6 @@ function uniq(a) {
         return seen.hasOwnProperty(item) ? false : (seen[item] = true);
     });
 }
-
-var express = require("express");
-var bodyParser = require("body-parser");
-
-var app = express();
-
-// Set the port of our application
-// process.env.PORT lets the port be set by Heroku
-var PORT = process.env.PORT || 8080;
-
-// Use the express.static middleware to serve static content for the app from the "public" directory in the application directory.
-app.use(express.static("public"));
-
-// Sets up the Express app to handle data parsing
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
-app.use(express.static("public"));
 
 app.get("/", function(req, res){
   res.sendFile(path.join(__dirname, "./public/index.html"));
