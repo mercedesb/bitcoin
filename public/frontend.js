@@ -1,25 +1,53 @@
-  async function buildTable() {
-      console.log("starting function: build table");
+async function buildTable() {
+    console.log("starting function: build table");
     var table = $("<table class='table table-hover table-sm table-responsive'>");
     var head = $("<thead id='shapeshift'>");
     var tr = $("<tr>");
     table.append(head);
     head.append(tr);
-    
-    const shapeshift = await fetchShapeshift();
 
+//Whatever happens here works
+    var data = {};
+    data.title = "title";
+    data.message = "message";
+
+    $.ajax({
+        type: 'POST',
+        data: JSON.stringify(data),
+        contentType: 'application/json',
+        url: 'http://localhost:3000/shapeshift',
+        success: function (data) {
+            console.log('success');
+            console.log(JSON.stringify(data));
+        }
+    });
+
+    var shapeshiftData;
+
+    $.ajax({
+        type: "GET",
+        url: "localhost:3000/shapeshift",
+        datatype : "application/json",
+        contentType: "text/plain",
+        success: function (response) {
+            console.log(JSON.parse(response));
+            shapeshiftData = JSON.parse(response);
+   
     //var shapeshift = JSON.parse(localStorage.getItem("shapeshift"));
     //Here I put the first coin
-    var keys = Object.keys(shapeshift);
-    for (var i = 0; i < keys.length; i++) {
-        addTH(tr, keys[i].slice(0-4));
+    var keys = Object.keys(shapeshiftData);
+        for(var i = 0; i<keys.length; i++) {
+        addTH(tr, keys[i].slice(0 - 4));
     }
     table.append(tbody);
-   
+
     makeRow(tbody, shapeshift);
 
     console.log(success);
-    $("#shapeshift").append(table);
+    $("#coin1").append(table);
+}
+});
+
 }
 
 function addTH(x, y) {
@@ -32,7 +60,7 @@ function addTD(x, y) {
     td.text(y);
     x.append(td);
 }
-function addTH2(x,y) {
+function addTH2(x, y) {
     var th = $("<th scope = row")
     th.text(y);
     x.append(th);
@@ -40,9 +68,9 @@ function addTH2(x,y) {
 function makeRow(body, obj) {
     var tr = $("<tr>");
     var th = $("<th scope = 'row'>");
-    
-   //THIS IS WHERE I GET ASYNC SHAPESHIFT DATA
-    //Here I put the first coin
+
+
+
     var keys = Object.keys(shapeshift);
     for (var i = 0; i < keys.length; i++) {
         addTH2(tr, keys[i]);
@@ -68,6 +96,6 @@ buildTable();
 //         var COIN = [];
 //         var CURR = [];
 //         console.log(response);
-        
+
 //     });
 // });

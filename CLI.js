@@ -748,7 +748,7 @@ firebasePromise.push(database.ref("/changelly/").once("value"));
 
 
 // app.get('/bitz/', function (req, res) {
-firebasePromise.push(database.ref("/bitz/").once("value"))
+firebasePromise.push(database.ref("/bitz/").once("value"));
 
 // PROMISE 8
 // .then(function (response) {
@@ -770,7 +770,7 @@ firebasePromise.push(database.ref("/bitz/").once("value"))
 // }); 
 
 // app.get('/bisq/', function (req, res) {
-firebasePromise.push(database.ref("/bisq/").once("value"));
+//firebasePromise.push(database.ref("/bisq/").once("value"));
 
 // PROMISE 10
 // .then(function (response) {
@@ -782,7 +782,7 @@ firebasePromise.push(database.ref("/bisq/").once("value"));
 
 // app.get('/bisq/:coin', function (req, res) {
 
-firebasePromise.push(database.ref("/bisq/").once("value"))
+firebasePromise.push(database.ref("/bisq/").once("value"));
 
 // PROMISE 11
 // .then(function (response) {
@@ -834,7 +834,7 @@ Promise.all(firebasePromise).then(function (values) {
         }
     }
     var shapeshiftTrading = Object.keys(values[0].child("min").val());
-   // console.log(shapeshiftMinerFee);
+    // console.log(shapeshiftMinerFee);
     //console.log(shapeshiftTrading);
     coins.push(shapeshiftTrading);
     //console.log(coins);
@@ -869,31 +869,46 @@ Promise.all(firebasePromise).then(function (values) {
     // console.log(mergedCoins);
 
     var coinObj = {};
-        
-            var alpha = Object.values(values[0].child("rate").val());
-            var beta = Object.values(values[0].child("miner").val());
-            //console.log(beta);
-            for (var j = 0; j < alpha.length; j++) {
-                    if (mergedCoins.includes(alpha[j].pair)) {
-                        coinObj[alpha[j].pair] = alpha[j].rate;
-                        if(beta.includes(alpha[j].pair)) {
-                            for(var k = 0; k < beta.length; k++) {
-                                if(beta[k].symbol === alpha[j].pair.slice(0,3))
-                                {
-                                    conObj[alpha[j].pair] = alpha[j].rate - +beta[k].minerFee;
-                                }
-                            }
 
-                        }
+    var alpha = Object.values(values[0].child("rate").val());
+    var beta = Object.values(values[0].child("miner").val());
+    //console.log(beta);
+    for (var j = 0; j < alpha.length; j++) {
+        if (mergedCoins.includes(alpha[j].pair)) {
+            coinObj[alpha[j].pair] = alpha[j].rate;
+            if (beta.includes(alpha[j].pair)) {
+                for (var k = 0; k < beta.length; k++) {
+                    if (beta[k].symbol === alpha[j].pair.slice(0, 3)) {
+                        conObj[alpha[j].pair] = alpha[j].rate - +beta[k].minerFee;
                     }
                 }
 
-               app.get("/shapeshift/", function(req,res){
-                   res.json(coinObj);
-               });
-            //console.log(coinObj);
-           //listen HERE??
-            //This is my shapeshift object in it's full glory. Now I can turn it into a graph.
+            }
+        }
+    }
+    ////////////THIS IS MY FIRST FINAL OBJECT. LOOKS GOOD FOR SHAPESHIFT.
+
+    //    app.get("/shapeshift/", function(req,res){
+    //        res.json(coinObj);
+    //    });
+    app.post('/shapeshift', function (req, res) {
+        console.log(JSON.stringify(coinObj));
+        res.send(JSON.stringify(coinObj));
+    });
+    //console.log(coinObj);
+    //listen HERE??
+    //This is my shapeshift object in it's full glory. Now I can turn it into a graph.
+    //console.log(values[3].val());
+    var changellyKeys = Object.keys(values[3].val());
+    var zeta = values[3].val();
+    var epsilon = {};
+    changellyKeys.forEach(function(pair, index) {
+        epsilon[pair] = zeta[pair].price; 
+    });
+    delete epsilon["prices"];
+    console.log(epsilon);
+    //This is changelly
+
 });
 
 function uniq(a) {
@@ -903,8 +918,8 @@ function uniq(a) {
     });
 }
 
-app.get("/", function(req, res){
-  res.sendFile(path.join(__dirname, "./public/index.html"));
+app.get("/", function (req, res) {
+    res.sendFile(path.join(__dirname, "./public/index.html"));
 });
 
 app.listen(PORT, function () {
