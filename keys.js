@@ -1,4 +1,3 @@
-console.log('this is loaded');
 require("dotenv").config();
 
 module.exports = {
