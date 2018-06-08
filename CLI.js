@@ -8,18 +8,38 @@ var app = firebase.initializeApp({
     messagingSenderId: "195092768796"
 });
 
+var diff = require('deep-diff').diff; //finding differences between objects
+//-------------------------------------------------------CUT FROM BELOW
+var express = require("express");
+var bodyParser = require("body-parser");
+
+// Sets up the Express App
+// =============================================================
+var app = express();
+
+app.use(bodyParser.urlencoded({ extended: true }));
+// parse application/json
+app.use(bodyParser.json());
+
+// Set the port of our application
+// process.env.PORT lets the port be set by Heroku
+var PORT = process.env.PORT || 3000;
+
+// Use the express.static middleware to serve static content for the app from the "public" directory in the application directory.
+app.use(express.static("public"));
+
+
+
+//--------------------------------------------------------------------------CUT FROM BELOW
+
 //var stream = require('stream');
 //var es = require('event-stream')
 //require("dotenv").config();
 //var fs = require('fs') // gonna write some of this shit down
 //var request = require('request');
-if (typeof localStorage === "undefined" || localStorage === null) {
-    var LocalStorage = require('node-localstorage').LocalStorage;
-    localStorage = new LocalStorage('./scratch');
-  }
 //create an API route that reads the scratch file and sends it through an API route to client whenever it makes a request. Then you can access it in local storage.
-const shapeshift = require('shapeshift')
-  ;
+const request = require('request');
+const shapeshift = require('shapeshift');
 const coincap = require('coincap-lib');
 var Combinatorics = require('js-combinatorics');
 var getJSON = require('get-json');
@@ -35,7 +55,7 @@ var firebasePromise = [];
 
 
 //----------------------------Coinigy contains private key data that I would like to keep secure, but it also contains all the data needed for the major exchanges in one place. I would like to use it if possible.
-const request = require('request');
+
 
 
 request({
@@ -43,8 +63,8 @@ request({
     url: 'https://api.coinigy.com/api/v1/userWatchList',
     headers: {
         'Content-Type': 'application/json',
-        'X-API-KEY': keys.key,
-        'X-API-SECRET': keys.secret
+        'X-API-KEY': keys.coinigy_key,
+        'X-API-SECRET': keys.coinigy_secret
     }
 }, function (error, response, body) {
     if (error) throw error;
@@ -63,135 +83,6 @@ request({
     //good data. needs additions from coincap
 
 });
-
-
-//This is the basic averages.
-
-coincap.front().then(function (response) {
-    response.find(function (element) {
-        if (element.short === "BTC") {
-            database.ref("/coincap/BTC").set({
-                "cap24hrChange": element.cap24hrChange,
-                "short": element.short,
-                "price": element.price
-            }
-            );
-        }
-    });
-    response.find(function (element) {
-        if (element.short === "ETH") {
-            database.ref("/coincap/ETH").set(
-                {
-                    "cap24hrChange": element.cap24hrChange,
-                    "short": element.short,
-                    "price": element.price
-                }
-            );
-        }
-    });
-    response.find(function (element) {
-        if (element.short === "BCH") {
-            database.ref("/coincap/BCH").set(
-                {
-                    "cap24hrChange": element.cap24hrChange,
-                    "short": element.short,
-                    "price": element.price
-                }
-            );
-        }
-    });
-    response.find(function (element) {
-        if (element.short === "DASH") {
-            database.ref("/coincap/DASH").set(
-                {
-                    "cap24hrChange": element.cap24hrChange,
-                    "short": element.short,
-                    "price": element.price
-                }
-            );
-        }
-    });
-    response.find(function (element) {
-        if (element.short === "LTC") {
-            database.ref("/coincap/LTC").set(
-                {
-                    "cap24hrChange": element.cap24hrChange,
-                    "short": element.short,
-                    "price": element.price
-                }
-            );
-        }
-    });
-    response.find(function (element) {
-        if (element.short === "NEO") {
-            database.ref("/coincap/NEO").set(
-                {
-                    "cap24hrChange": element.cap24hrChange,
-                    "short": element.short,
-                    "price": element.price
-                }
-            );
-        }
-    });
-    response.find(function (element) {
-        if (element.short === "STEEM") {
-            database.ref("/coincap/STEEM").set(
-                {
-                    "cap24hrChange": element.cap24hrChange,
-                    "short": element.short,
-                    "price": element.price
-                }
-            );
-        }
-    });
-    response.find(function (element) {
-        if (element.short === "XLM") {
-            database.ref("/coincap/XLM").set(
-                {
-                    "cap24hrChange": element.cap24hrChange,
-                    "short": element.short,
-                    "price": element.price
-                }
-            );
-        }
-    });
-    response.find(function (element) {
-        if (element.short === "XMR") {
-            database.ref("/coincap/XMR").set(
-                {
-                    "cap24hrChange": element.cap24hrChange,
-                    "short": element.short,
-                    "price": element.price
-                }
-            );
-        }
-    });
-    response.find(function (element) {
-        if (element.short === "XRP") {
-            database.ref("/coincap/XRP").set(
-                {
-                    "cap24hrChange": element.cap24hrChange,
-                    "short": element.short,
-                    "price": element.price
-                }
-            );
-        }
-    });
-    response.find(function (element) {
-        if (element.short === "ZEC") {
-            database.ref("/coincap/ZEC").set(
-                {
-                    "cap24hrChange": element.cap24hrChange,
-                    "short": element.short,
-                    "price": element.price
-                }
-            );
-        }
-    });
-
-    //good data
-});
-
 
 
 shapeshift.getCoins()
@@ -220,10 +111,6 @@ shapeshift.getCoins()
             shapeshift.getRate(pair[j])
                 .then(function (data) {
                     if (data.body.error) { } else {
-                        // pairPrice.push({
-                        //     "pair": data.body.pair,
-                        //     "rate": data.body.rate,
-                        // });
                         database.ref("/shapeshift/rate/" + data.body.pair).set(
                             {
                                 "pair": data.body.pair,
@@ -232,7 +119,6 @@ shapeshift.getCoins()
                         );
 
                     }
-                    //this one works (pairPrice)
                 }).catch((err) => { return err });
         }
 
@@ -265,8 +151,8 @@ shapeshift.getCoins()
 var Changelly = require('./lib.js');
 
 var changelly = new Changelly(
-    'ed7f576df31d4bcab7742641d37f935b',
-    '4fb2405ff40d0e7874baae70687ff7e28b3ffec8f9303aed5bb205b2da871bbe'
+    keys.changelly_key,
+    keys.changelly_secret
 );
 
 changelly.getCurrencies(function (err, data) {
@@ -302,119 +188,6 @@ changelly.getCurrencies(function (err, data) {
 
 
 
-//-----------------------------------------------------------------------------------------------------
-//get-Json 
-
-
-
-// var get1 = new getJSON('https://api.bibox.com/v1/mdata?cmd=marketAll', function (response) {
-//     response.result.find(function (element) {
-//         if (element.coin_symbol === "BCH" && element.currency_symbol === "BTC") {
-//             database.ref("/bibox/" + element.coin_symbol + "_" + element.currency_symbol).set(
-//                 {
-//                     "coin_symbol": element.coin_symbol,
-//                     "currency_symbol": element.currency_symbol,
-//                     "last": element.last,
-//                     "taker": "0.1%",
-//                     "withdraw": "0.005"
-//                 }
-//             );
-
-//         }
-//     });
-//     response.result.find(function (element) {
-//         if (element.coin_symbol === "BCH" && element.currency_symbol === "ETH") {
-//             database.ref("/bibox/" + element.coin_symbol + "_" + element.currency_symbol).set(
-//                 {
-//                     "coin_symbol": element.coin_symbol,
-//                     "currency_symbol": element.currency_symbol,
-//                     "last": element.last,
-//                     "taker": "0.1%",
-//                     "withdraw": "0.005"
-//                 }
-//             );
-//         }
-//     });
-//     response.result.find(function (element) {
-//         if (element.coin_symbol === "DASH" && element.currency_symbol === "BTC") {
-//             database.ref("/bibox/" + element.coin_symbol + "_" + element.currency_symbol).set(
-//                 {
-//                     "coin_symbol": element.coin_symbol,
-//                     "currency_symbol": element.currency_symbol,
-//                     "last": element.last,
-//                     "taker": "0.1%",
-//                     "withdraw": "0.001"
-//                 }
-//             );
-//         }
-//     });
-//     response.result.find(function (element) {
-//         if (element.coin_symbol === "DASH" && element.currency_symbol === "ETH") {
-//             database.ref("/bibox/" + element.coin_symbol + "_" + element.currency_symbol).set(
-//                 {
-//                     "coin_symbol": element.coin_symbol,
-//                     "currency_symbol": element.currency_symbol,
-//                     "last": element.last,
-//                     "taker": "0.1%",
-//                     "withdraw": "0.001"
-//                 }
-//             );
-//         }
-//     });
-//     response.result.find(function (element) {
-//         if (element.coin_symbol === "LTC" && element.currency_symbol === "BTC") {
-//             database.ref("/bibox/" + element.coin_symbol + "_" + element.currency_symbol).set(
-//                 {
-//                     "coin_symbol": element.coin_symbol,
-//                     "currency_symbol": element.currency_symbol,
-//                     "last": element.last,
-//                     "taker": "0.1%",
-//                     "withdraw": "0.005"
-//                 }
-//             );
-//         }
-//     });
-//     response.result.find(function (element) {
-//         if (element.coin_symbol === "LTC" && element.currency_symbol === "ETH") {
-//             database.ref("/bibox/" + element.coin_symbol + "_" + element.currency_symbol).set(
-//                 {
-//                     "coin_symbol": element.coin_symbol,
-//                     "currency_symbol": element.currency_symbol,
-//                     "last": element.last,
-//                     "taker": "0.1%",
-//                     "withdraw": "0.005"
-//                 }
-//             );
-//         }
-//     });
-//     response.result.find(function (element) {
-//         if (element.coin_symbol === "NEO" && element.currency_symbol === "BTC") {
-//             database.ref("/bibox/" + element.coin_symbol + "_" + element.currency_symbol).set(
-//                 {
-//                     "coin_symbol": element.coin_symbol,
-//                     "currency_symbol": element.currency_symbol,
-//                     "last": element.last,
-//                     "taker": "0.1%",
-//                     "withdraw": false
-//                 }
-//             );
-//         }
-//     });
-//     response.result.find(function (element) {
-//         if (element.coin_symbol === "NEO" && element.currency_symbol === "ETH") {
-//             database.ref("/bibox/" + element.coin_symbol + "_" + element.currency_symbol).set(
-//                 {
-//                     "coin_symbol": element.coin_symbol,
-//                     "currency_symbol": element.currency_symbol,
-//                     "last": element.last,
-//                     "taker": "0.1%",
-//                     "withdraw": false
-//                 }
-//             );
-//         }
-//     });
-//     //good data
-// });
 
 
 var get2 = new getJSON('https://www.bit-z.com/api_v1/tickerall', function (error, response) {
@@ -615,190 +388,36 @@ var get4 = new getJSON('https://markets.bisq.network/api/ticker', function (erro
 
 //-----------------------NEED TO DO EXPRESS STUFF ----------------------------
 
-var express = require("express");
-var bodyParser = require("body-parser");
-
-var app = express();
-
-// Set the port of our application
-// process.env.PORT lets the port be set by Heroku
-var PORT = process.env.PORT || 3000;
-
-// Use the express.static middleware to serve static content for the app from the "public" directory in the application directory.
-app.use(express.static("public"));
-
-// Sets up the Express app to handle data parsing
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
-
-
-// app.get('/blockchain',function(req,res){ //outputs
-
-//     res.json(blockchain);
-
-//   });
-
-
 firebasePromise.push(database.ref("/shapeshift/").once("value"));
 
-// app.get('/kucoin/', function (req, res) {
 firebasePromise.push(database.ref("/kucoin/").once("value"));
-// PROMISE 0
-// then(function (response) {
-//     var coins = [];
-//     coins = Object.keys(response.val());
-//     res.json(coins);
-// });
-// });
 
 // app.get('/kucoin/:coin', function (req, res) {
 
-// firebasePromise.push(database.ref("/kucoin/").once("value"));
-
-// PROMISE 1
-// then(function (response) {
-//      var coins = [];
-//      coins = Object.keys(response.val());
-//      coins.forEach(function(value){console.log(value.toLowerCase()); console.log(req.params.coin); if(value.toLowerCase() === req.params.coin.toLowerCase()){res.json(response.child(value).val())}});
-// });
-// }); 
 
 
 // app.get('/coinigy/', function (req, res) {
+
 firebasePromise.push(database.ref("/coinigy/").once("value"));
 
-// PROMISE 2
-// .then(function (response) {
-//     var coins = [];
-//     coins = Object.keys(response.val());
-//     res.json(coins);
-// });
-// });
-
 // app.get('/coinigy/:coin', function (req, res) {
-// firebasePromise.push(database.ref("/coinigy/").once("value"));
-
-// PROMISE 3
-// .then(function (response) {
-//      var coins = [];
-//      coins = Object.keys(response.val());
-//      coins.forEach(function(value){console.log(value.toLowerCase()); console.log(req.params.coin); if(value.toLowerCase() === req.params.coin.toLowerCase()){res.json(response.child(value).val())}});
-// });
-// }); 
 
 // app.get('/coincap/', function (req, res) {
-//firebasePromise.push(database.ref("/coincap/").once("value"));
-
-// PROMISE 4
-// .then(function (response) {
-//     var coins = [];
-//     coins = Object.keys(response.val());
-//     res.json(coins);
-// });
-// });
 
 // app.get('/coincap/:coin', function (req, res) {
-// firebasePromise.push(database.ref("/coincap/").once("value"));
-
-// PROMISE 5
-// .then(function (response) {
-//      var coins = [];
-//      coins = Object.keys(response.val());
-//      coins.forEach(function(value){console.log(value.toLowerCase()); console.log(req.params.coin); if(value.toLowerCase() === req.params.coin.toLowerCase()){res.json(response.child(value).val())}});
-// });
-// }); 
-
 // app.get('/changelly/', function (req, res) {
 firebasePromise.push(database.ref("/changelly/").once("value"));
-
-// PROMISE 6
-// .then(function (response) {
-//     var coins = [];
-//     coins = Object.keys(response.val());
-//     res.json(coins);
-// });
-// });
-
 // app.get('/changelly/:coin', function (req, res) {
-// firebasePromise.push(database.ref("/changelly/").once("value"));
-
-// PROMISE 7
-// .then(function (response) {
-//      var coins = [];
-//      coins = Object.keys(response.val());
-//      coins.forEach(function(value){console.log(value.toLowerCase()); console.log(req.params.coin); if(value.toLowerCase() === req.params.coin.toLowerCase()){res.json(response.child(value).val())}});
-// });
-// }); 
 
 
 // app.get('/bitz/', function (req, res) {
-firebasePromise.push(database.ref("/bitz/").once("value"))
-
-// PROMISE 8
-// .then(function (response) {
-//     var coins = [];
-//     coins = Object.keys(response.val());
-//     res.json(coins);
-// });
-// });
+firebasePromise.push(database.ref("/bitz/").once("value"));
 
 // app.get('/bitz/:coin', function (req, res) {
-// firebasePromise.push(database.ref("/bitz/").once("value"));
-
-// PROMISE 9
-// .then(function (response) {
-//      var coins = [];
-//      coins = Object.keys(response.val());
-//      coins.forEach(function(value){console.log(value.toLowerCase()); console.log(req.params.coin); if(value.toLowerCase() === req.params.coin.toLowerCase()){res.json(response.child(value).val())}});
-// });
-// }); 
-
-// app.get('/bisq/', function (req, res) {
 firebasePromise.push(database.ref("/bisq/").once("value"));
 
-// PROMISE 10
-// .then(function (response) {
-//     var coins = [];
-//     coins = Object.keys(response.val());
-//     res.json(coins);
-// });
-// });
-
-// app.get('/bisq/:coin', function (req, res) {
-
-firebasePromise.push(database.ref("/bisq/").once("value"))
-
-// PROMISE 11
-// .then(function (response) {
-//      var coins = [];
-//      coins = Object.keys(response.val());
-//      coins.forEach(function(value){console.log(value.toLowerCase()); console.log(req.params.coin); if(value.toLowerCase() === req.params.coin.toLowerCase()){res.json(response.child(value).val())}});
-// });
-// }); 
-
-// app.get('/bibox/', function (req, res) {
 firebasePromise.push(database.ref("/bibox/").once("value"));
 
-// PROMISE 12
-// .then(function (response) {
-//     var coins = [];
-//     coins = Object.keys(response.val());
-//     res.json(coins);
-// });
-// });
-
-// app.get('/bibox/:coin', function (req, res) {
-
-
-// firebasePromise.push(database.ref("/bibox/").once("value"));
-
-// PROMISE 12
-// .then(function (response) {
-//      var coins = [];
-//      coins = Object.keys(response.val());
-//      coins.forEach(function(value){console.log(value.toLowerCase()); console.log(req.params.coin); if(value.toLowerCase() === req.params.coin.toLowerCase()){res.json(response.child(value).val())}});
-// });
-// }); 
 
 Promise.all(firebasePromise).then(function (values) {
     var coins = [];
@@ -818,7 +437,7 @@ Promise.all(firebasePromise).then(function (values) {
         }
     }
     var shapeshiftTrading = Object.keys(values[0].child("min").val());
-   // console.log(shapeshiftMinerFee);
+    // console.log(shapeshiftMinerFee);
     //console.log(shapeshiftTrading);
     coins.push(shapeshiftTrading);
     //console.log(coins);
@@ -849,31 +468,254 @@ Promise.all(firebasePromise).then(function (values) {
     coins.push(personal4);
     var mergedCoins = [].concat.apply([], coins);
     mergedCoins = uniq(mergedCoins);
-    //console.log(mergedCoins);
+    ///console.log(mergedCoins);
     // console.log(mergedCoins);
 
     var coinObj = {};
-        
-            var alpha = Object.values(values[0].child("rate").val());
-            var beta = Object.values(values[0].child("miner").val());
-            //console.log(beta);
-            for (var j = 0; j < alpha.length; j++) {
-                    if (mergedCoins.includes(alpha[j].pair)) {
-                        coinObj[alpha[j].pair] = alpha[j].rate;
-                        if(beta.includes(alpha[j].pair)) {
-                            for(var k = 0; k < beta.length; k++) {
-                                if(beta[k].symbol === alpha[j].pair.slice(0,3))
-                                {
-                                    conObj[alpha[j].pair] = alpha[j].rate - +beta[k].minerFee;
-                                }
-                            }
 
-                        }
+    var alpha = Object.values(values[0].child("rate").val());
+    var beta = Object.values(values[0].child("miner").val());
+    //console.log(beta);
+    for (var j = 0; j < alpha.length; j++) {
+        if (mergedCoins.includes(alpha[j].pair)) {
+            coinObj[alpha[j].pair] = alpha[j].rate;
+            if (beta.includes(alpha[j].pair)) {
+                for (var k = 0; k < beta.length; k++) {
+                    if (beta[k].symbol === alpha[j].pair.slice(0, 3)) {
+                        coinObj[alpha[j].pair] = alpha[j].rate - +beta[k].minerFee;
                     }
                 }
-            //console.log(coinObj);
-            localStorage.setItem("shapeshift", JSON.stringify(coinObj));
-            //This is my shapeshift object in it's full glory. Now I can turn it into a graph.
+
+            }
+        }
+    }
+    ////////////THIS IS MY FIRST FINAL OBJECT. LOOKS GOOD FOR SHAPESHIFT. coinObj
+
+
+    //    app.get("/shapeshift/", function(req,res){
+    //        res.json(coinObj);
+    //    });
+    app.get('/shapeshift', function (req, res) {
+        //console.log(JSON.stringify(coinObj));
+        res.send(JSON.stringify(coinObj));
+    });
+    //console.log(coinObj);
+    //listen HERE??
+    //This is my shapeshift object in it's full glory. Now I can turn it into a graph.
+
+    // console.log(values[1].val());
+    var kucoinKeys = Object.keys(values[1].val());
+    var delta = values[1].val();
+    var kucoinObj = {}
+
+    kucoinKeys.forEach(function (pair, index) {
+        kucoinObj[pair] = delta[pair].lastDealPrice;
+        //- (+delta[pair].lastDealPrice * +delta[pair].taker));
+    });
+
+
+
+
+
+
+    //console.log(values[3].val());
+
+    var changellyKeys = Object.keys(values[3].val());
+    var zeta = values[3].val();
+    var changellyObj = {};
+    changellyKeys.forEach(function (pair, index) {
+        changellyObj[pair] = zeta[pair].price;
+    });
+    delete changellyObj["prices"];
+    // console.log(epsilon);
+    //This is changelly
+
+    //bitz, bitsq, bibox
+
+    //console.log(values[4].val());
+    var bitzKeys = Object.keys(values[4].val());
+    var bitzob = values[4].val();
+    var bitzObj = {}
+
+    bitzKeys.forEach(function (pair, index) {
+        bitzObj[pair] = bitzob[pair].last;
+    });
+    // console.log(bitzObj);
+    //bitz prices here
+
+    // console.log(values[5].val());
+    var bitsqKeys = Object.keys(values[5].val());
+    var bitsqob = values[5].val();
+    var bitsqObj = {}
+
+    bitsqKeys.forEach(function (xy, index) {
+        bitsqObj[xy] = bitsqob[xy].last;
+    });
+    //    console.log(bitsqObj);
+    // bitsq prices here
+    //   console.log(values[6].val());
+    var biboxKeys = Object.keys(values[6].val());
+    var biboxob = values[6].val();
+    var biboxObj = {}
+
+    biboxKeys.forEach(function (xy, index) {
+        var yx = xy.toString().toLowerCase();
+        yx = yx.substr(0, 3) + "_" + yx.substr(4);
+        biboxObj[xy] = biboxob[xy].last;
+    });
+
+    // console.log(coinObj);
+    // console.log(changellyObj);
+    // console.log(bitzObj);
+    // console.log(bitsqObj);
+    // console.log(kucoinObj);
+
+    //Shapeshift Differences
+    var diffchk1 = diff(coinObj, changellyObj);
+    var diffchk2 = diff(coinObj, bitzObj);
+    var diffchk3 = diff(coinObj, bitsqObj);
+    //   var diffchk4 = diff(coinObj, biboxObj);
+    //   var diffchk5 = diff(coinObj, kucoinObj);
+
+    //Changelly Differences
+    var diffchk6 = diff(changellyObj, bitzObj);
+    var diffchk7 = diff(changellyObj, bitsqObj);
+    //    var diffchk8 = diff(changellyObj, biboxObj);
+    //    var diffchk9 = diff(changellyObj, kucoinObj);
+
+    //bitz Differences
+    var diffchk10 = diff(bitzObj, bitsqObj);
+    //    var diffchk11 = diff(bitzObj, biboxObj);
+    //    var diffchk12 = diff(bitzObj, kucoinObj);
+
+    //bitsq diff
+    // var diffchk13 = diff(bitsqObj, biboxObj);
+    //var diffchk14 = diff(bitsqObj, kucoinObj);
+    var shapeshiftChangellyDiff = [];
+    var shapeshiftBitzDiff = [];
+    var shapeshiftBitsqDiff = [];
+    var changellyBitzDiff = [];
+    var changellyBitsqDiff = [];
+    var bitzBitsqDiff = [];
+    //var diffchk15 = diff(biboxObj, kucoinObj); 
+    for (var i = 0; i < diffchk1.length; i++) {
+        if (diffchk1[i].kind === 'E') {
+            // console.log(diffchk1[i]);
+            shapeshiftChangellyDiff.push(diffchk1[i]);
+        }
+    }
+    for (var i = 0; i < diffchk2.length; i++) {
+        if (diffchk2[i].kind === 'E') {
+            //console.log(diffchk2[i]);
+            shapeshiftBitzDiff.push(diffchk2[i]);
+        }
+    }
+    for (var i = 0; i < diffchk3.length; i++) {
+        if (diffchk3[i].kind === 'E') {
+            // console.log(diffchk3[i]);
+            shapeshiftBitsqDiff.push(diffchk3[i]);
+        }
+    }
+    for (var i = 0; i < diffchk6.length; i++) {
+        if (diffchk6[i].kind === 'E') {
+            //console.log(diffchk6[i]);
+            changellyBitzDiff.push(diffchk6[i]);
+        }
+    }
+    for (var i = 0; i < diffchk7.length; i++) {
+        if (diffchk7[i].kind === 'E') {
+            //console.log(diffchk7[i]);
+            changellyBitsqDiff.push(diffchk7[i]);
+        }
+    }
+    for (var i = 0; i < diffchk10.length; i++) {
+        if (diffchk10[i].kind === 'E') {
+            //console.log(diffchk10[i]);
+            bitzBitsqDiff.push(diffchk10[i]);
+        }
+    }
+    var arbitrage = {};
+    arbitrage["BitZ-BitSquare"] = bitzBitsqDiff;
+    arbitrage["Changelly-BitSquare"] = changellyBitsqDiff;
+    arbitrage["Changelly-BitZ"] = changellyBitzDiff;
+    arbitrage["Shapeshift-BitsSquare"] = shapeshiftBitsqDiff;
+    arbitrage["Shapeshift-BitZ"] = shapeshiftBitzDiff;
+    arbitrage["Shapeshift-Changelly"] = shapeshiftChangellyDiff;
+
+    
+    // console.log(bitzBitsqDiff);
+    // // //console.log(JSON.parse(diffchk1));
+    // console.log(changellyBitsqDiff);
+    // console.log(changellyBitzDiff);
+    // console.log(shapeshiftBitsqDiff);
+    // console.log(shapeshiftChangellyDiff);
+    // console.log(shapeshiftBitzDiff);
+
+   // module.exports.bitzBitsqDiff = bitzBitsqDiff;
+    //module.exports.changellyBitsqDiff = changellyBitsqDiff;
+    // module.exports.changellyBitzDiff = changellyBitzDiff;
+    // module.exports.shapeshiftBitsqDiff = shapeshiftBitsqDiff;
+    // module.exports.shapeshiftChangellyDiff = shapeshiftChangellyDiff;
+    // module.exports.shapeshiftBitzDiff = shapeshiftBitsqDiff;
+
+    //Cookies.set("bitzBitsq", bitzBitsqDiff);
+    var exchanges = [
+        "BitSquare",
+        "BitZ",
+        "Changelly",
+        "Shapeshift"
+    ]
+
+    // app.get("/exchanges", function(req, res) {
+    //     res.json(exchanges);
+    //   });
+
+    // app.get("/api/:exch", function(req, res) {
+    //     //res.json exch prices
+    // });
+    // app.get("/:exch/:exch2", function(req, res){
+    //     //get arbitrage at an exchange
+    // });
+    app.get("/api", function(req, res){
+        res.json(arbitrage);
+        //print all arbitrage opportunities
+    });
+
+    //Now let's do Coinigy, the second hardest compared to Shapeshift
+
+    //console.log(values[2].val());
+
+    var firstCoin = Object.keys(values[2].val());
+    var secondCoin = values[2].val();
+    var coinigyObj = {};
+
+    var pairing = [];
+    firstCoin.forEach(function (val, ind) { pairing.push(Object.keys(secondCoin[firstCoin[ind]])) });
+    // console.log(pairing);
+    //console.log(firstCoin);
+    // console.log(secondCoin);
+    var stringcoin = "";
+    var cartesian = [];
+
+    firstCoin.forEach(function (val, index) {
+        firstCoin[index] = val.toString();
+        //console.log(firstCoin);
+    });
+
+
+    firstCoin.forEach(function (val, index) {
+        cp = Combinatorics.cartesianProduct([val], pairing[index]);
+        cartesian.push(cp.toArray());
+    });
+    //console.log(cartesian);
+
+
+    //app.use(express.static("public"));
+
+    // app.get('/', function (req, res) {
+    //     res.send();
+    // }
+
 });
 
 function uniq(a) {
@@ -883,42 +725,6 @@ function uniq(a) {
     });
 }
 
-var express = require("express");
-var bodyParser = require("body-parser");
-
-var app = express();
-
-// Set the port of our application
-// process.env.PORT lets the port be set by Heroku
-var PORT = process.env.PORT || 8080;
-
-// Use the express.static middleware to serve static content for the app from the "public" directory in the application directory.
-app.use(express.static("public"));
-
-// Sets up the Express app to handle data parsing
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
-app.use(express.static("public"));
-
-app.get("/", function(req, res){
-  res.sendFile(path.join(__dirname, "./public/index.html"));
-});
-
-app.listen(PORT, function () {
-    console.log("localhost:" + PORT);
-});
+app.listen(PORT);
 
 
-    //I have a variable which is a promise type. But the response has been dealt with. Let me test.
-    //this is the main engine for doing the math and finding the pairs. I will write prototypes and include them here, as well as any node NPM
-
-    //The first system will not be tether based. Instead it will find the lowest and highest price ratios between coin trading pairs across markets.
-
-    //Big obstacle: populate firebase with market data input from Node.js
-    //Obstacle 2: Pull a snapshot of that data and calculate the best pairs: jQuery to screen.
-
-    //Expansion notes: It is easier to add more exchanges than coins. The exchanges picked so far all have working phone trading apps.
-
-    //Second Expansion: Legit websites without phone apps (better deals) -- need to note this somehow on the print.
-
-    //Say something about the $ tether ideas USDT, the Circle tether, the other overpriced tether. Provide a graph against the actual USD.
