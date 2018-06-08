@@ -26,7 +26,7 @@ app.use(bodyParser.json());
 var PORT = process.env.PORT || 3000;
 
 // Use the express.static middleware to serve static content for the app from the "public" directory in the application directory.
-//app.use(express.static("public"));
+app.use(express.static("public"));
 
 
 
@@ -666,17 +666,17 @@ Promise.all(firebasePromise).then(function (values) {
         "Shapeshift"
     ]
 
-    app.get("/exchanges", function(req, res) {
-        res.json(exchanges);
-      });
+    // app.get("/exchanges", function(req, res) {
+    //     res.json(exchanges);
+    //   });
 
-    app.get("/api/:exch", function(req, res) {
-        //res.json exch prices
-    });
-    app.get("/:exch/:exch2", function(req, res){
-        //get arbitrage at an exchange
-    });
-    app.get("/", function(req, res){
+    // app.get("/api/:exch", function(req, res) {
+    //     //res.json exch prices
+    // });
+    // app.get("/:exch/:exch2", function(req, res){
+    //     //get arbitrage at an exchange
+    // });
+    app.get("/api", function(req, res){
         res.json(arbitrage);
         //print all arbitrage opportunities
     });
