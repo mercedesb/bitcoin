@@ -6,7 +6,7 @@
   "scripts": {
     "server": "node server.js",
     "client": "cd client && npm run start",
-    "start": "./node_modules/.bin/concurrently \"./node_modules/.bin/nodemon\" \"npm run client\"",
+    "start": "./node_modules/.bin/concurrently \"nodemon server\" \"npm run client\"",
     "build": "cd client && npm run build",
     "deploy": "yarn build && git add . && git commit -m \"Building for production\" && git push heroku master",
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -15,10 +15,19 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "concurrently": "^3.5.0",
-    "nodemon": "^1.11.0"
+    "concurrently": "^3.6.0",
+    "nodemon": "^1.17.5"
   },
   "dependencies": {
-    "express": "^4.15.4"
+    "coincap-lib": "^1.0.0",
+    "deep-diff": "^1.0.1",
+    "dotenv": "^6.0.0",
+    "express": "^4.15.4",
+    "feedly": "^0.1.6",
+    "firebase": "^5.1.0",
+    "get-json": "^1.0.0",
+    "jayson": "^2.0.6",
+    "js-combinatorics": "^0.5.3",
+    "shapeshift": "^1.0.2"
   }
 }
