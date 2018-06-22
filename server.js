@@ -14,6 +14,8 @@ var keys = require("./keys.js");
 require("dotenv").config();
 //var coinigy = new Coinigy(keys.coinigy);
 
+//var brain = require('brain');
+
 const firebasePromise = [];
 
 // Serve up static assets (usually on heroku)
@@ -28,6 +30,7 @@ const fb = firebase.initializeApp({
     messagingSenderId: "195092768796"
 });
 const database = firebase.database();
+
 
 if (process.env.NODE_ENV === "production") {
     app.use(express.static("client/build"));
@@ -165,51 +168,51 @@ changelly.getCurrencies(function (err, data) {
 
 
 
-var get2 = new getJSON('https://www.bit-z.com/api_v1/tickerall', function (error, response) {
-    if (error) throw error;
-
-    database.ref("/bitz/eth_btc").set(
-        {
-            "symbol": "eth_btc",
-            "last": response.data.eth_btc.last,
-            "taker": "0.1%",
-            "withdraw": "0.01"
-        }
-    );
-    database.ref("/bitz/bch_btc").set(
-        {
-            "symbol": "bch_btc",
-            "last": response.data.bch_btc.last,
-            "taker": "0.1%",
-            "withdraw": "0.0001"
-        }
-    );
-    database.ref("/bitz/dash_btc").set(
-        {
-            "symbol": "dash_btc",
-            "last": response.data.dash_btc.last,
-            "taker": "0.1%",
-            "withdraw": "0.002"
-        }
-    );
-    database.ref("/bitz/ltc_btc").set(
-        {
-            "symbol": "ltc_btc",
-            "last": response.data.ltc_btc.last,
-            "taker": "0.1%",
-            "withdraw": "0.01"
-        }
-    );
-    database.ref("/bitz/zec_btc").set(
-        {
-            "symbol": "zec_btc",
-            "last": response.data.zec_btc.last,
-            "taker": "0.1%",
-            "withdraw": "0.005"
-        }
-    );
-    //good data
-});
+// var get2 = new getJSON('https://www.bit-z.com/api_v1/tickerall', function (error, response) {
+//     if (error) console.log(error);
+//     console.log(response.data);
+//     database.ref("/bitz/eth_btc").set(
+//         {
+//             "symbol": "eth_btc",
+//             "last": response.data.eth_btc.last,
+//             "taker": "0.1%",
+//             "withdraw": "0.01"
+//         }
+//     );
+//     database.ref("/bitz/bch_btc").set(
+//         {
+//             "symbol": "bch_btc",
+//             "last": response.data.bch_btc.last,
+//             "taker": "0.1%",
+//             "withdraw": "0.0001"
+//         }
+//     );
+//     database.ref("/bitz/dash_btc").set(
+//         {
+//             "symbol": "dash_btc",
+//             "last": response.data.dash_btc.last,
+//             "taker": "0.1%",
+//             "withdraw": "0.002"
+//         }
+//     );
+//     database.ref("/bitz/ltc_btc").set(
+//         {
+//             "symbol": "ltc_btc",
+//             "last": response.data.ltc_btc.last,
+//             "taker": "0.1%",
+//             "withdraw": "0.01"
+//         }
+//     );
+//     database.ref("/bitz/zec_btc").set(
+//         {
+//             "symbol": "zec_btc",
+//             "last": response.data.zec_btc.last,
+//             "taker": "0.1%",
+//             "withdraw": "0.005"
+//         }
+//     );
+//     //good data
+// });
 
 var get3 = new getJSON('https://api.kucoin.com/v1/open/tick', function (error, response) {
     if (error) throw error;
@@ -361,7 +364,9 @@ var get4 = new getJSON('https://markets.bisq.network/api/ticker', function (erro
 });
 
 
-//-----------------------NEED TO DO EXPRESS STUFF ----------------------------
+//-----------------------NEED TO DO MACHINE LEARNING STUFF ----------------------------
+
+
 
 firebasePromise.push(database.ref("/shapeshift/").once("value"));
 
@@ -458,10 +463,10 @@ Promise.all(firebasePromise).then(function (values) {
 
     binance = toLowerCase(binance);
     //binance is ready to go
-    console.log(binance);
+    //console.log(binance);
 
     hitb = toLowerCase(hitb);
-    console.log(hitb);
+   0//console.log(hitb);
 
     bittrex = toLowerCase(bittrex);
     kraken = toLowerCase(kraken);
@@ -874,7 +879,115 @@ Promise.all(firebasePromise).then(function (values) {
     arbitrage["BitZ-Bibox"] = bitzBiboxDiff;
     arbitrage["BitSquare-Bibox"] = bitsqBiboxDiff;
 
-    console.log(arbitrage);
+
+    //some binary decisions made by machine learning and neural networks
+    
+
+    var arbiter = flattenObject(arbitrage)
+    //console.log(flattenObject(arbitrage));
+
+    var arbiterVal = Object.values(arbiter);
+    var arbiterKey = Object.keys(arbiter);
+    //console.log(Object.values(arbiter));
+    var training = []
+    var cl0 = classing(arbiterKey, arbiterVal, 1, 0);
+    training.push(cl0); 
+    var cl1 = classing(arbiterKey, arbiterVal, 1, 4);
+    training.push(cl1);
+    //console.log(training);   
+    var cl2 = classing(arbiterKey, arbiterVal, 1, 8);
+    training.push(cl2);
+    //console.log(training);   
+    var cl3 = classing(arbiterKey, arbiterVal, 1, 12);
+    training.push(cl3);
+    // console.log(training);   
+    var cl4 = classing(arbiterKey, arbiterVal, 1, 16);
+    training.push(cl4);
+    // console.log(training);   
+    var cl5 = classing(arbiterKey, arbiterVal, 1, 20);
+    training.push(cl5);
+    // console.log(training);   
+    var cl6 = classing(arbiterKey, arbiterVal, 1, 24);
+    training.push(cl6);
+    // console.log(training);   
+    var cl7 = classing(arbiterKey, arbiterVal, 1, 28);
+    training.push(cl7);
+    // console.log(training);   
+    //var cl8 = classing(arbiterKey, arbiterVal, 1, 32);
+    //training.push(cl18);
+    // console.log(training);   
+    var cl9 = classing(arbiterKey, arbiterVal, 1, 36);
+    training.push(cl9);
+    // console.log(training);   
+    var cl10 = classing(arbiterKey, arbiterVal, 1, 40);
+    training.push(cl10);
+    // console.log(training);   
+    var cl11 = classing(arbiterKey, arbiterVal, 1, 44);
+    training.push(cl11);
+    // console.log(training);   
+    var cl12 = classing(arbiterKey, arbiterVal, 1, 48);
+    training.push(cl12);
+    // console.log(training);   
+    var cl13 = classing(arbiterKey, arbiterVal, 1, 52);
+    training.push(cl13);
+    // console.log(training);   
+    var cl14 = classing(arbiterKey, arbiterVal, 1, 56);
+    training.push(cl14);
+    // console.log(training);   
+    var cl15 = classing(arbiterKey, arbiterVal, 1, 60);
+    training.push(cl15);
+    // console.log(training);   
+    var cl16 = classing(arbiterKey, arbiterVal, 1, 64);
+    training.push(cl16);
+    // console.log(training);   
+    var cl17 = classing(arbiterKey, arbiterVal, 1, 68);
+    training.push(cl17);
+    // console.log(training);   
+    var cl18 = classing(arbiterKey, arbiterVal, 1, 72);
+    training.push(cl18);
+    // console.log(training);   
+    var cl19 = classing(arbiterKey, arbiterVal, 1, 76);
+    training.push(cl19);
+    // console.log(training);   
+    var cl20 = classing(arbiterKey, arbiterVal, 1, 80);
+    training.push(cl20);
+    // console.log(training);   
+    var cl21 = classing(arbiterKey, arbiterVal, 1, 84);
+    training.push(cl21);
+    // console.log(training);   
+    var cl22 = classing(arbiterKey, arbiterVal, 1, 88);
+    training.push(cl22);
+    // console.log(training);   
+    var cl23 = classing(arbiterKey, arbiterVal, 1, 92);
+    training.push(cl23);
+    // console.log(training);   
+    var cl24 = classing(arbiterKey, arbiterVal, 1, 96);
+    training.push(cl24);
+    // console.log(training);   
+    var cl25 = classing(arbiterKey, arbiterVal, 1, 100);
+    training.push(cl25);
+    // console.log(training);   
+    var cl26 = classing(arbiterKey, arbiterVal, 1, 104);
+    training.push(cl26);
+    // console.log(training);   
+    var cl27 = classing(arbiterKey, arbiterVal, 1, 108);
+    training.push(cl27);
+    // console.log(training);   
+    var cl28 = classing(arbiterKey, arbiterVal, 1, 112);
+    training.push(cl28);
+    // console.log(training);   
+    var cl29 = classing(arbiterKey, arbiterVal, 1, 116);
+    training.push(cl29);
+    console.log("****************", "training:", training, "****************");  
+    
+    //var net = new brain.NeuralNetwork();
+    //net.train(training);
+    //var output = net.run({ 'Binance-Bittrex.0.kind': 'E',
+    // 'Binance-Bittrex.0.path.0': 'bcc_btc',
+    // 'Binance-Bittrex.0.lhs': '0.124514',
+    // 'Binance-Bittrex.0.rhs': '0.13182' });
+    // console.log(output);
+
     // console.log(bitzBitsqDiff);
     // // //console.log(JSON.parse(diffchk1));
     // console.log(changellyBitsqDiff);
@@ -938,7 +1051,7 @@ Promise.all(firebasePromise).then(function (values) {
 
     //console.log(arbitrage);
 
-});
+}).catch(err => console.log(err));
 
 function uniq(a) {
     var seen = {};
@@ -996,6 +1109,28 @@ function dif(diffcheck, array) {
             array.push(diffcheck[i]);
         }
     }
+}
+
+function classing(key, val, score, index){
+    var classifier = {}
+    var arbit = {}
+    for(var i = index; i<(index+4); i++) {
+        for(var j = index+1; j<(index+4); j++){
+        arbit[key[j]] = val[j];
+        }
+    }
+    var comp = [];
+    for(var i = index; i<(index+4); i++) {
+        for(var j = index+2; j<(index+4); j++){
+        comp[key[j]] = val[j];
+        }
+    }
+    classifier["input"] = arbit;
+    var vals = Object.values(comp);
+    for(var k=0; k<index; k++){
+        classifier["output"] = vals.reduce(function(acc, curr){ return Math.abs(acc - curr)});
+    }
+    return classifier;
 }
 
 

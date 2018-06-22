@@ -19,15 +19,18 @@
     "nodemon": "^1.17.5"
   },
   "dependencies": {
+    "brain": "^1.0.0",
+    "brain.js": "^1.2.2",
     "coincap-lib": "^1.0.0",
     "deep-diff": "^1.0.1",
     "dotenv": "^6.0.0",
-    "express": "^4.15.4",
+    "express": "^4.16.3",
     "feedly": "^0.1.6",
     "firebase": "^5.1.0",
     "get-json": "^1.0.0",
     "jayson": "^2.0.6",
     "js-combinatorics": "^0.5.3",
+    "limdu": "^0.9.4",
     "shapeshift": "^1.0.2"
   }
 }
