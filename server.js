@@ -666,6 +666,44 @@ Promise.all(firebasePromise).then(function (values) {
     var diffchk144 = diff(bitsqObj, liqui);
     var diffchk145 = diff(bitsqObj, binance);
     //var diffchk14 = diff(bitsqObj, kucoinObj);
+
+    //new intercomparisons
+    var diffchk151 = diff(binance, bittrex);
+    var diffchk152 = diff(binance, kraken);
+    var diffchk153 = diff(binance, cryptopia);
+    var diffchk154 = diff(binance, liqui);
+
+    var diffchk161 = diff(bittrex, kraken);
+    var diffchk162 = diff(bittrex, cryptopia);
+    var diffchk163 = diff(bittrex, liqui);
+
+    var diffchk171 = diff(kraken, cryptopia);
+    var diffchk172 = diff(kraken, liqui);
+
+    var diffchk181 = diff(cryptopia, liqui);
+
+    var binanceBittrex = []
+    var binanceKraken = []
+    var binanceCryptopia = []
+    var binanceLiqui = []
+    var bittrexCryptopia = []
+    var bittrexLiqui = []
+    var bittrexKraken = []
+    var krakenCryptopia = []
+    var krakenLiqui = []
+    var cryptopiaLiqui = []
+
+    dif(diffchk151, binanceBittrex);
+    dif(diffchk152, binanceKraken);
+    dif(diffchk153, binanceCryptopia);
+    dif(diffchk154, binanceLiqui);
+    dif(diffchk161, bittrexCryptopia);
+    dif(diffchk162, bittrexLiqui);
+    dif(diffchk163, bittrexKraken);
+    dif(diffchk171, krakenCryptopia);
+    dif(diffchk172, krakenLiqui);
+    dif(diffchk181, cryptopiaLiqui);
+
     var shapeshiftChangellyDiff = [];
     var shapeshiftBiboxDiff = [];
     var shapeshiftBitsqDiff = [];
@@ -715,30 +753,12 @@ Promise.all(firebasePromise).then(function (values) {
     dif(diffchk92,changellyKraken);
     dif(diffchk91, changellyBittrex);
     dif(diffchk51,shapeshiftBittrex);
-    for (var i = 0; i < diffchk52.length; i++) {
-        if (diffchk52[i].kind === 'E') {
-            // console.log(diffchk1[i]);
-            shapeshiftKraken.push(diffchk52[i]);
-        }
-    }
-    for (var i = 0; i < diffchk53.length; i++) {
-        if (diffchk53[i].kind === 'E') {
-            // console.log(diffchk1[i]);
-            shapeshiftCryptopia.push(diffchk53[i]);
-        }
-    }
-    for (var i = 0; i < diffchk54.length; i++) {
-        if (diffchk54[i].kind === 'E') {
-            // console.log(diffchk1[i]);
-            shapeshiftLiqui.push(diffchk54[i]);
-        }
-    }
-    for (var i = 0; i < diffchk55.length; i++) {
-        if (diffchk55[i].kind === 'E') {
-            // console.log(diffchk1[i]);
-            shapeshiftBinance.push(diffchk55[i]);
-        }
-    }
+    dif(diffchk52,shapeshiftKraken);
+    dif(diffchk53,shapeshiftCryptopia);
+    dif(diffchk54, shapeshiftLiqui);
+    dif(diffchk55,shapeshiftBinance);
+
+
     //------------------------------------------------------------------------OLD
     //var diffchk15 = diff(biboxObj, kucoinObj); 
     for (var i = 0; i < diffchk1.length; i++) {
@@ -808,11 +828,25 @@ Promise.all(firebasePromise).then(function (values) {
 
     var arbitrage = {};
 
+
+    arbitrage["Binance-Bittrex"] = binanceBittrex;
+    arbitrage["Binance-Kraken"] = binanceKraken;
+    arbitrage["Binance-Cryptopia"] = binanceCryptopia;
+    arbitrage["Binance-Liqui"] = binanceLiqui;
+    arbitrage["Bittrex-Cryptopia"] = bittrexCryptopia;
+    arbitrage["Bittrex-Liqui"] = bittrexLiqui;
+    arbitrage["bittrex-Kraken"] = bittrexKraken;
+    arbitrage["Kraken-Cryptopia"] = krakenCryptopia;
+    arbitrage["Kraken-Liqui"] = krakenLiqui;
+    arbitrage["Cryptopia-Liqui"] = cryptopiaLiqui;
+
+
+
+
     arbitrage["Bitsquare-Kraken"] = bitsqKraken;
     arbitrage["Bitsquare-Cryptopia"] = bitsqCryptopia;
     arbitrage["Bitsquare-Liqui"] = bitsqLiqui;
     arbitrage["Bitsquare-Binance"] = bitsqBinance;
-
     arbitrage["Bitsquare-Bittrex"] = bitsqBittrex;
     arbitrage["Bitz-Binance"] = bitzBinance;
     arbitrage["Bitz-Liqui"] = bitzLiqui;
