@@ -27,18 +27,18 @@ var resolve = require("./logic.js");
 //const bot = new TelegramBot(token, { polling: true });
 
 
-// const mongoose = require('mongoose');
-// mongoose.Promise = global.Promise;
+const mongoose = require('mongoose');
+mongoose.Promise = global.Promise;
 
 
-// //This promise resolution probably needs to be chained down below.
-// var database1 = 'coindb';
-// mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/" + database1);
-// var db = mongoose.connection;
-// db.once('open', () => console.log(`Now opening ${database1} we've got signal!`))
-//     .on('error', (error) => { console.warn('Warning:', error) });
+//This promise resolution probably needs to be chained down below.
+var database1 = 'coindb';
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/" + database1);
+var db = mongoose.connection;
+db.once('open', () => console.log(`Now opening ${database1} we've got signal!`))
+    .on('error', (error) => { console.warn('Warning:', error) });
 
-// //connected to mongoose. Throw error on disconnect.
+//connected to mongoose. Throw error on disconnect.
 
 
 

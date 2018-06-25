@@ -5,14 +5,15 @@ const request = require('request');
 const shapeshift = require('shapeshift');
 const coincap = require('coincap-lib');
 var Combinatorics = require('js-combinatorics');
-const mongoose = require('mongoose');
-mongoose.Promise = global.Promise;
+
+// const mongoose = require('mongoose');
+// mongoose.Promise = global.Promise;
 
 
-//This promise resolution probably needs to be chained down below.
-var database1 = 'coindb';
-mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/" + database1);
-var db = mongoose.connection;
+// //This promise resolution probably needs to be chained down below.
+// var database1 = 'coindb';
+// mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/" + database1);
+// var db = mongoose.connection;
 // db.once('open', () => console.log(`Now opening ${database1} we've got signal!`))
 //     .on('error', (error) => { console.warn('Warning:', error) });
 
@@ -317,8 +318,8 @@ firebasePromise.push(database.ref("/bisq/").once("value"));
 
 firebasePromise.push(database.ref("/bibox/").once("value"));
 
-firebasePromise.push(db.once('open', () => console.log(`Now opening ${database1} we've got signal!`))
-    .on('error', (error) => { console.warn('Warning:', error) }));
+//firebasePromise.push(db.once('open', () => console.log(`Now opening ${database1} we've got signal!`))
+  //  .on('error', (error) => { console.warn('Warning:', error) }));
 
 firebasePromise.push(coincap.front());
 firebasePromise.push(axios("https://cryptopanic.com/api/posts/?auth_token=518dacbc2f54788fcbd9e182521851725a09b4fa&public=true"));
@@ -677,60 +678,18 @@ Promise.all(firebasePromise).then((values) => {
     dif(diffchk54, shapeshiftLiqui);
     dif(diffchk55, shapeshiftBinance);
 
-
-    //------------------------------------------------------------------------OLD
-    for (var i = 0; i < diffchk1.length; i++) {
-        if (diffchk1[i].kind === 'E') {
-            shapeshiftChangellyDiff.push(diffchk1[i]);
-        }
-    }
-    for (var i = 0; i < diffchk2.length; i++) {
-        if (diffchk2[i].kind === 'E') {
-            shapeshiftBitzDiff.push(diffchk2[i]);
-        }
-    }
-    for (var i = 0; i < diffchk3.length; i++) {
-        if (diffchk3[i].kind === 'E') {
-            shapeshiftBitsqDiff.push(diffchk3[i]);
-        }
-    }
-    for (var i = 0; i < diffchk6.length; i++) {
-        if (diffchk6[i].kind === 'E') {
-            changellyBitzDiff.push(diffchk6[i]);
-        }
-    }
-    for (var i = 0; i < diffchk7.length; i++) {
-        if (diffchk7[i].kind === 'E') {
-            changellyBitsqDiff.push(diffchk7[i]);
-        }
-    }
-    for (var i = 0; i < diffchk10.length; i++) {
-        if (diffchk10[i].kind === 'E') {
-            bitzBitsqDiff.push(diffchk10[i]);
-        }
-    }
-
-    for (var i = 0; i < diffchk4.length; i++) {
-        if (diffchk4[i].kind === 'E') {
-            shapeshiftBiboxDiff.push(diffchk4[i]);
-        }
-    }
-    for (var i = 0; i < diffchk8.length; i++) {
-        if (diffchk8[i].kind === 'E') {
-            changellyBiboxDiff.push(diffchk8[i]);
-        }
-    }
-    for (var i = 0; i < diffchk11.length; i++) {
-        if (diffchk11[i].kind === 'E') {
-            bitzBiboxDiff.push(diffchk11[i]);
-        }
-    }
-    for (var i = 0; i < diffchk13.length; i++) {
-        if (diffchk13[i].kind === 'E') {
-            bitsqBiboxDiff.push(diffchk13[i]);
-        }
-    }
-
+    dif(diffchk1, shapeshiftChangellyDiff);
+    dif(diffchk2, shapeshiftBitzDiff);
+    dif(diffchk3, shapeshiftBitsqDiff);
+    dif(diffchk6, changellyBitzDiff);
+    dif(diffchk7, changellyBitsqDiff);
+    dif(diffchk10, bitzBitsqDiff);
+    dif(diffchk10, bitzBitsqDiff);
+    dif(diffchk4, shapeshiftBiboxDiff);
+    dif(diffchk8, shapeshiftBiboxDiff);
+    dif(diffchk11, bitzBiboxDiff);
+    dif(diffchk13, bitsqBiboxDiff);
+    
 
     var arbitrage = {};
 
@@ -806,11 +765,17 @@ Promise.all(firebasePromise).then((values) => {
         news.push(results.published_at);
         news.push(results.url);
     });
+
+    module.exports = {
+        news: news,
+        usd: values[values.length-2],
+        training: training
+    }
     console.log(news); //news
 
     console.log(values[values.length-2]); //USD values
 
-    console.log(values[values.length-3]); //connection to MONGOOSE
+    //console.log(values[values.length-3]); //connection to MONGOOSE
 
 //---------------------0000000000000000000000000000000--------------------------------------000000000000000000000000000000000000000000-------------------------------------------0000000000000000000000000000000000000-----------------------------
 
