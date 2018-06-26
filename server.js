@@ -39,8 +39,35 @@ db.once('open', () => console.log(`Now opening ${database1} we've got signal!`))
     .on('error', (error) => { console.warn('Warning:', error) });
 
 //connected to mongoose. Throw error on disconnect.
+var newsArray = [];
+let promiseNews = resolve.news();
+let promiseSlowest = resolve.coins();
+Promise.all([promiseNews]).then(([newsData]) => {
 
+          
+          promiseSlowest.then((lastData) => {
+            console.log(newsData);
+            console.log(lastData);
+            // data1, data2, data3, lastData all will be defined here
+         })
+      
+    });
 
+    console.log(newsArray);
+//console.log(promiseNews +" "+ promiseCoins);
+
+ 
+//  Promise.all([ promiseOther1, promiseOther2, promiseOther3 ]).then([data1, 
+//  data2, data3] => {
+//     promiseSlowest.then(lastData => {
+//        // data1, data2, data3, lastData all will be defined here
+//     })
+//  })
+
+// let news = resolve.news;
+// console.log(news);
+// let coins = resolve.coins;
+// console.log(coins);
 
 
 // const firebasePromise = [];
@@ -134,9 +161,9 @@ if (process.env.NODE_ENV === "production") {
 
 
 
-app.get("*", function (req, res) {
-    res.sendFile(path.join(__dirname, "./client/build/index.html"));
-});
+// app.get("*", function (req, res) {
+//     res.sendFile(path.join(__dirname, "./client/build/index.html"));
+// });
 
 
 
