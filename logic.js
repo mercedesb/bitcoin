@@ -418,9 +418,12 @@ module.exports = {
             //console.log(response.data.results);
             var news = [];
             response.data.results.forEach((results) => {
-                news.push(results.title);
-                news.push(results.published_at);
-                news.push(results.url);
+
+                news.push({
+                    title: results.title,
+                    pub_data: results.published_at,
+                    url: results.url
+                });
             });
             // console.log(news);
             return news;

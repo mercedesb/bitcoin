@@ -2,9 +2,8 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const exchangeSchema = new Schema({
-  title: String,
-  url:  String,
-  description: String,
+  input: Object,
+  output:  String,
   date: { type: Date, default: Date.now }
 });
 

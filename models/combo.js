@@ -7,7 +7,7 @@ const comboSchema = new Schema({
   rexchange: String,
   rurl: String,
   coin: String,
-  currency:  String,
+  currency: String,
   lhs: String,
   rhs: String,
   diff: String,
