@@ -1,19 +1,34 @@
 import React, { Component } from "react";
-import logo from "./logo.svg";
 import "./App.css";
+import CardsContainer from "./components/CardsContainer/CardsContainer";
+import Card from "./components/Card/Card";
+import cryptocoinsJSON from "./json/cryptocoins.json";
+
 
 class App extends Component {
+  state = {
+    cryptocoinsJSON
+  }
+
+  componentWillMount() {
+    var coinLogo = cryptocoinsJSON.map(coin => console.log(coin.logo));
+    // this.setState ({
+    //   cryptocoinsJSON: coinLogo
+    // })
+  }
+
   render() {
     return (
-      <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
-        </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
+      <CardsContainer>
+        {this.state.cryptocoinsJSON.map((coin, i) => (
+          <Card
+            key={i} 
+            name={coin.name}
+            symbol={coin.symbol}
+            logo={coin.logo}
+          />
+        ))}
+      </CardsContainer>
     );
   }
 }
