@@ -22,9 +22,6 @@ var resolve = require("./logic.js");
 
 //BOT AND MONGOOSE CONNECTION
 
-//const TelegramBot = require('node-telegram-bot-api');
-//const token = '612212702:AAFtVYuNNFCxFX0cyzoqJTGLXb6JGoC15bQ';
-//const bot = new TelegramBot(token, { polling: true });
 
 
 const mongoose = require('mongoose');
@@ -74,16 +71,6 @@ Promise.all([promiseNews]).then(([newsData]) => {
 
 // // Serve up static assets (usually on heroku)
 
-// const firebase = require('firebase');
-// const fb = firebase.initializeApp({
-//     apiKey: "AIzaSyD6V2x_61X1qWxBuQJJh6VpgrocReek6Bk",
-//     authDomain: "bitcoin-2-e029a.firebaseapp.com",
-//     databaseURL: "https://bitcoin-2-e029a.firebaseio.com",
-//     projectId: "bitcoin-2-e029a",
-//     storageBucket: "",
-//     messagingSenderId: "195092768796"
-// });
-// const database = firebase.database();
 
 
 if (process.env.NODE_ENV === "production") {
