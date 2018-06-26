@@ -1,0 +1,82 @@
+[
+    {
+        "name": "Binance Coin",
+        "symbol": "bnb",
+        "logo": "./img/crypto_logos/bnb_logo.svg"
+    },
+    {
+        "name": "Bitcoin",
+        "symbol": "btc",
+        "logo": "./img/crypto_logos/btc_logo.svg"
+    },
+    {
+        "name": "Bitcoin Cash",
+        "symbol": "bcc",
+        "logo": "./img/crypto_logos/bcc_logo.svg"
+    },
+    {
+        "name": "Dash",
+        "symbol": "dash",
+        "logo": "./img/crypto_logos/dash_logo.svg"
+    },
+    {
+        "name": "Ethereum",
+        "symbol": "eth",
+        "logo": "./img/crypto_logos/eth_logo.svg"
+    },
+    {
+        "name": "Ethereum Classic",
+        "symbol": "etc",
+        "logo": "./img/crypto_logos/etc_logo.svg"
+    },
+    {
+        "name": "Komodo",
+        "symbol": "kmd",
+        "logo": "./img/crypto_logos/kmd_logo.svg"
+    },
+    {
+        "name": "LBRY Credits",
+        "symbol": "lbc",
+        "logo": "./img/crypto_logos/lbc_logo.svg"
+    },
+    {
+        "name":  "Litecoin",
+        "symbol": "ltc",
+        "logo": "./img/crypto_logos/ltc_logo.svg"
+    },
+    {
+        "name": "Monero",
+        "symbol": "xmr",
+        "lgoo": "./img/crypto_logos/xmr_logo.svg"
+    },
+    {
+        "name": "NEO",
+        "symbol": "neo",
+        "logo": "./img/crypto_logos/neo_logo.svg"
+    },
+    {
+        "name": "Ripple",
+        "symbol": "xrp",
+        "logo": "./img/crypto_logos/xrp_logo.svg"
+    },
+    {
+        "name": "Steem",
+        "symbol": "steem",
+        "logo": "./img/crypto_logos/steem_logo.svg"
+    },
+    {
+        "name": "Stellar",
+        "symbol": "xlm",
+        "logo": "./img/crypto_logos/xlm_logo.svg"
+    },
+    {
+        "name": "Tether",
+        "symbol": "usdt",
+        "logo": "./img/crypto_logos/usdt_logo.svg"
+    },
+    {
+        "name": "Zcash",
+        "symbol": "zec",
+        "logo": "./img/crypto_logos/zec_logo.svg"
+    }
+]
