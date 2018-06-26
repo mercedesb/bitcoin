@@ -1,19 +1,19 @@
 import React, { Component } from "react";
-import { Popover } from "react-bootstrap";
-import $ from "jquery"; 
+// import { Popover } from "react-bootstrap";
+// import $ from "jquery"; 
 import "./Card.css";
 
-const popoverLeft = (
-    <Popover id="popover-position-left" title="Popover left">
-        Content goes here.
-    </Popover>
-)
+// const popoverLeft = (
+//     <Popover id="popover-position-left" title="Popover left">
+//         Content goes here.
+//     </Popover>
+// )
 
-const popoverRight = (
-    <Popover id="popover-position-right" title="Popover right">
-        Content goes here.
-    </Popover>
-)
+// const popoverRight = (
+//     <Popover id="popover-position-right" title="Popover right">
+//         Content goes here.
+//     </Popover>
+// )
 
 
 const Card = props => (
@@ -26,9 +26,9 @@ const Card = props => (
                 <thead>
                     <tr>
                         <th>
-                            <OverlayTrigger trigger="click" placement="left" overlay={popoverLeft}>
+                            {/* <OverlayTrigger trigger="click" placement="left" overlay={popoverLeft}> */}
                                 <button type="button" className="badge badge-danger low-badge">Low</button>
-                            </OverlayTrigger>
+                            {/* </OverlayTrigger> */}
                         </th>
                         <th className="empty-space"></th>
                         <th>
