@@ -428,6 +428,16 @@ module.exports = {
             console.error(error);
         }
     },
+    usd: async function getUsd() {
+        try{
+            let response = await axios.get('http://coincap.io/front');
+            //var usdValues;
+            coincapData = response.data.map(coin => ({ "short": coin.short, "price": coin.price }));
+            return coincapData;
+        } catch(error) {
+            console.log(error);
+        }
+    },
     coins: async function resolution() {
         try {
             const values = await Promise.all(firebasePromise);
@@ -1126,7 +1136,7 @@ function classing(key, val, index) {
     }
     classifier["input"] = arbit;
     var vals = Object.values(comp);
-    for (var k = 0; k < index; k++) {
+    for (var k = 0; k <= index; k++) {
         classifier["output"] = vals.reduce(function (acc, curr) { return Number(Math.abs(acc - curr)).toFixed(2) });
     }
     return classifier;
