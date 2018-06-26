@@ -22,9 +22,7 @@ var resolve = require("./logic.js");
 
 //BOT AND MONGOOSE CONNECTION
 
-//const TelegramBot = require('node-telegram-bot-api');
-//const token = '612212702:AAFtVYuNNFCxFX0cyzoqJTGLXb6JGoC15bQ';
-//const bot = new TelegramBot(token, { polling: true });
+
 
 
 const mongoose = require('mongoose');
