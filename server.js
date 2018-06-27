@@ -26,7 +26,6 @@ var { Combo, Exchange, News, Usd } = require('./models');
 //BOT AND MONGOOSE CONNECTION
 
 
-
 const mongoose = require('mongoose');
 // mongoose.Promise = global.Promise;
 var database = 'coindb';
