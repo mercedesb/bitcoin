@@ -9,6 +9,6 @@ const newsSchema = new Schema({
 });
 
 
-const NewsModel = mongoose.model('NewsModel', newsSchema );
+const News = mongoose.model('News', newsSchema );
 //module.exports = mongoose.model('CoinModel', coinSchema );
-export default NewsModel;
+module.exports = News;

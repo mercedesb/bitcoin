@@ -3,11 +3,11 @@ const Schema = mongoose.Schema;
 
 const exchangeSchema = new Schema({
   input: Object,
-  output:  String,
-  date: { type: Date, default: Date.now }
+  output: String,
+  date: { type: Date, default: Date.now },
 });
 
 
-const ExchangeModel = mongoose.model('ExchangeModel', exchangeSchema );
+const Exchange = mongoose.model('Exchange', exchangeSchema );
 //module.exports = mongoose.model('CoinModel', coinSchema );
-export default ExchangeModel;
+module.exports = Exchange;
