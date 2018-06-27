@@ -3,8 +3,8 @@ body {
 }
 
 .card {
-    width: 18rem;
     align-items: center;
+    width: 18rem;
 }
 .card-title {
     font-family: 'Raleway', sans-serif;
@@ -14,9 +14,9 @@ body {
     text-transform: uppercase;
 }
 .fa-angle-left {
+    color: #4091D3;
     margin-left: 10px;
     margin-right: 10px;
-    color: #4091D3;
 }
 .card-subtitle {
     text-align: center;
@@ -34,8 +34,8 @@ th {
     text-align: center;
 }
 .badge {
-    text-transform: uppercase;
     padding: 5px;
+    text-transform: uppercase;
     width: 80px;
 }
 .coin-cash-low-high-values, .dollar-low-high-values {
@@ -53,8 +53,8 @@ th {
     margin-top: .5rem;
 }
 .profit-badge {
-    width: 184px;
     margin-top: 30px;
+    width: 184px;
 }
 .profit-badge h5 {
     margin-bottom: 0px;

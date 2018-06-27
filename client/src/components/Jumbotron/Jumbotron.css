@@ -1,0 +1,30 @@
+.jumbotron {
+    background: #222 url('../../img/misc/jumbotron_img.svg') no-repeat center fixed;
+    background-size: 90%;
+    border-radius: 0px;
+    height: 100vh;
+    position: relative;
+    text-align: center;
+}
+.header-message {
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 0 auto;
+    position: relative;
+
+}
+.header-message p {
+    margin: 0 auto;
+    padding-bottom: 50px;
+    width: 80%;
+}
+.learn-more {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+    width: 300px;
+    margin: 0 auto;
+    padding-bottom: 10px;
+    padding-top: 10px;
+}
