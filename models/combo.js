@@ -3,11 +3,8 @@ const Schema = mongoose.Schema;
 
 const comboSchema = new Schema({
   lexchange: String,
-  lurl: String,
   rexchange: String,
-  rurl: String,
-  coin: String,
-  currency:  String,
+  coincurrency: String,
   lhs: String,
   rhs: String,
   diff: String,
@@ -18,6 +15,6 @@ const comboSchema = new Schema({
 });
 
 
-const ComboModel = mongoose.model('ComboModel', comboSchema );
+const Combo = mongoose.model('Combo', comboSchema );
 
-export default ComboModel;
+module.exports = Combo;

@@ -1,5 +1,6 @@
 module.exports = {
-    ComboModel: require("./combo"),
-    ExhcangeModel: require("./exchange"),
-    PriceModel: require("./news")
+    Combo: require("./combo"),
+    Exchange: require("./exchange"),
+    News: require("./news"),
+    Usd: require("./usd")
 }
