@@ -1,38 +1,23 @@
 import React, { Component } from "react";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import "./App.css";
 import Header from "./components/Header/Header";
-import CardsContainer from "./components/CardsContainer/CardsContainer";
-import Card from "./components/Card/Card";
-import cryptocoinsJSON from "./json/cryptocoins.json";
+
+import Homepage from "./pages/Homepage";
+import CardsPage from "./pages/CardsPage";
 
 
 class App extends Component {
-  state = {
-    cryptocoinsJSON
-  }
-
-  componentWillMount() {
-    var coinLogo = cryptocoinsJSON.map(coin => console.log(coin.logo));
-    // this.setState ({
-    //   cryptocoinsJSON: coinLogo
-    // })
-  }
 
   render() {
     return (
-      <div className="appContainer">
-        <Header />
-        <CardsContainer>
-          {this.state.cryptocoinsJSON.map((coin, i) => (
-            <Card
-              key={i}
-              name={coin.name}
-              symbol={coin.symbol}
-              logo={coin.logo}
-            />
-          ))}
-        </CardsContainer>
-      </div>
+      <Router>
+        <div className="appContainer">
+          <Header />
+          <Route exact path="/" component={Homepage} />
+          <Route exact path="/cards" component={CardsPage} />
+        </div>
+      </Router>
     );
   }
 }
