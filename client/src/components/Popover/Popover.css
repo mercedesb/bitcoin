@@ -1,0 +1,4 @@
+.popover-body {
+    max-height: 163px;
+    overflow-y: scroll;
+}

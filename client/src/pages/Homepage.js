@@ -3,6 +3,8 @@ import Jumbotron from "../components/Jumbotron/Jumbotron";
 import Overview from "../components/Overview/Overview";
 import About from "../components/About/About";
 import Subscriptions from "../components/Subscriptions/Subscriptions";
+import NewsfeedContainer from "../components/NewsfeedContainer/NewsfeedContainer";
+import Newsfeed from "../components/Newsfeed/Newsfeed";
 
 class Homepage extends Component {
     render() {
@@ -12,6 +14,7 @@ class Homepage extends Component {
                 <Overview />
                 <About />
                 <Subscriptions />
+                    {/* <Newsfeed /> */}
             </div>
         )
     }

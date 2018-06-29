@@ -1,11 +1,14 @@
-import React, { Component } from "react";
-import Card from "../Card/Card";
-import "../CardsContainer/CardsContainer.css";
+import React from "react";
 
 const CardsContainer = props => (
-    <div className="row cards-container">
-        {props.children.map(child => {
-            return (<div className="col-4 card-container">{child}</div>)
+    <div className="container card-deck cards-container my-5 mx-auto">
+        {props.children.map((child, i) => {
+            return (
+                <div 
+                    className="col-4 card-container" 
+                    key={i}>{child}
+                </div>
+            )
         })}
     </div>
 )

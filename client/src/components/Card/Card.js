@@ -1,56 +1,63 @@
-import React, { Component } from "react";
-import PopoverLeftRight from "../Popover/Popover";
+import React from "react";
+import { PopoverLeft, PopoverRight } from "../Popover/Popover"
 import "./Card.css";
 
 const Card = props => (
-    <div className="card">
+    <div className="card mb-4 d-flex">
         <div className="card-body">
-            <h5 className="card-title"><span className="rh-coin">{props.symbol}</span> <i className="fas fa-angle-left"></i> <span className="lh-curr">LTC</span></h5>
+            <h5 className="card-title"><span className="coin">{props.coin}</span> <i className="fas fa-angle-left ml-1 mr-1"></i> <span className="curr">{props.currency}</span></h5>
             <hr />
-            <h6 className="card-subtitle mb-2 text-muted">Low-High Spread</h6>
+            <h6 className="card-subtitle text-muted pt-2 pb-3">Low-High Spread</h6>
             <table>
                 <thead>
                     <tr>
-                        <th>
-                            {/* <button type="button" className="badge badge-danger low-badge">Low</button> */}
-                            <PopoverLeftRight/>
+                        <th className="pb-4">
+                            <PopoverLeft 
+                                id={props.id}
+                                lexchange={props.lexchange}
+                                description={props.lexchangeDescription}
+                            />
                         </th>
-                        {/* <th className="empty-space"></th>
-                        <th>
-                            <button type="button" className="badge badge-success high-badge">High</button>
-                        </th>   */}
+                        <th className="empty-space pb-4"></th>
+                        <th className="pb-4">
+                            <PopoverRight 
+                                id={props.id}
+                                rexchange={props.rexchange}
+                                description={props.rexchangeDescription}
+                                />
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr className="coin-cash-low-high-values">
+                    <tr className="curr-low-high-values">
                         <td>
-                            <h5>
-                                <span className="rh-coin-logo"><img alt={props.name} src={require(`../../img/crypto_logos/${props.symbol}_logo.svg`)} /></span> <span className="coin-cash-low-value">200</span>
+                            <h5 className="align-middle pb-2">
+                                <span className="curr-logo"><img alt={props.currency} src={require(`../../img/crypto_logos/${props.currency}_logo.svg`)} /></span> <span className="curr-low-value align-middle">{props.lefthandValue}</span>
                             </h5>
                         </td>
                         <td className="empty-space"></td>
                         <td>
-                            <h5>
-                                <span className="currency-logo">฿</span> <span className="coin-cash-high-value">600</span>
+                            <h5 className="align-middle pb-2">
+                            <span className="curr-logo"><img alt={props.currency} src={require(`../../img/crypto_logos/${props.currency}_logo.svg`)} /></span> <span className="curr-high-value align-middle">{props.righthandValue}</span>
                             </h5>
                         </td>
                     </tr>
                     <tr className="dollar-low-high-values">
                         <td>
-                            <h5 className="dollar-value">
-                                <span className="dollar-logo">$</span> <span className="dollar-low-value">50</span>
+                            <h5 className="dollar-value align-middle pt-3">
+                                <span className="dollar-logo">$</span> <span className="dollar-low-value">{props.leftusdValue}</span>
                             </h5>
                         </td>
                         <td className="empty-space"></td>
                         <td>
-                            <h5 className="dollar-value">
-                                <span className="dollar-logo">$</span> <span className="dollar-high-value">150</span>
+                            <h5 className="dollar-value align-middle pt-3">
+                                <span className="dollar-logo">$</span> <span className="dollar-high-value">{props.rightusdValue}</span>
                             </h5>
                         </td>
                     </tr>
                 </tbody>
             </table>
-            <div className="badge badge-success profit-badge"><h5>+ $ 100</h5></div>
+            <div className="badge badge-success profit-badge d-flex justify-content-center mt-4"><h5 className="align-middle my-2">+ $ {props.usdDiff}</h5></div>
         </div>
     </div>
 );

@@ -1,4 +1,4 @@
-import React, { Components } from "react";
+import React from "react";
 import "./Subscriptions.css";
 
 const Subscriptions = () => (
@@ -20,7 +20,6 @@ const Subscriptions = () => (
                             <h5>Data Only</h5>
                             <ul>
                                 <li>Real-time cards</li>
-                                <li>Access to limited number of randomized cards</li>
                                 <li>Real-time newsfeed</li>
                             </ul>
                             <p className="card-text"></p>
@@ -35,7 +34,6 @@ const Subscriptions = () => (
                             <h5>Website &#38; Data</h5>
                             <ul>
                                 <li>Real-time cards</li>
-                                <li>Access to all cards</li>
                                 <li>Real-time newsfeed</li>
                                 <li>Bot services for trade signals</li>
                             </ul>

@@ -4,28 +4,23 @@ body {
 
 .card {
     align-items: center;
-    width: 18rem;
+    width: 19rem;
 }
 .card-title {
     font-family: 'Raleway', sans-serif;
     text-align: center;
 }
-.rh-coin {
+.coin, .curr {
     text-transform: uppercase;
 }
 .fa-angle-left {
     color: #4091D3;
-    margin-left: 10px;
-    margin-right: 10px;
 }
 .card-subtitle {
     text-align: center;
 }
 table {
     align-content: center;
-}
-th {
-    padding-bottom: 20px;
 }
 .empty-space {
     width: 20px;
@@ -34,30 +29,18 @@ th {
     text-align: center;
 }
 .badge {
-    padding: 5px;
     text-transform: uppercase;
     width: 80px;
 }
-.coin-cash-low-high-values, .dollar-low-high-values {
+.curr-low-high-values, .dollar-low-high-values {
     text-align: center;
 }
-.rh-coin-logo img {
+.curr-logo img {
     height: 22px;
-    padding-bottom: 2px;
 }
 .dollar-low-high-values {
     border-top: 1px #bbb solid;
-    padding-top: 20px;
-}
-.dollar-value {
-    margin-top: .5rem;
 }
 .profit-badge {
-    margin-top: 30px;
     width: 184px;
-}
-.profit-badge h5 {
-    margin-bottom: 0px;
-    padding-top: 3px;
-    padding-bottom: 3px;
 }

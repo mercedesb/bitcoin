@@ -1,57 +1,46 @@
-[
-    {
-        "name": "bibox",
+{
+    "bibox": {
         "url": "https://www.bibox.com/",
         "description": "AI Enhanced Encrypted Digital Asset Exchange. The founding team is formed by top tier Chinese Blockchain and Crypto giants such as Okcoin and Houbi core team."
     },
-    {
-        "name": "binance",
+    "binance": {
         "url": "https://www.binance.com/",
         "description": "Lowest trading fees. Has its own currency: BNB."
     },
-    {
-        "name": "bitsquare",
+    "bitsquare": {
         "url": "https://bisq.network/",
         "description": "TOR-based decentralized exchange with escrow service. Bitsquare is an open-source desktop application with a TOR interface. Some setup may be required to gain access to TOR."
     },
-    {
-        "name": "bittrex",
+    "bittrex": {
         "url": "https://bittrex.com/",
         "description": "US-based blockchain trading platform."
     },
-    {
-        "name": "bitz",
+    "bitz": {
         "url": "https://www.bit-z.com/",
         "description": "Bit-Z is a Hong Kong exchange. It provides professional digital asset trading services. In addition, Bit-Z allows over-the-counter trades, which utilize a private wallet directly, obviating some transfer fees."
     },
-    {
-        "name": "changelly",
+    "changelly": {
         "url": "https://changelly.com/",
         "description": "Decentralized Exchange -- Only miner fees, no exchange fees. Changelly's trading algorithms are integrated into trading platforms such as Binance, Bittrex, Poloniex, and HitBTC. Whenever a user exchanges one cryptocurrency to another, the corresponding rate is picked up and suggested to them in real time, much like Shapeshift. In the span of milliseconds, Changelly correlates the amount to exchange and places bid/ask orders on the trading platforms and picks the best rate possible. Changelly was developed as an independent exchange service with a separate team and CEO, Konstantin Gladych."
     },
-    {
-        "name": "cryptopia",
+    "cryptopia": {
         "url": "https://www.cryptopia.co.nz/",
         "description": "New Zealand Exchange. Focuses on user experience."
     },
-    {
-        "name": "kraken",
+    "kraken": {
         "url": "https://www.kraken.com/",
         "description": "US-based cryptocurrency exchange operating in Canada, the EU, Japan, and the US. Kraken provides Bitcoin pricing to the Bloomberg Terminal. Fiat funding options."
     },
-    {
-        "name": "liqui",
+    "liqui": {
         "url": "https://liqui.io/",
         "description": "Headquartered in Kiev, Ukraine, with employees in Russia, Armenia, and USA. The total project is run by 7 individuals."
     },
-    {
-        "name": "kucoin",
+    "kucoin": {
         "url": "https://www.kucoin.com",
         "description": "Hong Kong-based exchange rumored to have higher than average exit fees. Restart of Kubi, which was previously shut down."
     },
-    {
-        "name": "shapeshift",
+    "shapeshift": {
         "url": "https://shapeshift.io",
         "description": "Decentralized Exchange -- Only miner fees; no exhcange fees. Founded in Switzerland by Roger Ver and Barry Silbert. Funded by Bitfinex, Bitcoin Capital, and Mardal Investments. Recent investments by European venture capital firm Earlybird."
     }
-]
+}
