@@ -1,6 +1,18 @@
 import React from "react";
+import ReactDOM from "react-dom";
 import "./Header.css";
-import Login from "../components/Login/Login";
+// import Login from "../components/Login/Login";
+
+// class Dashboard extends Component {
+//     state = {
+//         show: false;
+//     };
+
+//     showModal = () => {
+//         this.setState({ show: true});
+//     };
+
+// }
 
 const Header = () => (
     <header>
@@ -17,7 +29,7 @@ const Header = () => (
                     <a className="nav-item nav-link" href="#overviewContainer">Overview</a>
                     <a className="nav-item nav-link" href="#">About</a>
                     <a className="nav-item nav-link" href="#">Newsfeed</a>
-                    <a className="nav-item nav-link" href="#" onClick={Login()}>Log In</a>
+                    <a className="nav-item nav-link" href="#" onClick={(e) => this.handleClick(e)}>Log In</a>
                 </div>
             </div>
         </nav>
