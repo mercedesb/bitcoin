@@ -8,19 +8,6 @@ const shapeshift = require('shapeshift');
 const coincap = require('coincap-lib');
 var Combinatorics = require('js-combinatorics');
 
-// const mongoose = require('mongoose');
-// mongoose.Promise = global.Promise;
-
-
-// //This promise resolution probably needs to be chained down below.
-// var database1 = 'coindb';
-// mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/" + database1);
-// var db = mongoose.connection;
-// db.once('open', () => console.log(`Now opening ${database1} we've got signal!`))
-//     .on('error', (error) => { console.warn('Warning:', error) });
-
-//connected to mongoose. Throw error on disconnect.
-// parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
 
 // parse application/json
@@ -31,7 +18,6 @@ require("dotenv").config();
 
 const firebasePromise = [];
 
-// Serve up static assets (usually on heroku)
 
 const firebase = require('firebase');
 const fb = firebase.initializeApp({
@@ -43,31 +29,6 @@ const fb = firebase.initializeApp({
     messagingSenderId: "195092768796"
 });
 const database = firebase.database();
-
-
-//connected to mongoose. Throw error on disconnect.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 request({
@@ -354,62 +315,6 @@ firebasePromise.push(database.ref("/bisq/").once("value"));
 
 firebasePromise.push(database.ref("/bibox/").once("value"));
 
-//firebasePromise.push(db.once('open', () => console.log(`Now opening ${database1} we've got signal!`))
-//  .on('error', (error) => { console.warn('Warning:', error) }));
-
-//firebasePromise.push(coincap.front());
-//firebasePromise.push(axios("https://cryptopanic.com/api/posts/?auth_token=518dacbc2f54788fcbd9e182521851725a09b4fa&public=true"));
-//firebasePromise.push(db);
-// var news = getNews();
-// console.log("News promise pending:" + news); //promise pending
-// async function getNews() {
-//     try {
-//         const response = await axios.get('https://cryptopanic.com/api/posts/?auth_token=518dacbc2f54788fcbd9e182521851725a09b4fa&public=true');
-//         //console.log(response.data.results);
-//         var news = [];
-//         response.data.results.forEach((results) => {
-//             news.push(results.title);
-//             news.push(results.published_at);
-//             news.push(results.url);
-//         });
-//         console.log(news);
-//         return news;
-//     } catch (error) {
-//         console.error(error);
-//     }
-// }
-
-
-//resolve(news, coincapData, training, combo, comboArray);
-
-//setInterval(() => { resolve(news, coincapData, training, combo, comboArray) }, 1200000);
-
-//news from AXIOS
-//00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-
-// console.log(res.data.results);
-// var news = [];
-// res.data.results.forEach((results) => {
-//     news.push(results.title);
-//     news.push(results.published_at);
-//     news.push(results.url);
-// });
-
-
-//         coincapData = result.map(coin => ({ "short": coin.short, "price": coin.price }));
-//         //console.log(coincapData);
-//00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-// var coincap_instance = new PriceModel();
-// // Save the new model instance, passing a callback
-// coincap_instance.save(function (err) {
-//     if (err) return handleError(err);
-//     // saved!
-// });
-// PriceModel.create({ coincapData }, function (err, coincap_instance) {
-//     if (err) return handleError(err);
-//     // saved!
-//   });
-//need to push coincapData to mongoose price Schema and Combine with Combo Schema
 
 module.exports = {
     news: async function getNews() {
@@ -852,225 +757,12 @@ module.exports = {
 
             //console.log("****************", "training:", training, "****************");
             return training;
-            // var newsmedia = values[values.length - 2].data;
-            // var news = [];
-            // newsmedia.results.forEach((results) => {
-            //     news.push(results.title);
-            //     news.push(results.published_at);
-            //     news.push(results.url);
-            // });
-            // // console.log(news); //news
-
-            // console.log(values[values.length-3]); //USD values
-
-            //Probs here
-
-            // const mongodb = values[values.length - 1];
-            // mongodb.NewsModel.create({
-            //    title: news[0],
-            //    pub_date: news[1],
-            //    url: news[2],
-            //});
-
-            // app.get("/difference", function (req, res) {
-            //     res.json(training);
-            // });
-            // app.get("/news", (req, res) => {
-            //     res.json(JSON.parse(news));
-            // });
-            // app.get("/usd", (req, res) => {
-            //     res.json(values[values.length - 3]);
-            // });
-
-
-
-
-            //console.log(values[values.length-1]); //connection to MONGOOSE
-
-            //---------------------0000000000000000000000000000000--------------------------------------000000000000000000000000000000000000000000-------------------------------------------0000000000000000000000000000000000000-----------------------------
-
-
-            // var firstCoin = Object.keys(values[2].val());
-            // var secondCoin = values[2].val();
-
-
-            // var pairing = [];
-            // firstCoin.forEach(function (val, ind) { pairing.push(Object.keys(secondCoin[firstCoin[ind]])) });
-            // var cartesian = [];
-
-            // firstCoin.forEach(function (val, index) {
-            //     firstCoin[index] = val.toString();
-            // });
-
-
-            // firstCoin.forEach(function (val, index) {
-            //     cp = Combinatorics.cartesianProduct([val], pairing[index]);
-            //     cartesian.push(cp.toArray());
-            // });
         } catch (err) {
             console.log("Promise.all Error: " + error);
         }
     }
 }
-// // console.log(coincapData);
-// // console.log(news);
 
-
-
-
-//---------------------------------------------------HERE I MAKE THE $ VALUE TRANSLATIONS
-// var first;
-// var last;
-// var coin;
-// var currency;
-// //console.log(training[0].input);
-// training.forEach((val, i) => {
-//     var keys = Object.keys(val.input);
-//     //console.log(keys);
-//     keys.forEach((val, i) => {
-//         first = val.match(/.*-/g);
-//         last = val.match(/-.*\./g);
-//     })
-//     first = JSON.stringify(first);
-//     last = JSON.stringify(last);
-//     first = first.slice(2, -3);
-//     last = last.slice(3, -5);
-//     combo["lexchange"] = first;
-//     combo["rexchange"] = last;
-
-
-//     var vals = Object.values(val.input);
-//     //console.log(vals);
-//     combo["lhs"] = vals[1];
-//     combo["rhs"] = vals[2];
-//     combo["diff"] = val.output;
-
-
-
-//     coin = JSON.stringify(vals[0].match(/.*_/g));
-//     currency = JSON.stringify(vals[0].match(/\_.*/g));
-//     coin = coin.slice(2, -3);
-//     currency = currency.slice(3, -2);
-//     //console.log(coin +" "+ currency);
-//     combo["coin"] = coin;
-//     combo["currency"] = currency;
-// });
-//             //NEED TO FIND USD VALUES HERE 
-// var valGamma = Object.values(coincapData);
-// var keyGamma = Object.keys(concapData);
-// var coincapData = [];
-// keyGamma.forEach((vals, i) = > {
-//     coincapData.push(vals+' '+valGamma[i])
-// });
-
-
-//console.log(double);
-// for (var x in combo) {
-//     if (x === "currency") {
-//         //console.log(combo[x]);
-//         //currencyPrice = currencyEvaluation(coincapData, combo[x]);
-
-//         var array = [];
-//         coincapData.forEach((val) => array.push(Object.values(val)));
-//         array.forEach((val, i) => {
-//             //console.log(val[0]);                        
-//             if (val[0].toLowerCase() === currency) {
-//                 //console.log(val[1]);
-//                 for (var x in combo) {
-//                     if (x === "diff") {
-//                         var num = combo[x] * val[1];
-//                         //console.log(num);
-//                         combo["usddiff"] = num;
-//                         //console.log(combo[x].parseFloat);
-//                     }
-//                     if (x === "lhs") {
-//                         var num = combo[x] * val[1];
-//                         //console.log(num);
-//                         combo["usdlhs"] = num;
-
-//                         // console.log(combo[x]);
-//                         // console.log(num);
-//                     }
-//                     if (x === "rhs") {
-//                         var num = combo[x] * val[1];
-//                         //console.log(num);
-//                         combo["usdrhs"] = num;
-//                         //console.log(combo[x].parseFloat);
-//                     }
-//                     comboArray.push(combo);
-//                 }
-
-//             }
-//         });
-
-//     }
-// }
-
-
-// console.log(comboArray);
-
-// bot.on('message', (msg) => {
-//     const chatId = msg.chat.id;
-
-//     // send a message to the chat acknowledging receipt of their message
-
-//     bot.sendMessage(chatId, comboArray[1]);
-// });
-
-
-
-//comboData.push(combo);
-//console.log(comboData);
-// bot.on('message', (msg) => {
-//     const chatId = msg.chat.id;
-//     comboData.forEach((value) => {
-//         bot.sendMessage(chatId, JSON.stringify(value));
-//     });
-// });
-//const combon = new ComboModel(combo);
-//combon.save();
-
-//This is where the telegram bot needs to send a message to all users.
-//bot.sendMessage(chatId, JSON.stringify(combo));
-// bot.on('message', (msg) => {
-//     const chatId = msg.chat.id;
-
-//     // send a message to the chat acknowledging receipt of their message
-//     bot.sendMessage(chatId, 'Respond with card data');
-//   });
-
-//ComboModel.create(combo, function (err) {
-//     if (err) throw err;
-//     // saved!
-//   });
-// //console.log(combo);
-//need to write to MONGODB HERE
-// function currencyEvaluation(arrObj, currency) {
-//     var array = [];
-//     arrObj.forEach((val) => array.push(Object.values(val)));
-//     array.forEach((val) => {
-//         if (val[0].toLowerCase() === currency) {
-//             return val[1];
-//         }
-//     });
-//     // console.log(array);
-//     //console.log(currency);
-// }
-
-
-
-// bot.on('message', (msg) => {
-//     const chatId = msg.chat.id;
-//     var charcount = 0;
-//     var end = comboString.length;
-//     for (var j = 0; charcount <= end; j+=4096) {
-//         var one = charcount + j;
-//         bot.sendMessage(chatId, comboString.slice(charcount, one));
-//         charcount = charcount + j;
-//     }
-
-
-//-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
 

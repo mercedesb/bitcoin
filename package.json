@@ -20,9 +20,6 @@
   },
   "dependencies": {
     "add": "^2.0.6",
-    "express": "^4.15.4",
-    "react-bootstrap": "^0.32.1",
-    "yarn": "^1.7.0",
     "axios": "^0.18.0",
     "bitcore-lib": "^0.15.0",
     "brain": "^1.0.0",
@@ -33,12 +30,15 @@
     "express": "^4.16.3",
     "feedly": "^0.1.6",
     "firebase": "^5.1.0",
+    "firebase-admin": "^5.12.1",
     "get-json": "^1.0.0",
     "jayson": "^2.0.6",
     "js-combinatorics": "^0.5.3",
     "limdu": "^0.9.4",
     "mongoose": "^5.1.6",
     "node-telegram-bot-api": "^0.30.0",
-    "shapeshift": "^1.0.2"
+    "react-bootstrap": "^0.32.1",
+    "shapeshift": "^1.0.2",
+    "yarn": "^1.7.0"
   }
 }
