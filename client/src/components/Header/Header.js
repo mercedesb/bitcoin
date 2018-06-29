@@ -1,6 +1,6 @@
 import React from "react";
 import "./Header.css";
-import Login from "../components/Login/Login";
+// import Login from "../components/Login/Login";
 
 const Header = () => (
     <header>
@@ -17,7 +17,7 @@ const Header = () => (
                     <a className="nav-item nav-link" href="#overviewContainer">Overview</a>
                     <a className="nav-item nav-link" href="#">About</a>
                     <a className="nav-item nav-link" href="#">Newsfeed</a>
-                    <a className="nav-item nav-link" href="#" onClick={Login()}>Log In</a>
+                    <a className="nav-item nav-link" href="#">Log In</a>
                 </div>
             </div>
         </nav>
