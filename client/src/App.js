@@ -5,6 +5,7 @@ import Header from "./components/Header/Header";
 
 import Homepage from "./pages/Homepage";
 import CardsPage from "./pages/CardsPage";
+import { firebase } from './firebase';
 
 
 class App extends Component {
@@ -18,6 +19,7 @@ class App extends Component {
   }
 
   componentDidMount() {
+    console.log(firebase);
     firebase.auth.onAuthStateChanged(authUser => {
       authUser
         ? this.setState(() => ({ authUser }))
