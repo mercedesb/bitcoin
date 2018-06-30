@@ -48,8 +48,8 @@ class CardsPage extends Component {
                         rexchange={card.rexchange}
                         lexchangeURL={card.lex}
                         lexchangeDescription={card.lexchangeDescription.description}
+                        rexchangeDescription={card.rexchangeDescription.description}
                         >
-                        {/* {console.log(card.lexchangeDescription.description)} */}
                     </Card>
                 ))}
             </CardsContainer>

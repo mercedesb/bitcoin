@@ -2,45 +2,46 @@ import React from "react";
 import "./Subscriptions.css";
 
 const Subscriptions = () => (
-    <div className="spoilsContainer">
+    <div className="spoilsContainer mx-auto">
         <div className="container">
             <div className="row">
                 <div className="col-md-12">
-                    <div className="spoils-header">
+                    <div className="spoils-header py-5 text-center">
                         <h2>Check out our Spoils Subscriptions:</h2>
                     </div>
                 </div>
             </div>
-            <div className="row d-flex justify-content-center">
-                <div className="col-md-6">
-                    <div className="card">
+            <div className="row card-container mx-auto  mb-5 text-center">
+                <div className="offset-md-2 col-md-4">
+                    <div className="card spoils-card">
                         <div className="card-body">
                             <h4 className="card-title">Basic Spoils</h4>
-                            <h3 className="card-subtitle mb-2">$5/month</h3>
+                            <h3 className="card-subtitle mt-5 mb-2">$5/month</h3>
                             <h5>Data Only</h5>
-                            <ul>
+                            <ul className="text-left mt-5">
                                 <li>Real-time cards</li>
                                 <li>Real-time newsfeed</li>
                             </ul>
-                            <p className="card-text"></p>
                         </div>
                     </div>
                 </div>
-                <div className="col-md-6">
-                    <div className="card">
+                <div className="col-md-4 offst-md-2">
+                    <div className="card spoils-card">
                         <div className="card-body">
                             <h4 className="card-title">Premium Spoils</h4>
-                            <h3 className="card-subtitle mb-2">$10/month</h3>
-                            <h5>Website &#38; Data</h5>
-                            <ul>
+                            <h3 className="card-subtitle mt-5 mb-2">$10/month</h3>
+                            <h5 className="strong">Website &#38; Data</h5>
+                            <ul className="text-left mt-5">
                                 <li>Real-time cards</li>
                                 <li>Real-time newsfeed</li>
                                 <li>Bot services for trade signals</li>
                             </ul>
-                            <p className="card-text"></p>
                         </div>
                     </div>
                 </div>
+            </div>
+            <div className="row to-signup d-flex justify-content-center">
+                <a href="#"><button type="button" className="btn learn-more signup-btn">Sign Up!</button></a>
             </div>
         </div>
     </div>

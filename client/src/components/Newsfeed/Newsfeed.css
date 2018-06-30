@@ -1,0 +1,11 @@
+.newsfeedContainer {
+    max-height: 100vh;
+    overflow-y: scroll;
+}
+.article-title {
+    font-weight: bold;
+}
+.link-logo {
+    float: right;
+    height: 20px;
+}

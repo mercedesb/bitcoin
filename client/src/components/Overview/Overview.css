@@ -2,7 +2,6 @@
     background: #eee;
     color: #343A40;
     height: 100%;
-
 }
 .overview-header {
     margin-bottom: 100px;
@@ -11,21 +10,11 @@
     margin: 0 auto;
     width: 80%;
 }
-
-
-.talk-points-container {
-    margin: 0 auto;
-    text-align: left;
-}
-.overview-td {
-    padding-left: 30px;
-    padding-right: 30px;
-}
 .overview-img {
     height: 200px;
     margin-bottom: 50px; 
 }
-.button-link-to-about {
+.to-about {
     margin-top: 100px;
     margin-bottom: 100px;
 }

@@ -5,7 +5,7 @@
     },
     "binance": {
         "url": "https://www.binance.com/",
-        "description": "Lowest trading fees. Has its own currency: BNB."
+        "description": "Binance was originally founded in China, but moved to Japan when cryptocurrency regulations were put into place. There are plans to move to Malta, where there are less regulations. One of the largest cryptocurrency exchanges."
     },
     "bitsquare": {
         "url": "https://bisq.network/",
@@ -13,7 +13,7 @@
     },
     "bittrex": {
         "url": "https://bittrex.com/",
-        "description": "US-based blockchain trading platform."
+        "description": "Founded by cybersecurity professionals. One of the first exchanges to issue a “stablecoin” TrueUSD, supposedly backed by the US dollar. The currently predominant stablecoin is Tether."
     },
     "bitz": {
         "url": "https://www.bit-z.com/",
@@ -25,7 +25,7 @@
     },
     "cryptopia": {
         "url": "https://www.cryptopia.co.nz/",
-        "description": "New Zealand Exchange. Focuses on user experience."
+        "description": "The cryptopia marketplace allows for the listing of items for sale with cryptocurrency. They have a classified listing as well as an auction."
     },
     "kraken": {
         "url": "https://www.kraken.com/",

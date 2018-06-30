@@ -2,37 +2,41 @@ import React from "react";
 import "./About.css";
 
 const About = () => (
-    <div className="aboutContainer">
-        <div className="container">
+    <div className="aboutContainer mx-auto" id="aboutContainer">
+        <div className="container text-center">
             <div className="row">
                 <div className="col-md-12">
-                    <div className="about-header">
+                    <div className="about-header py-5">
                         <h2>What does Coin Crusader do?</h2>
                         <p>Coin Crusader is a flower in my garden, a mystery in my panties. Heart attack never stopped old Big Bear. I didn't even know we were calling him Big Bear. We never had the chance to. Maybe it was the eleven months he spent in the womb. The doctor said there were claw marks on the walls of her uterus. Yeah, well, have you seen the new Mustang?</p>
                     </div>
                 </div>
             </div>
-            <div className="row talk-points-container">
-                <table>
-                    <tr>
-                        <td><img src={require("../../img/brand_logo/coin-crusader_logo.svg")} /></td>
-                        <td><img src={require("../../img/brand_logo/coin-crusader_logo.svg")} /></td>
-                        <td><img src={require("../../img/brand_logo/coin-crusader_logo.svg")} /></td>
-                    </tr>
-                    <tr>
-                        <td><h3>Main Point 1.</h3></td>
-                        <td><h3>Main Point 2.</h3></td>
-                        <td><h3>Main Point 3.</h3></td>
-                    </tr>
-                    <tr>
-                        <td><p>Those options are already baked in with this model shoot me an email clear blue water but we need distributors to evangelize the new line to local markets, but fire up your browser. Strategic high-level 30,000 ft view. Drill down re-inventing the wheel at the end of the day but curate imagineer, or to be inspired is to become creative.</p></td>
-                        <td><p>Those options are already baked in with this model shoot me an email clear blue water but we need distributors to evangelize the new line to local markets, but fire up your browser. Strategic high-level 30,000 ft view. Drill down re-inventing the wheel at the end of the day but curate imagineer, or to be inspired is to become creative.</p></td>
-                        <td><p>Those options are already baked in with this model shoot me an email clear blue water but we need distributors to evangelize the new line to local markets, but fire up your browser. Strategic high-level 30,000 ft view. Drill down re-inventing the wheel at the end of the day but curate imagineer, or to be inspired is to become creative.</p></td>
-                    </tr>
-                </table>
+            <div className="about">
+                <div classNam="row text-center">
+                    <div className="offset-md-2 col-md-8 offset-md-2">
+                        <img className="about-img" src={require("../../img/brand_logo/coin-crusader_logo.svg")} alt="Icons" />
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col-md-12 text-left mb-3">
+                        <h4>What we do:</h4>
+                    </div>
+                </div>
+                <div className="row text-left mb-5">
+                    <div className="col-md-6">
+                        <p>Cryptocurrency is an idea that takes root in the ideas of the late 90s and early 2000s (see See Stephenson’s Cryptonomicon) when anonymity and security of information became a concern to those in the computing industry. What was once only theoretical knowledge, actually found a foothold in contemporary culture with the cryptocurrency explosion related to the worth of Bitcoin on local exchange markets.</p>
+                        <p>The currencies themselves are valued as a commodity in the same way that gold or silver is valued. In certain areas of the internet, these coins themselves may be used in exchange for goods and services, and, furthermore, may be traded on exchanges against coins of different values.</p>
+                        <p>These markets provide centralized locations where assets may be traded; however there is a weakness to</p>
+                    </div>
+                    <div className="col-md-6">
+                        <p>this methodology. First, the centralization of the market makes it a target for hackers. The blockchain system on which cryptocurrencies are based on is advanced enough that without some point to attack, owners' funds are generally safe. But if they are stored on an open market exchange, they may be compromised. This is why it is recommended that traders find a personal cold-storage wallet to store the funds that are not being actively traded.</p>
+                        <p>The inherent weakness to said methodology—the centralization of the exchange—has been overcome by a number of different services that offer direct translation between coins, providing algorithms that find buyers, sellers, and market values. This type of exchange, however, has a different set of economic rules and principles that guide its operation.</p>
+                    </div>
+                </div>
             </div>
-            <div className="row button-link-to-about">
-                <button type="button" className="btn btn-outline-dark learn-more">See Spoils</button>
+            <div className="row to-subscriptions d-flex justify-content-center">
+                <a href="#spoilsContainer"><button type="button" className="btn btn-outline-dark learn-more">See Spoils</button></a>
             </div>
         </div>
     </div>
