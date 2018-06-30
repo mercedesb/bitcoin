@@ -16,7 +16,7 @@ const Header = () => (
                 <div className="navbar-nav">
                     <a className="nav-item nav-link active" href="#">Home <span className="sr-only">(current)</span></a>
                     <a className="nav-item nav-link" href="#overviewContainer">Overview</a>
-                    <a className="nav-item nav-link" href="#">About</a>
+                    <a className="nav-item nav-link" href="#aboutContainer">About</a>
                     <a className="nav-item nav-link" href="#">Newsfeed</a>
                     <a className="nav-item nav-link" href="#">Log In</a>
                 </div>

@@ -52,7 +52,6 @@ class CardsPage extends Component {
                         lexchangeDescription={card.lexchangeDescription.description}
                         rexchangeDescription={card.rexchangeDescription.description}
                         >
-                        {/* {console.log(card.lexchangeDescription.description)} */}
                     </Card>
                 ))}
             </CardsContainer>

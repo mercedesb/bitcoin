@@ -25,7 +25,7 @@ const Overview = () => (
                 </div>
                 <div className="row text-left mb-5">
                     <div className="col-md-6">
-                        <p>Cryptocurrency is an idea that takes root in the ideas of the late 90s and early 2000s (see See Stephenson’s Cryptonomicon) when anonymity and security of information became a concern to those in the computing industry. What was once only theoretical knowledge, actually found a foothold in contemporary culture with the cryptocurrency explosion related to the worth of Bitcoin on local exchange markets.</p>
+                        <p>Cryptocurrency is an idea that takes root in the ideas of the late 90s and early 2000s (see Stephenson’s <a href="https://www.amazon.com/Cryptonomicon-Neal-Stephenson/dp/0060512806">Cryptonomicon</a>) when anonymity and security of information became a concern to those in the computing industry. What was once only theoretical knowledge, actually found a foothold in contemporary culture with the cryptocurrency explosion related to the worth of Bitcoin on local exchange markets.</p>
                         <p>The currencies themselves are valued as a commodity in the same way that gold or silver is valued. In certain areas of the internet, these coins themselves may be used in exchange for goods and services, and, furthermore, may be traded on exchanges against coins of different values.</p>
                         <p>These markets provide centralized locations where assets may be traded; however there is a weakness to</p>
                     </div>
@@ -55,8 +55,8 @@ const Overview = () => (
                     </div>
                 </div>
             </div>
-            <div className="row button-link-to-about">
-                <button type="button" className="btn btn-outline-dark learn-more">Why Coin Crusader?</button>
+            <div className="row to-about d-flex justify-content-center">
+                <a href="#aboutContainer"><button type="button" className="btn btn-outline-dark learn-more">Why Coin Crusader?</button></a>
             </div>
         </div>
     </div>
