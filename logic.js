@@ -20,15 +20,16 @@ const firebasePromise = [];
 
 
 const firebase = require('firebase');
-const fb = firebase.initializeApp({
+var fb = {
     apiKey: keys.firebase_api,
     authDomain: "bitcoin-2-e029a.firebaseapp.com",
     databaseURL: "https://bitcoin-2-e029a.firebaseio.com",
     projectId: "bitcoin-2-e029a",
-    storageBucket: "",
+    storageBucket: "bitcoin-2-e029a.appspot.com",
     messagingSenderId: "195092768796"
-});
-const database = firebase.database();
+  };
+  firebase.initializeApp(fb);
+  const database = firebase.database();
 
 
 request({
