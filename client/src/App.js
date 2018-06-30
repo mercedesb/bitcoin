@@ -9,6 +9,22 @@ import CardsPage from "./pages/CardsPage";
 
 class App extends Component {
 
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      authUser: null,
+    };
+  }
+
+  componentDidMount() {
+    firebase.auth.onAuthStateChanged(authUser => {
+      authUser
+        ? this.setState(() => ({ authUser }))
+        : this.setState(() => ({ authUser: null }));
+    });
+  }
+
   render() {
     return (
       <Router>
