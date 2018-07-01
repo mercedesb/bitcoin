@@ -128,7 +128,7 @@ app.get("/api/news", (req,res)=>{
   });
 });
 
-app.get("/api/cards", VerifyToken, (req,res)=>{
+app.get("/api/cards", (req,res)=>{
   Combo.find({}).sort({date:-1}).limit(50).then((data)=>{
     res.json(data.filter(a=> +a.usddiff > 5.00 ? true : false).sort((a,b)=>b.usddiff-a.usddiff));
   })
