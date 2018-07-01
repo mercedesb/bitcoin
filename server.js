@@ -6,7 +6,8 @@ const bodyParser = require("body-parser");
 var resolve = require("./logic.js");
 var { Combo, Exchange, News, Usd } = require('./models');
 const keys = require("./keys");
-
+var VerifyToken = require('./auth/VerifyToken.js');
+global.__root   = __dirname + '/';
 
 const mongoose = require('mongoose');
 var database = 'coindb';
@@ -110,6 +111,16 @@ if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/public"));
 }
 
+app.get('/api', function (req, res) {
+  res.status(200).send('API works.');
+});
+
+var UserController = require(__root + 'user/UserController');
+app.use('/api/users', UserController);
+
+var AuthController = require(__root + 'auth/AuthController');
+app.use('/api/auth', AuthController);
+
 app.get("/api/news", (req,res)=>{
   News.find({}).sort({date:-1}).limit(20).then((data)=>{
     console.log(data);
@@ -117,7 +128,7 @@ app.get("/api/news", (req,res)=>{
   });
 });
 
-app.get("/api/cards", (req,res)=>{
+app.get("/api/cards", VerifyToken, (req,res)=>{
   Combo.find({}).sort({date:-1}).limit(50).then((data)=>{
     res.json(data.filter(a=> +a.usddiff > 5.00 ? true : false).sort((a,b)=>b.usddiff-a.usddiff));
   })
