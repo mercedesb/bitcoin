@@ -1,12 +1,12 @@
 import firebase from 'firebase/app';
 import 'firebase/auth';
 
-var keys = require("../../keys.js");
+var keys = require("./keysfb");
 require("dotenv").config();
 
 
 const config = {
-  apiKey: keys.firebase_api,
+  apiKey: "AIzaSyD6V2x_61X1qWxBuQJJh6VpgrocReek6Bk",
   authDomain: "bitcoin-2-e029a.firebaseapp.com",
   databaseURL: "https://bitcoin-2-e029a.firebaseio.com",
   projectId: "bitcoin-2-e029a",

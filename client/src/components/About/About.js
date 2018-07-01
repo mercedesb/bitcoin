@@ -13,7 +13,7 @@ const About = () => (
                 </div>
             </div>
             <div className="about">
-                <div classNam="row text-center">
+                <div className="row text-center">
                     <div className="offset-md-2 col-md-8 offset-md-2">
                         <img className="about-img" src={require("../../img/brand_logo/coin-crusader_logo.svg")} alt="Icons" />
                     </div>

@@ -5,6 +5,7 @@ import Header from "./components/Header/Header";
 
 import Homepage from "./pages/Homepage";
 import CardsPage from "./pages/CardsPage";
+import SignUpPage from "./pages/SignUpPage";
 import { firebase } from './firebase';
 
 
@@ -33,7 +34,9 @@ class App extends Component {
         <div className="appContainer">
           <Header />
           <Route exact path="/" component={Homepage} />
+          <Route exact path="/home" component={Homepage} />
           <Route exact path="/cards" component={CardsPage} />
+          <Route exact path="/signup" component={SignUpPage} />
         </div>
       </Router>
     );
