@@ -9,7 +9,7 @@
   - https://crypto-arbitrage-api.herokuapp.com/cards 
   --This route is accessible to those who know its URL. It has not been protected at this time
   - https://crypto-arbitrage-api.herokuapp.com/api/cards
-  --This route is *not* accessible to those who know its URL. It has to be provided an authorization token. To register for this route, the following must be done:
+  --This route is *not* accessible to those who know its URL. It has to be provided an authorization token. To register for this route, the following must be done: POST request to /api/auth/register which is x-www-form-urlencoded. Three keys: x-access-token: "username", email: "email@something.com", password: "password". After creating this user, you will be provided a response with an auth token. This token must be added as a header of type "x-access-token" to access the API data. A script must be written to automatically authorize users when they sign up for the premium membership and provide them with their API x-access-tokens. 
 
 ## Future Plans
 Here we have some developments we are planning on implementing in the future.
