@@ -89,9 +89,9 @@ function recall() { Promise.all([promiseNews, promiseUsd]).then(([newsData, usdD
         //console.log(usdiff);
         
         if (i === container.length - 1) {
-          console.log(container);
+          //console.log(container);
           for (let j = 0; j < container.length; j++) {
-            Combo.create(container[j]).then((dbCombo) => { console.log(dbCombo) }).catch((err) => console.log(err));
+            Combo.create(container[j]).then((dbCombo) => {  }).catch((err) => console.log(err));
           }
         }
       }).catch((err) => console.log(err));
@@ -123,7 +123,7 @@ app.use('/api/auth', AuthController);
 
 app.get("/api/news", (req,res)=>{
   News.find({}).sort({date:-1}).limit(20).then((data)=>{
-    console.log(data);
+    //console.log(data);
     res.json(data);
   });
 });
