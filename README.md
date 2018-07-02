@@ -1,11 +1,12 @@
 # The Bitcoin Arbitrage App
 
 ## Current Features
-
+ - The main page has a description of cryptocurrency arbitrage as well as a general introduction to the topic.
+ - The final sale is the two tiered subscription status. The first allows access to the /coins route, which provides arbitrage opportunities. The second provides more direct access with an API route. 
+ - Bot notification systems are also accessible to the top tier services.
 
 ## Future Plans
 Here we have some developments we are planning on implementing in the future.
-
 ### AI Bots
  - Discord
  - Telegram
