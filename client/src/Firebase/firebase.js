@@ -7,7 +7,7 @@ require("dotenv").config({path: '../../.env'});
 console.log("PROCESS:", process.env);
 
 const config = {
-  apiKey: keysfb.firebase_api,
+  apiKey: "AIzaSyD6V2x_61X1qWxBuQJJh6VpgrocReek6Bk",
   authDomain: "bitcoin-2-e029a.firebaseapp.com",
   databaseURL: "https://bitcoin-2-e029a.firebaseio.com",
   projectId: "bitcoin-2-e029a",
