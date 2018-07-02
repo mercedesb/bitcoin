@@ -16,6 +16,7 @@
     "react-router-dom": "^4.3.1",
     "react-scripts": "1.0.14",
     "reactstrap": "^6.1.0",
+    "unirest": "^0.5.1",
     "webpack": "^4.12.1"
   },
   "scripts": {
