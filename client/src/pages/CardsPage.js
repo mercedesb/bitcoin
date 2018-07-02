@@ -20,8 +20,6 @@ class CardsPage extends Component {
                 cards[i].currency = cards[i].coincurrency.match(/(?<=_).*/g)[0];
                 cards[i].lexchangeDescription = descriptionsJSON[cards[i].lexchange];
                 cards[i].rexchangeDescription = descriptionsJSON[cards[i].rexchange];
-                console.log(cards[i].rexchange);
-                console.log(cards[i].rexchangeDescription);
  
                 // cards[i].lexchangeURL = descriptionsJSON[cards[i].lexchangeDescription[1]];
                 // cards[i].rexchangeURL = descriptionsJSON[cards[i].rexchange[1]];
@@ -30,6 +28,10 @@ class CardsPage extends Component {
                 cards
             });
         });
+    }
+    
+    if (cards) {
+
     }
 
     render() {

@@ -55,6 +55,21 @@ const Overview = () => (
                     </div>
                 </div>
             </div>
+            <div className="trading-arbitrage-overview">
+                <div className="row">
+                    <div className="col-md-12 text-left mb-3">
+                        <h4>Trading &amp; Arbitrage</h4>
+                    </div>
+                </div>
+                <div className="row text-left mb-5">
+                    <div className="col-md-6">
+                        <p>Blockchain is the technology upon which Bitcoin is based. To provide a currency without a centralized authority, a decentralized network was devised. This network supports the transaction ledger. In turn, this ledger records every transaction from the coin's introduction to its present day position. Mining the blockchain allows for the creation of new coins, in the same way that mining the earth for gold produces new gold. The way bitcoin specifically was set up, was that there is a finite number of coins that can be mined from the blockchain, and once those coins are all mined, then there are no new coins left to circulate. This methodology can create a supply shortage and increases the price of the coin.</p>
+                    </div>
+                    <div className="col-md-6">
+                        <p>Not all coins operate on the same blockchain. A graphical representation of the different algorithms and their corresponding coins can be found at <a href="https://coin360.io/">coin360</a>. These differences create competition on a number of levels. If the algorithms upon which the coins are based are not sufficiently secure, then the ledgers may be attacked by malicious agents. This problem arises again for smaller networks, which can be more easily taken over by bad actors. The form of this attack is called "a 51% attack," where 51% of the network's nodes are taken over by a hacking group, allowing the coercion of the network in order for the hackers to empty people’s wallets. To monitor the availability of this type of attack on a specific coin, to provide a good idea of the coin's stability relative to bad actors, see <a href="https://www.crypto51.app/">crypto51</a>.</p>
+                    </div>
+                </div>
+            </div>
             <div className="row to-about d-flex justify-content-center">
                 <a href="#aboutContainer"><button type="button" className="btn btn-outline-dark learn-more">Why Coin Crusader?</button></a>
             </div>

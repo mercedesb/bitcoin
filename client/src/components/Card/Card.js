@@ -3,7 +3,7 @@ import { PopoverLeft, PopoverRight } from "../Popover/Popover"
 import "./Card.css";
 
 const Card = props => (
-    <div className="card mb-4 d-flex">
+    <div className="card mb-4 d-flex justify-content-center">
         <div className="card-body">
             <h5 className="card-title"><span className="coin">{props.coin}</span> <i className="fas fa-angle-left ml-1 mr-1"></i> <span className="curr">{props.currency}</span></h5>
             <hr />
@@ -57,7 +57,7 @@ const Card = props => (
                     </tr>
                 </tbody>
             </table>
-            <div className="badge badge-success profit-badge d-flex justify-content-center mt-4"><h5 className="align-middle my-2">+ $ {props.usdDiff}</h5></div>
+            <div className="badge badge-success profit-badge d-flex justify-content-center text-center mt-4"><h5 className="align-middle my-2">+ $ {props.usdDiff}</h5></div>
         </div>
     </div>
 );
