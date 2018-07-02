@@ -39,18 +39,18 @@ class PopoverItem extends React.Component {
 
 export const PopoverLeft = props => (
   <PopoverItem 
-    item={{ placement: 'bottom', text: 'Low' }}
+    item={{ placement: 'bottom', text: 'Exchange' }}
     id={props.id + "-left"} 
     exchange={props.lexchange}
     description={props.description}
-    className="badge badge-danger low-badge py-1"/>
+    className="badge low-badge py-1"/>
 )
 
 export const PopoverRight = props => (
   <PopoverItem 
-    item={{ placement: 'top', text: 'High' }} 
+    item={{ placement: 'top', text: 'Exchange' }} 
     id={props.id + "-right"} 
     exchange={props.rexchange}
     description={props.description}
-    className="badge badge-success high-badge py-1" />
+    className="badge high-badge py-1" />
 )
