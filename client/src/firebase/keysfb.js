@@ -1,7 +1,7 @@
-require("dotenv").config();
+require("dotenv").config({path: '../../.env'});
 
 module.exports = {
-    firebase_api: process.env.FIREBASE_KEY
+    firebase_api: process.env.REACT_APP_SECRET_CODE
   };
 
   

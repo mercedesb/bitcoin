@@ -1,9 +1,10 @@
 import firebase from 'firebase/app';
 import 'firebase/auth';
 
-var keys = require("./keysfb");
-require("dotenv").config();
+var keysfb = require("./keysfb");
+require("dotenv").config({path: '../../.env'});
 
+console.log("PROCESS:", process.env);
 
 const config = {
   apiKey: keysfb.firebase_api,
