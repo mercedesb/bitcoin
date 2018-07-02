@@ -12,6 +12,7 @@ class CardsPage extends Component {
     }
     
     componentDidMount() {
+
         API.getCardData().then(res => {
             const cards = res.data;
             console.log("cards", cards);
@@ -28,10 +29,6 @@ class CardsPage extends Component {
                 cards
             });
         });
-    }
-    
-    if (cards) {
-
     }
 
     render() {
