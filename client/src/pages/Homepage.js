@@ -19,11 +19,11 @@ class Homepage extends Component {
             const newsfeed = res.data;
             console.log(res.data);
             for (let i = 0; i < newsfeed.length; i++) {
-                console.log("Title: " + newsfeed[i].title);
-                console.log("=================");
-                console.log("Url: " + newsfeed[i].url);
-                console.log("=================");
-                console.log("Date: " + newsfeed[i].date);
+                // console.log("Title: " + newsfeed[i].title);
+                // console.log("=================");
+                // console.log("Url: " + newsfeed[i].url);
+                // console.log("=================");
+                // console.log("Date: " + newsfeed[i].date);
             }
             this.setState({
                 newsfeed

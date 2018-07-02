@@ -11,22 +11,22 @@ import { firebase } from './firebase';
 
 class App extends Component {
 
-  constructor(props) {
-    super(props);
+  // constructor(props) {
+  //   super(props);
 
-    this.state = {
-      authUser: null,
-    };
-  }
+  //   this.state = {
+  //     authUser: null,
+  //   };
+  // }
 
-  componentDidMount() {
-    console.log(firebase);
-    firebase.auth.onAuthStateChanged(authUser => {
-      authUser
-        ? this.setState(() => ({ authUser }))
-        : this.setState(() => ({ authUser: null }));
-    });
-  }
+  // componentDidMount() {
+  //   console.log(firebase);
+  //   firebase.auth.onAuthStateChanged(authUser => {
+  //     authUser
+  //       ? this.setState(() => ({ authUser }))
+  //       : this.setState(() => ({ authUser: null }));
+  //   });
+  // }
 
   render() {
     return (
