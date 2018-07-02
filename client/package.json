@@ -17,6 +17,7 @@
     "react-fontawesome": "^1.6.1",
     "react-router-dom": "^4.3.1",
     "react-scripts": "1.0.14",
+    "react-scroll-to-component": "^1.0.2",
     "reactstrap": "^6.1.0",
     "unirest": "^0.5.1",
     "webpack": "^4.12.1"

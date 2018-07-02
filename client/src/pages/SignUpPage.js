@@ -4,15 +4,16 @@ import { Link, withRouter } from "react-router-dom";
 import { auth } from "../firebase";
 import * as routes from "../constants/routes";
 
+import "./SignUpInPage.css";
+
 
 const SignUpPage = ({history}) =>
-    <div>
-        <h1>SignUp</h1>
+    <div className="container mt-5">
+        <h1 className="mb-5">Sign Up:</h1>
         <SignUpForm history={history} />
     </div>
 
 const INITIAL_STATE = {
-    username: "",
     email: "",
     passwordOne: "",
     passwordTwo: "",
@@ -32,7 +33,6 @@ class SignUpForm extends Component {
 
     onSubmit = (event) => {
         const {
-            username,
             email,
             passwordOne,
         } = this.state;
@@ -55,7 +55,6 @@ class SignUpForm extends Component {
 
     render() {
         const {
-            username,
             email,
             passwordOne,
             passwordTwo,
@@ -65,17 +64,10 @@ class SignUpForm extends Component {
         const isInvalid =
             passwordOne !== passwordTwo ||
             passwordOne === '' ||
-            email === '' ||
-            username === '';
+            email === '';
 
         return (
             <form onSubmit={this.onSubmit}>
-                <input
-                    value={username}
-                    onChange={event => this.setState(byPropKey("username", event.target.value))}
-                    type="text"
-                    placeholder="Full Name"
-                />
                 <input
                     value={email}
                     onChange={event => this.setState(byPropKey("email", event.target.value))}
@@ -94,7 +86,7 @@ class SignUpForm extends Component {
                     type="password"
                     placeholder="Confirm Password"
                 />
-                <button disabled={isInvalid} type="submit">Sign Up!</button>
+                <button disabled={isInvalid} type="submit" className="btn">Sign up</button>
 
                 {error && <p>{error.message}</p>}
             </form>

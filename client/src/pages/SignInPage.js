@@ -5,10 +5,15 @@ import { SignUpLink } from "../pages/SignUpPage";
 import { auth } from "../firebase";
 import * as routes from "../constants/routes";
 
+import "./SignUpInPage.css";
+
 const SignInPage = ({ history }) =>
-    <span className="nav-item nav-link" onClick={auth.doSignOut}>Sign In
-    <SignInForm history={history} />
-        <SignUpLink /></span>
+    <div className="container mt-5">
+        <h1 className="mb-5">Sign In:</h1>
+        <SignInForm history={history} />
+        <SignUpLink />
+    </div>
+
 
 const byPropKey = (propertyName, value) => () => ({
     [propertyName]: value
@@ -72,9 +77,9 @@ class SignInForm extends Component {
                     onChange={event => this.setState(byPropKey("password", event.target.value))}
                     type="password"
                     placeholder="Password" />
-                <button disabled={isInvalid} type="submit">Sign In</button>
+                <button disabled={isInvalid} type="submit" className="btn">Sign in</button>
 
-                { error && <p>{error.message}</p> }
+                {error && <p>{error.message}</p>}
             </form>
         );
     }
