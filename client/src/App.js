@@ -48,10 +48,10 @@ class App extends Component {
           {console.log(firebase)}
           <Header authUser={this.state.authUser} />
           <Route exact path="/" component={Homepage} />
-          <Route exact path="/home" component={Homepage} />
           <Route exact path="/cards" component={CardsPage} />
           <Route exact path="/signup" component={SignUpPage} />
           <Route exact path="/signin" component={SignInPage} />
+          {/* <Route component={NoMatch} /> */}
         </div>
       </Router>
     );

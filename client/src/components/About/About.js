@@ -8,7 +8,7 @@ const About = () => (
                 <div className="col-md-12">
                     <div className="about-header py-5">
                         <h2>What does Coin Crusader do?</h2>
-                        <p>Coin Crusader is a flower in my garden, a mystery in my panties. Heart attack never stopped old Big Bear. I didn't even know we were calling him Big Bear. We never had the chance to. Maybe it was the eleven months he spent in the womb. The doctor said there were claw marks on the walls of her uterus. Yeah, well, have you seen the new Mustang?</p>
+                        <p>The cryptocurrency market lacks equilibrium. With severe instability, the differences in prices between markets may reach astronomical levels. Arbitrage seeks to profit on this instability by providing trades which stabilize the market.</p>
                     </div>
                 </div>
             </div>

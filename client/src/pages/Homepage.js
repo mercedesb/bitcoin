@@ -1,10 +1,12 @@
 import React, { Component } from "react";
+
 import Jumbotron from "../components/Jumbotron/Jumbotron";
 import Overview from "../components/Overview/Overview";
 import About from "../components/About/About";
 import Subscriptions from "../components/Subscriptions/Subscriptions";
 import NewsfeedContainer from "../components/NewsfeedContainer/NewsfeedContainer";
 import Newsfeed from "../components/Newsfeed/Newsfeed";
+import Footer from "../components/Footer/Footer";
 
 import API from "../utils/API";
 
@@ -48,6 +50,7 @@ class Homepage extends Component {
                         />
                     ))}
                 </NewsfeedContainer>
+                <Footer />
             </div>
         )
     }

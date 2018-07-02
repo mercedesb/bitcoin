@@ -1,8 +1,10 @@
 import React from "react";
 import "./Subscriptions.css";
+import { Link } from "react-router-dom";
+import * as routes from "../../constants/routes";
 
 const Subscriptions = () => (
-    <div className="spoilsContainer mx-auto">
+    <div className="spoilsContainer mx-auto" id="spoilsContainer">
         <div className="container">
             <div className="row">
                 <div className="col-md-12">
@@ -41,7 +43,7 @@ const Subscriptions = () => (
                 </div>
             </div>
             <div className="row to-signup d-flex justify-content-center">
-                <a href="#"><button type="button" className="btn learn-more signup-btn">Sign Up!</button></a>
+                <Link to={routes.SIGN_UP}><button type="button" className="btn learn-more signup-btn">Sign Up!</button></Link>
             </div>
         </div>
     </div>

@@ -1,0 +1,19 @@
+form input {
+    display: block;
+    margin-bottom: 10px;
+    padding: 5px;
+    width: 30rem;
+}
+
+form button {
+    background: #4091D3;
+    color: #fff;
+    margin-top: 50px;
+    margin-bottom: 20px;
+    padding: 10px;
+}
+
+form a:hover {
+    color: #4091D3;
+    text-decoration: none;
+}

@@ -1,3 +1,6 @@
+.newsContainer {
+   margin-bottom: 100px; 
+}
 .newsfeedContainer {
     max-height: 100vh;
     overflow-y: scroll;

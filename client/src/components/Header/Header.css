@@ -1,5 +1,5 @@
-.navbar-brand img {
-    height: 60px;
+.navbar-brand {
+    height: 80px;
 }
 .brand-name {
     color: #4091D3;
@@ -7,13 +7,18 @@
     font-family: 'Raleway', sans-serif;
     font-size: 24px;
     font-weight: bold;
+    text-decoration: none;
     text-transform: uppercase;
 }
 .nav-link {
     font-family: 'Montserrat', sans-serif;
     font-weight: 300;
 }
-ul {
-    list-style: none;
-    display: inline-block;
+.nav-item a {
+    color: #fff;
+    text-decoration: none;
+}
+.nav-item a:hover {
+    color: #4091D3;
+    text-decoration: none;
 }
