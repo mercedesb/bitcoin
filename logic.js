@@ -18,6 +18,8 @@ require("dotenv").config();
 
 const firebasePromise = [];
 
+// MB: this file seems to be doing quite a lot of different things. It would probably make sense
+// to create a file for each market.
 
 const firebase = require('firebase');
 var fb = {
@@ -158,7 +160,62 @@ changelly.getCurrencies(function (err, data) {
 
 axios('https://api.kucoin.com/v1/open/tick', function (error, response) {
     if (error) throw error;
+    
+    // MB: The intended behavior for Array.find is to return the first element that satisfies a condition.
+    // Since there isn't a return in any of these, I'm guessing that all of the response.data.finds
+    // are looping through the entire collection every time. If we added a return and then called 
+    // the database outside of the .find, I think we could improve performance. Something like below:
 
+    // ethBtcElement = response.data.find((element) => {
+    //    return element.symbol === "ETH-BTC"
+    // })
+    //
+    // database.ref("/kucoin/" + ethBtcElement.symbol).set(
+    // {
+    //     "symbol": ethBtcElement.symbol,
+    //     "lastDealPrice": ethBtcElement.lastDealPrice,
+    //     "feeRate": ethBtcElement.feeRate,
+    //     "taker": "0.1%",
+    //     "withdraw": "0.01"
+    // })
+
+
+    // MB: It also looks like all of these .finds are doing almost the same thing. We could do
+    // something creative to limit the lines of code needed for this. I'm thinking something like
+    // creating a hash of the symbols with an object of the taker and withdraw for the symbol. 
+    // We could remove the .find and use an Array.reduce instead so that we grab only the elements 
+    // with symbols we care about and then we can go through those and make the database calls.
+    // Something like this
+
+    // kucoinData = {
+    //      "ETH-BTC": {
+    //          "taker": "0.1%",
+    //          "withdraw": "0.01"
+    //      },
+    //      "BCH-BTC": {
+    //          "taker": "0.1%",
+    //          "withdraw": "0.0005"
+    //      }
+    //      etc
+    //  }
+
+    // elements = response.data.reduce((result, element) => {
+    //     if (Object.keys(kucoinData).includes(element.symbol)) {
+    //         result.push(element)
+    //     }
+    //     return result
+    // }, [])
+    // elements.forEach((elem) => {
+    //     database.ref("/kucoin/" + elem.symbol).set(
+    //     {
+    //          "symbol": elem.symbol,
+    //          "lastDealPrice": elem.lastDealPrice,
+    //          "feeRate": elem.feeRate,
+    //          "taker": kucoinData[elem.symbol].taker,
+    //          "withdraw": kucoinData[elem.symbol].withdraw
+    //      }
+    //    )
+    // })
 
     response.data.find(function (element) {
         if (element.symbol === "ETH-BTC") {
@@ -280,8 +337,19 @@ axios('https://api.kucoin.com/v1/open/tick', function (error, response) {
 
 });
 
+// MB: It feels like we're doing a some extra work in this callback. We can probably make use of
+// some of the JS Object.entries method here. 
+// Object.entries returns an an array of a given object's own enumerable property [key, value] pairs
+// i.e. data[0] = key, data[1] = value
 
-
+// Object.entries(response).forEach((data) => {
+//      if (data[1] !=== null) {
+//          database.ref("/bisq/" + data[0]).set({
+//              "pair": data[0],
+//              "last": data[1].last
+//          })
+//      }
+//  })
 axios('https://markets.bisq.network/api/ticker', function (error, response) {
     var keys = [];
     var goodKeys = [];
@@ -301,6 +369,10 @@ axios('https://markets.bisq.network/api/ticker', function (error, response) {
         });
     });
 });
+
+// MB: This is suuuuppper nitpicky 🙈 but it might be helpful to declare the const firebasePromise right before
+// we start pushing onto it. When I saw us using it here, I had to go back and look to see what firebasePromise was
+// and if we had pushed anything else into it to try to understand what it would be used for later
 
 firebasePromise.push(database.ref("/shapeshift/").once("value"));
 
@@ -324,6 +396,17 @@ module.exports = {
             //console.log(response.data.results);
             var news = [];
             response.data.results.forEach((results) => {
+                // MB: if you're interested at all, ES6 has a neat little trick called destructuring
+                // that could be fun to use here (depending on what is all returned on the results object)
+                // but you could do 
+
+                //  news.push({
+                //    ...results
+                //  })
+
+                // and that would give an object that looks just like the results object (i.e. title, published_at, and url)
+                // I think you would need to install the babel package or some other transpiler in order to be able to use it
+                // but I just thought I'd mention it because it can be a fun way to clean up some repetitive lines of code
 
                 news.push({
                     title: results.title,
@@ -368,6 +451,7 @@ module.exports = {
             var cryptopia = {};
             var liqui = {};
 
+            // MB: we could make these lines into a function to DRY this up a little bit
             mysteryValues.forEach((val, i, container) => {
                 if (val === "BINA") {
                     binance[container[i + 3]] = container[i + 2];
@@ -414,6 +498,8 @@ module.exports = {
             liqui = toLowerCase(liqui);
 
 
+            // MB: usually when I write a comment like this, it's an indicator for me to make a function or a method
+            // of the code I'm describing. We could do that here to make the code more readable and provide some semantic meaning
 
             //this block grabs all of my coin names and eliminates duplicates. Except for three problem cases.
 
@@ -515,6 +601,29 @@ module.exports = {
                 biboxObj[yx] = biboxob[xy].last;
             });
 
+
+            // MB: We could really pare down the lines of code here by changing up our variable declarations and 
+            // how we call our methods (I'm guessing by about 100 lines)
+            // From what I can tell, we never call the dif function with anything other than an empty array in the
+            // second parameter. Is that correct? If so, then we can remove the second parameter, `let` a local 
+            // variable inside of the method and return it. So something like this:
+
+            // function dif(diffcheck) {
+            //     let array = []
+            //     for (var i = 0; i < diffcheck.length; i++) {
+            //         if (diffcheck[i].kind === 'E') {
+            //             array.push(diffcheck[i]);
+            //         }
+            //      }
+            //      return array
+            //  }
+
+            // Then we can remove all the empty variable instantiations and instead set the props of the arbitage object
+            // like this:
+            // arbitrage["shapeshift-kucoin"] = dif(diffchk5)
+            
+            // if we do this, we may want to figure out a clearer naming convention since it could be easy to mix them up
+            
             //Shapeshift Differences
             var diffchk1 = diff(coinObj, changellyObj);
             var diffchk2 = diff(coinObj, bitzObj);
